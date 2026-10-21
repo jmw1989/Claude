@@ -129,3 +129,32 @@ test('finds weekly links newest first', () => {
   assert.equal(links[1].url, 'https://www.joe.co.uk/quiz/the-joe-friday-pub-quiz-week-524-550910');
   assert.equal(weekFromUrl(links[2].url), 523);
 });
+
+test('reads JOE WP Viral Quiz embeds, including rounds and the answer key', () => {
+  const answer = (id, text) =>
+    `<div class="wpvq-answer" data-wpvq-answer="${id}"> <!-- Weight+multiplier ID --> <input type="radio" class="vq-css-checkbox" data-wpvq-answer="${id}"> <label class="vq-css-label" data-wpvq-answer="${id}"> ${text} </label> </div>`;
+  const question = (qid, label, img, answers) =>
+    `<div class="wpvq-question wpvq-line" data-pageAfter="false" data-questionId="${qid}"> <div class="wpvq-question-label">${label}</div>
+     <div style="position:relative;"><img width="1180" src="${img}" class="wpvq-question-img" alt=""></div>
+     ${answers.join(' ')} <div class="wpvq-clear"></div> <div class="wpvq-explaination"><div class="wpvq-true">Correct!</div><div class="wpvq-false">Wrong!</div></div></div>`;
+  const html = `<html><head><title>JOE</title></head><body class="wpvq-embed">
+    <script type="text/javascript"> /* JS debug. */ var wpvq_js_debug = false; var wpvq_ans89733 = {"a9374":{"70093":"0","70091":"1","70092":"0","70094":"1","70095":"0","70096":"0","70106":"0","70107":"1","70108":"0"}}; var other = 1;</script>
+    <div id="wpvq-quiz-1282" class="wpvq TrueFalse columns-3">
+    ${question(1, 'ROUND 1: General Knowledge<br> <br> Which of these iconic products hit shelves first?', 'https://assets.joe.ie/uploads/2026/10/1-1.webp', [answer(70093, "Hellmann's Mayonaise"), answer(70091, "Colman's Mustard"), answer(70092, 'Heinz Ketchup')])}
+    ${question(2, 'What is the capital of Bulgaria?', 'https://assets.joe.ie/2.webp', [answer(70094, 'Sofia'), answer(70095, 'Budapest'), answer(70096, 'Bucharest')])}
+    ${question(3, 'ROUND 2: Sport<br> <br> When Liverpool signed Andy Carroll in 2011, how much did he cost?', 'https://assets.joe.ie/6.webp', [answer(70107, '£20 million'), answer(70106, '£35 million'), answer(70108, '£25 million')])}
+    </div></body></html>`;
+  const result = parseQuizPage(html, 'https://www.joe.ie/wpvq-embed/1282/');
+  assert.equal(result.strategy, 'wpvq');
+  assert.equal(result.questions.length, 3);
+  const [q1, q2, q3] = result.questions;
+  assert.equal(q1.q, 'Which of these iconic products hit shelves first?');
+  assert.equal(q1.category, 'ROUND 1: General Knowledge');
+  assert.equal(q1.options[q1.answer].text, "Colman's Mustard");
+  assert.equal(q1.image, 'https://assets.joe.ie/uploads/2026/10/1-1.webp');
+  assert.equal(q2.category, 'ROUND 1: General Knowledge');
+  assert.equal(q2.options[q2.answer].text, 'Sofia');
+  assert.equal(q3.category, 'ROUND 2: Sport');
+  assert.equal(q3.q, 'When Liverpool signed Andy Carroll in 2011, how much did he cost?');
+  assert.equal(q3.options[q3.answer].text, '£20 million');
+});

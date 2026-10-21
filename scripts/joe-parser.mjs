@@ -310,6 +310,63 @@ function questionsFromHtml($) {
   return out;
 }
 
+// JOE builds its pub quiz with the WP Viral Quiz plugin. The correct answers live in a
+// script variable like `var wpvq_ans89733 = {"a9374":{"70093":"0","70091":"1"}}`.
+function wpvqAnswerKey(html) {
+  const key = new Map();
+  for (const m of html.matchAll(/var\s+wpvq_ans\w*\s*=\s*/g)) {
+    const start = m.index + m[0].length;
+    const end = matchBracket(html, start);
+    if (end < 0) continue;
+    let data;
+    try {
+      data = JSON.parse(html.slice(start, end + 1));
+    } catch {
+      continue;
+    }
+    const walk = (o) => {
+      for (const [k, v] of Object.entries(o || {})) {
+        if (v && typeof v === 'object') walk(v);
+        else if (/^\d+$/.test(k)) key.set(k, Number(v) > 0);
+      }
+    };
+    walk(data);
+  }
+  return key;
+}
+
+function questionsFromWpvq($, html) {
+  const key = wpvqAnswerKey(html);
+  if (!key.size) return [];
+  const out = [];
+  let round = null;
+  $('.wpvq-question').each((_, el) => {
+    const $q = $(el);
+    let label = ($q.find('.wpvq-question-label').first().html() || '').trim();
+    const roundMatch = /^\s*(ROUND\s*\d+\s*[:\-–—]\s*[^<]*?)\s*(<br\s*\/?>|$)/i.exec(label);
+    if (roundMatch) {
+      round = stripHtml(roundMatch[1]);
+      label = label.slice(roundMatch[0].length);
+    }
+    const imgEl = $q.find('img.wpvq-question-img, .wpvq-question-img img').first();
+    const image = imgEl.attr('src') || imgEl.attr('data-src') || null;
+    const options = [];
+    let answer = -1;
+    $q.find('.wpvq-answer').each((i, a) => {
+      const $a = $(a);
+      const id = $a.attr('data-wpvq-answer');
+      const text = ($a.find('label').first().text() || $a.text()).replace(/\s+/g, ' ').trim();
+      const $img = $a.find('img').first();
+      options.push({ text, image: $img.attr('src') || $img.attr('data-src') || null });
+      if (key.get(String(id))) answer = i;
+    });
+    const q = stripHtml(label);
+    if (options.length < 2 || answer < 0 || (!q && !image)) return;
+    out.push({ q: q || 'Picture question', image, options, answer, round });
+  });
+  return out;
+}
+
 export function parseQuizPage(html, url = '') {
   const $ = cheerio.load(html);
   const title = ($('meta[property="og:title"]').attr('content') || $('title').text() || '').trim();
@@ -321,6 +378,7 @@ export function parseQuizPage(html, url = '') {
   const description = ($('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content') || '').trim();
 
   const strategies = [
+    ['wpvq', () => questionsFromWpvq($, html)],
     ['embedded-json', () => jsonCandidates($).flatMap((c) => collectQuestions(c))],
     ['html', () => questionsFromHtml($)],
   ];
@@ -348,6 +406,7 @@ export function parseQuizPage(html, url = '') {
     image: absolutise(q.image),
     options: q.options.map((o) => ({ text: o.text, image: absolutise(o.image) })),
     answer: q.answer,
+    ...(q.round ? { category: q.round } : {}),
   }));
 
   return { title, description, image, publishedAt: published, strategy, questions };
