@@ -462,9 +462,18 @@ function renderQuestion() {
       </button>`,
     )
     .join('');
+  // JOE quizzes play like a pub quiz: think of your answer, then reveal the options.
+  const hideOptions = qz.joeWeek != null;
+  $('#options').hidden = hideOptions;
+  $('#reveal-btn').hidden = !hideOptions;
   $('#next-btn').hidden = true;
   if (qz.idx > 0) $('#quiz-note').hidden = true;
 }
+
+$('#reveal-btn').addEventListener('click', () => {
+  $('#reveal-btn').hidden = true;
+  $('#options').hidden = false;
+});
 
 $('#options').addEventListener('click', (e) => {
   const btn = e.target.closest('.option');
