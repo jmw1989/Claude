@@ -176,6 +176,10 @@ main { max-width: 640px; margin: 0 auto; padding: 16px; }
 .qqq-field input:focus { outline: none; border-color: var(--accent); }
 .qqq-form .primary-btn { margin-top: 8px; }
 .qqq-hint { text-align: center; margin: 0; }
+.qqq-form input:disabled, .qqq-form button:disabled { opacity: 0.6; }
+.qqq-results { scroll-margin-top: 80px; }
+.qqq-results iframe { width: 100%; height: 80vh; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+.qqq-results .hint { margin-top: 8px; }
 
 /* Play */
 .progress { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }

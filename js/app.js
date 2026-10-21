@@ -346,9 +346,15 @@ function renderQqq(quiz) {
             </div>`,
           )
           .join('')}
-        <button class="primary-btn" type="submit">Submit &amp; see answers ↗</button>
-        <p class="hint qqq-hint">Opens QuizQuizQuiz's results page. As on their site, you can only submit once.</p>
+        <button class="primary-btn" type="submit">Submit &amp; see answers</button>
+        <p class="hint qqq-hint">QuizQuizQuiz marks your answers and shows the correct ones below. As on their site, you can only submit once.</p>
       </form>
+      <section class="qqq-results" id="qqq-results" hidden>
+        <h2 class="section-label">Your results from QuizQuizQuiz</h2>
+        <iframe name="qqq-results-frame" title="QuizQuizQuiz results"></iframe>
+        <p class="hint">The results stay here until you leave this screen, so take a screenshot if you want to keep them.
+          Nothing showing? <button class="link-btn" id="qqq-open-browser" type="button">Open the results in your browser</button></p>
+      </section>
       <a class="secondary-btn full" href="${escapeAttr(quiz.url)}" target="_blank" rel="noopener">Play on QuizQuizQuiz instead ↗</a>`;
   }
 
@@ -359,6 +365,7 @@ function renderQqq(quiz) {
         .join('')
     : '<li class="empty">Past quizzes will build up here each week.</li>';
   state.qqq.startedAt = Date.now();
+  state.qqq.submitted = null;
 }
 
 $('#screen-qqq').addEventListener('input', (e) => {
@@ -370,6 +377,10 @@ $('#screen-qqq').addEventListener('input', (e) => {
 });
 
 $('#screen-qqq').addEventListener('click', async (e) => {
+  if (e.target.id === 'qqq-open-browser' && state.qqq.submitted) {
+    postToQqq(state.qqq.shown.submitUrl, state.qqq.submitted, '_blank');
+    return;
+  }
   const btn = e.target.closest('[data-qqq]');
   if (!btn) return;
   const entry = state.qqq.index.quizzes.find((q) => q.quizId === btn.dataset.qqq);
@@ -386,13 +397,26 @@ $('#screen-qqq').addEventListener('submit', (e) => {
   if (!Object.values(answers).some((v) => v.trim())) return toast('Type at least one answer first.');
   if (!confirm('Submit your answers to QuizQuizQuiz? You can only do this once.')) return;
 
-  // A normal form post, exactly like the one on QuizQuizQuiz's own page.
+  state.qqq.submitted = { ...quiz.hidden, ...answers, 'time-taken': String(Math.round((Date.now() - state.qqq.startedAt) / 1000)) };
+  // The app can't read another site's pages, so QuizQuizQuiz's results page is shown in a frame.
+  postToQqq(quiz.submitUrl, state.qqq.submitted, 'qqq-results-frame');
+  e.target.querySelectorAll('input, button').forEach((el) => (el.disabled = true));
+  $('#qqq-results').hidden = false;
+  $('#qqq-results').scrollIntoView({ behavior: 'smooth' });
+
+  const done = store.get('qqq.done', {});
+  done[quiz.quizId] = new Date().toISOString();
+  store.set('qqq.done', done);
+  renderQqqCard();
+});
+
+// A normal form post, exactly like the one on QuizQuizQuiz's own page.
+function postToQqq(url, fields, target) {
   const form = document.createElement('form');
   form.method = 'post';
-  form.action = quiz.submitUrl;
-  form.target = '_blank';
+  form.action = url;
+  form.target = target;
   form.acceptCharset = 'UTF-8';
-  const fields = { ...quiz.hidden, ...answers, 'time-taken': String(Math.round((Date.now() - state.qqq.startedAt) / 1000)) };
   for (const [name, value] of Object.entries(fields)) {
     const input = document.createElement('input');
     input.type = 'hidden';
@@ -403,13 +427,7 @@ $('#screen-qqq').addEventListener('submit', (e) => {
   document.body.appendChild(form);
   form.submit();
   form.remove();
-
-  const done = store.get('qqq.done', {});
-  done[quiz.quizId] = new Date().toISOString();
-  store.set('qqq.done', done);
-  renderQqq(quiz);
-  renderQqqCard();
-});
+}
 
 // ---------- Playing ----------
 function startQuiz({ title, questions, note = '', joeWeek = null, replay = null }) {
