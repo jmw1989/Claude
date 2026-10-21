@@ -16,10 +16,21 @@ jobs:
           import { describePage } from './describe-page.mjs';
           import { findQuizEmbeds } from './joe-parser.mjs';
           const H = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', Accept: 'text/html,*/*', 'Accept-Language': 'en-GB,en;q=0.9' };
-          for (const url of ['https://quizquizquiz.com/friday/', 'https://quizquizquiz.com/']) {
-            const res = await fetch(url, { headers: H, redirect: 'follow' });
-            const html = await res.text();
-            console.log(`===== ${url} -> HTTP ${res.status}, final ${res.url}, ${html.length} bytes`);
+          const target = 'https://quizquizquiz.com/friday/';
+          const routes = {
+            allorigins: `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,
+            codetabs: `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(target)}`,
+            jina: `https://r.jina.ai/${target}`,
+            wayback: `https://web.archive.org/web/2id_/${target}`,
+          };
+          for (const [name, url] of Object.entries(routes)) {
+            let res, html;
+            try {
+              res = await fetch(url, { headers: name === 'jina' ? { ...H, 'X-Return-Format': 'html' } : H, redirect: 'follow', signal: AbortSignal.timeout(45000) });
+              html = await res.text();
+            } catch (e) { console.log(`===== ${name}: ${e.message}`); continue; }
+            console.log(`===== ${name} -> HTTP ${res.status}, final ${res.url}, ${html.length} bytes`);
+            if (/_cf_chl_opt|Just a moment/.test(html) || html.length < 3000) { console.log(html.slice(0, 300)); continue; }
             console.log(describePage(html));
             console.log('Embeds:', findQuizEmbeds(html, res.url));
             const links = [...new Set([...html.matchAll(/href="([^"#]+)"/g)].map((m) => m[1]))];
