@@ -1,0 +1,30 @@
+name: Inspect quizquizquiz page (temporary)
+on: workflow_dispatch
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - working-directory: scripts
+        run: npm install --no-audit --no-fund
+      - working-directory: scripts
+        run: |
+          cat > inspect.mjs <<'JS'
+          import { describePage } from './describe-page.mjs';
+          import { findQuizEmbeds } from './joe-parser.mjs';
+          const H = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', Accept: 'text/html,*/*', 'Accept-Language': 'en-GB,en;q=0.9' };
+          for (const url of ['https://quizquizquiz.com/friday/', 'https://quizquizquiz.com/']) {
+            const res = await fetch(url, { headers: H, redirect: 'follow' });
+            const html = await res.text();
+            console.log(`===== ${url} -> HTTP ${res.status}, final ${res.url}, ${html.length} bytes`);
+            console.log(describePage(html));
+            console.log('Embeds:', findQuizEmbeds(html, res.url));
+            const links = [...new Set([...html.matchAll(/href="([^"#]+)"/g)].map((m) => m[1]))];
+            console.log('Links:', links.slice(0, 120).join('\n'));
+            console.log('Scripts src:', [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]).join('\n'));
+          }
+          JS
+          node inspect.mjs
