@@ -6,9 +6,510 @@
   "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-525-886057",
   "image": "https://assets.joe.ie/uploads/2026/10/My-Quiz-FT-1-1024x512.png",
   "publishedAt": "2026-10-15T16:00:00.000Z",
-  "fetchedAt": "2026-10-21T20:44:26.416Z",
-  "status": "link-only",
-  "parser": null,
-  "fetchedVia": "jina",
-  "questions": []
+  "fetchedAt": "2026-10-21T20:46:59.910Z",
+  "status": "ok",
+  "parser": "embed/wpvq",
+  "fetchedVia": "allorigins",
+  "questions": [
+    {
+      "q": "Which of these iconic products hit shelves first?",
+      "image": "https://assets.joe.ie/uploads/2026/10/1-1.webp",
+      "options": [
+        {
+          "text": "Hellmann's Mayonaise",
+          "image": null
+        },
+        {
+          "text": "Colman's Mustard",
+          "image": null
+        },
+        {
+          "text": "Heinz Ketchup",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the capital of Bulgaria?",
+      "image": "https://assets.joe.ie/uploads/2026/10/2-2.webp",
+      "options": [
+        {
+          "text": "Sofia",
+          "image": null
+        },
+        {
+          "text": "Budapest",
+          "image": null
+        },
+        {
+          "text": "Bucharest",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Brazil's election sees incumbent Lula face off against what relative of old rival Jair Bolsonaro?",
+      "image": "https://assets.joe.ie/uploads/2026/10/3.webp",
+      "options": [
+        {
+          "text": "His brother",
+          "image": null
+        },
+        {
+          "text": "His son",
+          "image": null
+        },
+        {
+          "text": "His uncle",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the largest of these USA national parks?",
+      "image": "https://assets.joe.ie/uploads/2026/10/4-2.webp",
+      "options": [
+        {
+          "text": "Death Valley National Park",
+          "image": null
+        },
+        {
+          "text": "Yellowstone National Park",
+          "image": null
+        },
+        {
+          "text": "Grand Canyon National Park",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "The Sendlinger Tor is a historical landmark in which German city?",
+      "image": "https://assets.joe.ie/uploads/2026/10/5.jpg",
+      "options": [
+        {
+          "text": "Cologne",
+          "image": null
+        },
+        {
+          "text": "Munich",
+          "image": null
+        },
+        {
+          "text": "Berlin",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "When Liverpool signed Andy Carroll in 2011, how much did he cost?",
+      "image": "https://assets.joe.ie/uploads/2026/10/6-1.webp",
+      "options": [
+        {
+          "text": "£20 million",
+          "image": null
+        },
+        {
+          "text": "£35 million",
+          "image": null
+        },
+        {
+          "text": "£25 million",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "What was the last club outside of Europe's traditional \"top 5\" leagues to win the Champions League?",
+      "image": "https://assets.joe.ie/uploads/2026/10/7-1.webp",
+      "options": [
+        {
+          "text": "Ajax",
+          "image": null
+        },
+        {
+          "text": "Benfica",
+          "image": null
+        },
+        {
+          "text": "Porto",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Who is the most capped player in Irish Rugby history?",
+      "image": "https://assets.joe.ie/uploads/2026/10/8.png",
+      "options": [
+        {
+          "text": "Ronan O'Gara",
+          "image": null
+        },
+        {
+          "text": "Brian O'Driscoll",
+          "image": null
+        },
+        {
+          "text": "Cian Healy",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "What is the name of this gymnastics event?",
+      "image": "https://assets.joe.ie/uploads/2026/10/9.png",
+      "options": [
+        {
+          "text": "Horizontal Bar",
+          "image": null
+        },
+        {
+          "text": "Parallel Bars",
+          "image": null
+        },
+        {
+          "text": "Uneven Bars",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Before 2012, when was the last time Manchester City won the Premier league title?",
+      "image": "https://assets.joe.ie/uploads/2026/10/10-1.webp",
+      "options": [
+        {
+          "text": "1977/78",
+          "image": null
+        },
+        {
+          "text": "1967/68",
+          "image": null
+        },
+        {
+          "text": "1937/38",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which TV show holds the record for winning the most IFTA awards in the same night?",
+      "image": "https://assets.joe.ie/uploads/2026/10/11-1.png",
+      "options": [
+        {
+          "text": "The Tudors",
+          "image": null
+        },
+        {
+          "text": "Normal People",
+          "image": null
+        },
+        {
+          "text": "Love/Hate",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "What streaming subscription would you need to be able to watch The Gentlemen?",
+      "image": "https://assets.joe.ie/uploads/2026/10/12-2.webp",
+      "options": [
+        {
+          "text": "Netflix",
+          "image": null
+        },
+        {
+          "text": "HBO Max",
+          "image": null
+        },
+        {
+          "text": "Disney+",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which legendary American actor made a surprise appearance to open Kendrick Lamar’s 2025 Super Bowl halftime show?",
+      "image": "https://assets.joe.ie/uploads/2026/10/13-2.webp",
+      "options": [
+        {
+          "text": "Samuel L. Jackson",
+          "image": null
+        },
+        {
+          "text": "Morgan Freeman",
+          "image": null
+        },
+        {
+          "text": "Laurence Fishburne",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "In how many movies has Ralph Macchio played the \"Karate Kid\" Daniel LaRusso?",
+      "image": "https://assets.joe.ie/uploads/2026/10/14-2.webp",
+      "options": [
+        {
+          "text": "5",
+          "image": null
+        },
+        {
+          "text": "4",
+          "image": null
+        },
+        {
+          "text": "2",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Who directed 2015 movie The Martian?",
+      "image": "https://assets.joe.ie/uploads/2026/10/15-2.webp",
+      "options": [
+        {
+          "text": "Ridley Scott",
+          "image": null
+        },
+        {
+          "text": "Steven Spielberg",
+          "image": null
+        },
+        {
+          "text": "James Cameron",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "After Madrid, what is the second most populous city in Spain?",
+      "image": "https://assets.joe.ie/uploads/2026/10/16-1.webp",
+      "options": [
+        {
+          "text": "Seville",
+          "image": null
+        },
+        {
+          "text": "Valencia",
+          "image": null
+        },
+        {
+          "text": "Barcelona",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Second Cities"
+    },
+    {
+      "q": "After Paris, what is the second most populous city in France?",
+      "image": "https://assets.joe.ie/uploads/2026/10/17-2.webp",
+      "options": [
+        {
+          "text": "Marseille",
+          "image": null
+        },
+        {
+          "text": "Lille",
+          "image": null
+        },
+        {
+          "text": "Lyon",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Second Cities"
+    },
+    {
+      "q": "After New York, what is the second most populous city in the USA?",
+      "image": "https://assets.joe.ie/uploads/2026/10/18-1.webp",
+      "options": [
+        {
+          "text": "Los Angeles",
+          "image": null
+        },
+        {
+          "text": "Dallas",
+          "image": null
+        },
+        {
+          "text": "Houston",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Second Cities"
+    },
+    {
+      "q": "After Sydney, what is the second most populous city in Australia?",
+      "image": "https://assets.joe.ie/uploads/2026/10/19-1.webp",
+      "options": [
+        {
+          "text": "Melbourne",
+          "image": null
+        },
+        {
+          "text": "Adelaide",
+          "image": null
+        },
+        {
+          "text": "Canberra",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Second Cities"
+    },
+    {
+      "q": "After Seoul, what is the most populous city in South Korea?",
+      "image": "https://assets.joe.ie/uploads/2026/10/20-1.webp",
+      "options": [
+        {
+          "text": "Busan",
+          "image": null
+        },
+        {
+          "text": "Incheon",
+          "image": null
+        },
+        {
+          "text": "Daejeon",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Second Cities"
+    },
+    {
+      "q": "What is this film called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/21-2.webp",
+      "options": [
+        {
+          "text": "La La Land",
+          "image": null
+        },
+        {
+          "text": "Bugonia",
+          "image": null
+        },
+        {
+          "text": "Birdman",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: 21st Century Best Picture Winners"
+    },
+    {
+      "q": "What film is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/22-2.webp",
+      "options": [
+        {
+          "text": "Good Will Hunting",
+          "image": null
+        },
+        {
+          "text": "A Beautiful Mind",
+          "image": null
+        },
+        {
+          "text": "American Gangster",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: 21st Century Best Picture Winners"
+    },
+    {
+      "q": "What film is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/23-2.webp",
+      "options": [
+        {
+          "text": "Nomadland",
+          "image": null
+        },
+        {
+          "text": "Fargo",
+          "image": null
+        },
+        {
+          "text": "Three Billboards Outside Ebbing, Missouri",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: 21st Century Best Picture Winners"
+    },
+    {
+      "q": "What film is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/24-2.webp",
+      "options": [
+        {
+          "text": "Everything Everywhere All At Once",
+          "image": null
+        },
+        {
+          "text": "The Shape of Water",
+          "image": null
+        },
+        {
+          "text": "CODA",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: 21st Century Best Picture Winners"
+    },
+    {
+      "q": "What is this 2003 Best Picture winning-film called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/25-1.webp",
+      "options": [
+        {
+          "text": "Chicago",
+          "image": null
+        },
+        {
+          "text": "Boston",
+          "image": null
+        },
+        {
+          "text": "New York",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: 21st Century Best Picture Winners"
+    }
+  ]
 }
