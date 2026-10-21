@@ -27,6 +27,7 @@ const state = {
   difficulty: store.get('difficulty', 'any'),
   quiz: null,
   joe: { index: null, latest: null },
+  qqq: { index: null, latest: null, shown: null },
 };
 
 // ---------- Navigation ----------
@@ -34,6 +35,7 @@ const TITLES = {
   home: 'Quiz Night',
   setup: 'New quiz',
   joe: 'JOE Friday Pub Quiz',
+  qqq: 'QuizQuizQuiz Friday Quiz',
   loading: 'Loading',
   play: 'Quiz',
   results: 'Results',
@@ -85,6 +87,7 @@ function renderHome() {
     .map((h) => `<li><span>${escapeHtml(h.title)}</span><b>${h.score}/${h.total}</b></li>`)
     .join('');
   renderJoeCard();
+  renderQqqCard();
 }
 
 $$('.card[data-kind]').forEach((btn) =>
@@ -271,6 +274,143 @@ $('#screen-joe').addEventListener('click', async (e) => {
   play();
 });
 
+// ---------- QuizQuizQuiz Friday Quiz ----------
+// Answers are typed in and sent to QuizQuizQuiz, which marks them and shows the
+// correct answers. Their page has no answers in it, so the app can't mark it itself.
+async function loadQqq() {
+  try {
+    const res = await fetch(`data/qqq/index.json?t=${Math.floor(Date.now() / 60000)}`, { cache: 'no-store' });
+    state.qqq.index = res.ok ? await res.json() : { quizzes: [] };
+  } catch {
+    state.qqq.index = state.qqq.index || { quizzes: [] };
+  }
+  const latest = state.qqq.index.quizzes?.[0];
+  state.qqq.latest = latest ? await loadQqqQuiz(latest) : null;
+  renderQqqCard();
+  if (current === 'qqq' && !state.qqq.shown) renderQqq(state.qqq.latest);
+}
+
+async function loadQqqQuiz(entry) {
+  try {
+    const res = await fetch(`data/qqq/${entry.file}`, { cache: 'no-cache' });
+    if (res.ok) return await res.json();
+  } catch {}
+  return null;
+}
+
+function renderQqqCard() {
+  const sub = $('#qqq-card-sub');
+  const latest = state.qqq.latest;
+  if (!state.qqq.index) return;
+  const done = latest && store.get('qqq.done', {})[latest.quizId];
+  sub.textContent = !latest
+    ? 'A new quiz lands here every Friday.'
+    : `${latest.title.replace(/^The QuizQuizQuiz Friday Quiz,?\s*/i, '')} · ${done ? 'answers submitted' : `${latest.questions.length} questions · tap to play`}`;
+  $('#qqq-badge').hidden = !latest || Boolean(done);
+}
+
+$('#qqq-card').addEventListener('click', () => {
+  renderQqq(state.qqq.latest);
+  show('qqq');
+});
+
+function renderQqq(quiz) {
+  state.qqq.shown = quiz;
+  const body = $('#qqq-body');
+  if (!quiz) {
+    body.innerHTML = `<div class="joe-hero"><h2>No quiz yet</h2><p>The QuizQuizQuiz Friday Quiz is fetched automatically every Friday. Check back then!</p>
+      <a class="secondary-btn full" href="https://quizquizquiz.com/friday/" target="_blank" rel="noopener">Open on QuizQuizQuiz ↗</a></div>`;
+  } else {
+    const draft = store.get(`qqq.draft.${quiz.quizId}`, {});
+    const done = store.get('qqq.done', {})[quiz.quizId];
+    body.innerHTML = `
+      <div class="joe-hero qqq-hero">
+        <p class="eyebrow">${quiz === state.qqq.latest ? 'This week' : 'Previous week'}</p>
+        <h2>${escapeHtml(quiz.title)}</h2>
+        <p>Type your answers, then submit them to QuizQuizQuiz. It marks them and shows you the correct answers.</p>
+        ${done ? '<p class="done">You submitted answers for this quiz.</p>' : ''}
+      </div>
+      <form id="qqq-form" class="qqq-form" autocomplete="off">
+        ${quiz.questions
+          .map(
+            (q) => `<div class="question-card qqq-question">
+              <p class="q-category">Question ${q.number}</p>
+              ${q.image ? `<img class="q-image" src="${escapeAttr(q.image)}" alt="" referrerpolicy="no-referrer">` : ''}
+              <h3 class="q-text">${escapeHtml(q.q)}</h3>
+              ${q.fields
+                .map(
+                  (f) => `<label class="qqq-field">${f.label ? `<span>${escapeHtml(f.label)}</span>` : ''}
+                    <input type="text" name="${escapeHtml(f.name)}" value="${escapeHtml(draft[f.name] || '')}" placeholder="Your answer" autocapitalize="sentences"></label>`,
+                )
+                .join('')}
+            </div>`,
+          )
+          .join('')}
+        <button class="primary-btn" type="submit">Submit &amp; see answers ↗</button>
+        <p class="hint qqq-hint">Opens QuizQuizQuiz's results page. As on their site, you can only submit once.</p>
+      </form>
+      <a class="secondary-btn full" href="${escapeAttr(quiz.url)}" target="_blank" rel="noopener">Play on QuizQuizQuiz instead ↗</a>`;
+  }
+
+  const older = (state.qqq.index?.quizzes || []).filter((q) => q.quizId !== quiz?.quizId);
+  $('#qqq-list').innerHTML = older.length
+    ? older
+        .map((q) => `<li><span><b>${escapeHtml(q.title.replace(/^The QuizQuizQuiz Friday Quiz,?\s*/i, ''))}</b><small>${q.count} questions</small></span><button class="small-btn" data-qqq="${escapeHtml(q.quizId)}">Open</button></li>`)
+        .join('')
+    : '<li class="empty">Past quizzes will build up here each week.</li>';
+  state.qqq.startedAt = Date.now();
+}
+
+$('#screen-qqq').addEventListener('input', (e) => {
+  const quiz = state.qqq.shown;
+  if (!quiz || !e.target.name) return;
+  const draft = store.get(`qqq.draft.${quiz.quizId}`, {});
+  draft[e.target.name] = e.target.value;
+  store.set(`qqq.draft.${quiz.quizId}`, draft);
+});
+
+$('#screen-qqq').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-qqq]');
+  if (!btn) return;
+  const entry = state.qqq.index.quizzes.find((q) => q.quizId === btn.dataset.qqq);
+  const quiz = entry && (await loadQqqQuiz(entry));
+  if (!quiz) return toast("Couldn't load that quiz.");
+  renderQqq(quiz);
+  window.scrollTo(0, 0);
+});
+
+$('#screen-qqq').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const quiz = state.qqq.shown;
+  const answers = Object.fromEntries(new FormData(e.target));
+  if (!Object.values(answers).some((v) => v.trim())) return toast('Type at least one answer first.');
+  if (!confirm('Submit your answers to QuizQuizQuiz? You can only do this once.')) return;
+
+  // A normal form post, exactly like the one on QuizQuizQuiz's own page.
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = quiz.submitUrl;
+  form.target = '_blank';
+  form.acceptCharset = 'UTF-8';
+  const fields = { ...quiz.hidden, ...answers, 'time-taken': String(Math.round((Date.now() - state.qqq.startedAt) / 1000)) };
+  for (const [name, value] of Object.entries(fields)) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = value;
+    form.appendChild(input);
+  }
+  document.body.appendChild(form);
+  form.submit();
+  form.remove();
+
+  const done = store.get('qqq.done', {});
+  done[quiz.quizId] = new Date().toISOString();
+  store.set('qqq.done', done);
+  renderQqq(quiz);
+  renderQqqCard();
+});
+
 // ---------- Playing ----------
 function startQuiz({ title, questions, note = '', joeWeek = null, replay = null }) {
   state.quiz = { title, questions, note, joeWeek, replay, idx: 0, score: 0, picks: [] };
@@ -424,3 +564,4 @@ history.replaceState({ screen: 'home' }, '');
 show('home', { push: false });
 showInstallHint();
 loadJoe();
+loadQqq();

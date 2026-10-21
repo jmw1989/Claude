@@ -159,6 +159,24 @@ main { max-width: 640px; margin: 0 auto; padding: 16px; }
 .joe-list .empty { color: var(--muted); justify-content: center; }
 .small-btn { border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; padding: 8px 14px; border-radius: 99px; text-decoration: none; font-size: 0.9rem; }
 
+/* QuizQuizQuiz */
+.card-qqq { background: #0f5e8c; border-color: transparent; color: #fff; }
+.card-qqq .card-title { color: #fff; }
+.card-qqq .card-sub { color: #cfe6f5; }
+.qqq-hero { background: #0f5e8c; margin-bottom: 16px; }
+.qqq-hero h2 { color: #fff; }
+.qqq-form { display: grid; gap: 12px; }
+.qqq-question .q-text { font-size: 1.1rem; margin-bottom: 10px; }
+.qqq-field { display: block; margin-top: 8px; }
+.qqq-field span { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
+.qqq-field input {
+  width: 100%; padding: 12px; font: inherit; font-size: 16px; color: var(--text);
+  background: var(--bg); border: 2px solid var(--border); border-radius: 10px;
+}
+.qqq-field input:focus { outline: none; border-color: var(--accent); }
+.qqq-form .primary-btn { margin-top: 8px; }
+.qqq-hint { text-align: center; margin: 0; }
+
 /* Play */
 .progress { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
 .progress-bar { height: 100%; width: 0; background: var(--accent); transition: width 0.3s; }

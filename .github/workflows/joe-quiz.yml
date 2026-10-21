@@ -1,9 +1,9 @@
-name: Fetch JOE Friday Pub Quiz
+name: Fetch Friday quizzes
 
 on:
   schedule:
-    # JOE usually publishes late Thursday or on Friday (UK time). Check a few
-    # times; runs after the quiz is saved finish straight away.
+    # JOE usually publishes late Thursday or on Friday (UK time) and QuizQuizQuiz
+    # on Friday. Check a few times; runs after a quiz is saved finish straight away.
     - cron: '0 18 * * 4'   # Thursday 18:00 UTC
     - cron: '0 7 * * 5'    # Friday 07:00 UTC
     - cron: '0 11 * * 5'   # Friday 11:00 UTC
@@ -44,7 +44,9 @@ jobs:
         working-directory: scripts
         run: npm test
 
-      - name: Fetch this week's quiz
+      - name: Fetch this week's JOE quiz
+        id: joe
+        continue-on-error: true
         working-directory: scripts
         env:
           QUIZ_URL: ${{ inputs.url }}
@@ -55,6 +57,12 @@ jobs:
           if [ "$FORCE" = "true" ]; then args+=(--force); fi
           node fetch-joe-quiz.mjs "${args[@]}"
 
+      - name: Fetch this week's QuizQuizQuiz Friday Quiz
+        id: qqq
+        continue-on-error: true
+        working-directory: scripts
+        run: node fetch-qqq-quiz.mjs
+
       - name: Keep the page for debugging if it couldn't be read
         if: always()
         uses: actions/upload-artifact@v4
@@ -63,14 +71,20 @@ jobs:
           path: scripts/debug/
           if-no-files-found: ignore
 
-      - name: Commit the quiz
+      - name: Commit the quizzes
         run: |
           git config user.name "quiz-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/joe
+          git add data
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Add JOE Friday Pub Quiz $(jq -r '.week' data/joe/latest.json)"
+            git commit -m "Update Friday quizzes"
             git push
           fi
+
+      - name: Report a failed fetch
+        if: steps.joe.outcome == 'failure' || steps.qqq.outcome == 'failure'
+        run: |
+          echo "::error::JOE: ${{ steps.joe.outcome }}, QuizQuizQuiz: ${{ steps.qqq.outcome }}. See the steps above."
+          exit 1

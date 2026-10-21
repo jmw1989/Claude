@@ -5,6 +5,7 @@ A mobile quiz app you can host for free on GitHub Pages and add to your phone's 
 - **General Knowledge quizzes**: pick categories (History, Geography, Science, Film & TV, Music, Arts & Literature, Food & Drink, Society & Culture), how many questions and the difficulty.
 - **Sports quizzes**: pick sports (Football, Rugby, GAA, Cricket, Tennis, Golf, F1, Boxing, Olympics, and more).
 - **The JOE Friday Pub Quiz**: a GitHub Action fetches the latest quiz from JOE every Friday and saves it into the app, so you can play it there. Past weeks stay available too.
+- **The QuizQuizQuiz Friday Quiz**: the same job saves the week's questions from [quizquizquiz.com/friday](https://quizquizquiz.com/friday/). You type your answers in the app and submit them to QuizQuizQuiz, which marks them and shows the correct answers (they aren't published anywhere else).
 - Tracks your scores, works offline (with a built-in question bank), and has light and dark themes.
 
 Questions come from [The Trivia API](https://the-trivia-api.com) and [Open Trivia DB](https://opentdb.com), both free and keyless.
@@ -18,7 +19,7 @@ Questions come from [The Trivia API](https://the-trivia-api.com) and [Open Trivi
    - iPhone (Safari): tap **Share → Add to Home Screen**.
    - Android (Chrome): tap **⋮ → Install app** (or **Add to Home screen**).
 
-To get this week's JOE quiz right away instead of waiting for Friday, go to **Actions → Fetch JOE Friday Pub Quiz → Run workflow**.
+To get this week's quizzes right away instead of waiting for Friday, go to **Actions → Fetch Friday quizzes → Run workflow**.
 
 ## How the JOE quiz import works
 
@@ -62,5 +63,6 @@ node fetch-joe-quiz.mjs --url <quiz-url>   # a specific week
 | `js/offline-questions.js` | Built-in questions used when there's no signal |
 | `sw.js`, `manifest.webmanifest`, `icons/` | Home-screen install and offline support |
 | `data/joe/` | Saved JOE quizzes (written by the weekly job) |
-| `scripts/` | The JOE quiz fetcher, parser and tests |
-| `.github/workflows/joe-quiz.yml` | The weekly fetch job |
+| `data/qqq/` | Saved QuizQuizQuiz Friday Quiz questions |
+| `scripts/` | The quiz fetchers, parsers and tests |
+| `.github/workflows/joe-quiz.yml` | The weekly fetch job (both quizzes) |
