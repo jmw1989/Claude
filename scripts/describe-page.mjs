@@ -16,7 +16,7 @@ export function describePage(html) {
   const classes = new Map();
   $('[class]').each((_, el) => {
     for (const c of ($(el).attr('class') || '').split(/\s+/)) {
-      if (/quiz|question|answer|option|choice|correct|round|result/i.test(c)) classes.set(c, (classes.get(c) || 0) + 1);
+      if (/quiz|question|answer|option|choice|correct|round|result|wpvq/i.test(c)) classes.set(c, (classes.get(c) || 0) + 1);
     }
   });
   lines.push(`Quiz-like classes: ${[...classes].map(([c, n]) => `${c}×${n}`).join(', ') || 'none'}`);
@@ -28,8 +28,11 @@ export function describePage(html) {
   lines.push(`data-* attributes: ${[...dataAttrs].sort((a, b) => b[1] - a[1]).slice(0, 40).map(([k, n]) => `${k}×${n}`).join(', ')}`);
 
   let shown = 0;
-  for (const m of html.matchAll(/answer|correct|question/gi)) {
-    if (shown++ >= 25) break;
+  let last = -1000;
+  for (const m of html.matchAll(/wpvq|answer|correct|question/gi)) {
+    if (m.index - last < 350) continue;
+    last = m.index;
+    if (shown++ >= 40) break;
     lines.push(`…${html.slice(Math.max(0, m.index - 150), m.index + 200).replace(/\s+/g, ' ')}…`);
   }
   const text = $('body').text().replace(/\s+/g, ' ');

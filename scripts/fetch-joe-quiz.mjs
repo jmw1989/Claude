@@ -6,7 +6,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describePage } from './describe-page.mjs';
-import { findWeeklyQuizLinks, parseQuizPage, weekFromUrl } from './joe-parser.mjs';
+import { findQuizEmbeds, findWeeklyQuizLinks, parseQuizPage, weekFromUrl } from './joe-parser.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(HERE, '..', 'data', 'joe');
@@ -146,6 +146,24 @@ async function main() {
   console.log(`Fetching week ${target.week ?? '?'}: ${target.url}`);
   const { html, finalUrl, via } = await get(target.url);
   const parsed = parseQuizPage(html, finalUrl);
+  const debugPages = [[`week-${target.week}`, html, via]];
+  if (!parsed.questions.length) {
+    for (const embedUrl of findQuizEmbeds(html, finalUrl)) {
+      console.log(`Questions not in the article; trying embedded quiz ${embedUrl}`);
+      try {
+        const embed = await get(embedUrl);
+        const fromEmbed = parseQuizPage(embed.html, embedUrl);
+        if (fromEmbed.questions.length) {
+          parsed.questions = fromEmbed.questions;
+          parsed.strategy = `embed/${fromEmbed.strategy}`;
+          break;
+        }
+        debugPages.push([`week-${target.week}-embed`, embed.html, embed.via]);
+      } catch (err) {
+        console.warn(err.message);
+      }
+    }
+  }
   const week = target.week ?? weekFromUrl(finalUrl) ?? weekFromUrl(parsed.title);
   const ok = parsed.questions.length > 0;
 
@@ -167,8 +185,10 @@ async function main() {
   if (!ok) {
     // Keep the page so the parser can be fixed; the app still links to JOE.
     await mkdir(DEBUG_DIR, { recursive: true });
-    await writeFile(join(DEBUG_DIR, `week-${week}.html`), html);
-    console.log(`::group::Page outline (via ${via})\n${describePage(html)}\n::endgroup::`);
+    for (const [name, page, pageVia] of debugPages) {
+      await writeFile(join(DEBUG_DIR, `${name}.html`), page);
+      console.log(`::group::Outline of ${name} (via ${pageVia})\n${describePage(page)}\n::endgroup::`);
+    }
     console.warn(`::warning::Found week ${week} but could not read its questions. The app will link to the quiz on JOE instead.`);
   } else {
     console.log(`Parsed ${quiz.questions.length} questions using the ${parsed.strategy} strategy.`);

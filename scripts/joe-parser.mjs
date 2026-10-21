@@ -379,3 +379,18 @@ export function weekFromUrl(url) {
   const m = /pub-quiz-week-(\d+)/i.exec(url || '');
   return m ? Number(m[1]) : null;
 }
+
+// Quizzes are often embedded in an iframe (e.g. /wpvq-embed/1282/) rather than in the article itself.
+export function findQuizEmbeds(html, baseUrl) {
+  const $ = cheerio.load(html);
+  const urls = new Set();
+  $('iframe[src], iframe[data-src], [data-embed-src]').each((_, el) => {
+    const src = $(el).attr('src') || $(el).attr('data-src') || $(el).attr('data-embed-src');
+    if (!src || !/quiz|wpvq|embed/i.test(src) || /sibforms|youtube|twitter|instagram|facebook|tiktok|spotify/i.test(src)) return;
+    try {
+      urls.add(new URL(src, baseUrl).href);
+    } catch {}
+  });
+  for (const m of html.matchAll(/["'(](\/wpvq-embed\/\d+\/?)/g)) urls.add(new URL(m[1], baseUrl).href);
+  return [...urls];
+}
