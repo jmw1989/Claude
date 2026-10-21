@@ -5,6 +5,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { describePage } from './describe-page.mjs';
 import { findWeeklyQuizLinks, parseQuizPage, weekFromUrl } from './joe-parser.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -167,6 +168,7 @@ async function main() {
     // Keep the page so the parser can be fixed; the app still links to JOE.
     await mkdir(DEBUG_DIR, { recursive: true });
     await writeFile(join(DEBUG_DIR, `week-${week}.html`), html);
+    console.log(`::group::Page outline (via ${via})\n${describePage(html)}\n::endgroup::`);
     console.warn(`::warning::Found week ${week} but could not read its questions. The app will link to the quiz on JOE instead.`);
   } else {
     console.log(`Parsed ${quiz.questions.length} questions using the ${parsed.strategy} strategy.`);
