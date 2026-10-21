@@ -1,0 +1,76 @@
+name: Fetch JOE Friday Pub Quiz
+
+on:
+  schedule:
+    # JOE usually publishes late Thursday or on Friday (UK time). Check a few
+    # times; runs after the quiz is saved finish straight away.
+    - cron: '0 18 * * 4'   # Thursday 18:00 UTC
+    - cron: '0 7 * * 5'    # Friday 07:00 UTC
+    - cron: '0 11 * * 5'   # Friday 11:00 UTC
+    - cron: '0 16 * * 5'   # Friday 16:00 UTC
+    - cron: '0 10 * * 6'   # Saturday 10:00 UTC
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Optional: a specific JOE quiz page URL to import'
+        required: false
+      force:
+        description: 'Re-import even if this week is already saved'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: joe-quiz
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install script dependencies
+        working-directory: scripts
+        run: npm install --no-audit --no-fund
+
+      - name: Test the parser
+        working-directory: scripts
+        run: npm test
+
+      - name: Fetch this week's quiz
+        working-directory: scripts
+        env:
+          QUIZ_URL: ${{ inputs.url }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=()
+          if [ -n "$QUIZ_URL" ]; then args+=(--url "$QUIZ_URL"); fi
+          if [ "$FORCE" = "true" ]; then args+=(--force); fi
+          node fetch-joe-quiz.mjs "${args[@]}"
+
+      - name: Keep the page for debugging if it couldn't be read
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: joe-debug-pages
+          path: scripts/debug/
+          if-no-files-found: ignore
+
+      - name: Commit the quiz
+        run: |
+          git config user.name "quiz-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/joe
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Add JOE Friday Pub Quiz $(jq -r '.week' data/joe/latest.json)"
+            git push
+          fi

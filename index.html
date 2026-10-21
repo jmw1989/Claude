@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quiz Night</title>
+  <meta name="description" content="General knowledge and sports quizzes, plus the JOE Friday Pub Quiz every week.">
+  <meta name="theme-color" content="#1b1f3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Quiz Night">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="icon-btn" id="back-btn" aria-label="Back" hidden>←</button>
+    <h1 id="screen-title">Quiz Night</h1>
+    <span class="topbar-spacer"></span>
+  </header>
+
+  <main id="app">
+    <!-- Home -->
+    <section class="screen" id="screen-home">
+      <button class="card card-joe" id="joe-card">
+        <span class="card-icon">🍺</span>
+        <span class="card-body">
+          <span class="card-title">JOE Friday Pub Quiz</span>
+          <span class="card-sub" id="joe-card-sub">Checking for this week's quiz…</span>
+        </span>
+        <span class="badge" id="joe-badge" hidden>NEW</span>
+      </button>
+
+      <button class="card" data-kind="general">
+        <span class="card-icon">🧠</span>
+        <span class="card-body">
+          <span class="card-title">General Knowledge</span>
+          <span class="card-sub">History, geography, science, film, music and more</span>
+        </span>
+      </button>
+
+      <button class="card" data-kind="sports">
+        <span class="card-icon">🏆</span>
+        <span class="card-body">
+          <span class="card-title">Sports</span>
+          <span class="card-sub">Football, rugby, GAA, cricket, F1, golf…</span>
+        </span>
+      </button>
+
+      <section class="panel" id="stats-panel">
+        <h2>Your stats</h2>
+        <div class="stats" id="stats"></div>
+        <ol class="history" id="history"></ol>
+      </section>
+
+      <p class="install-hint" id="install-hint" hidden></p>
+    </section>
+
+    <!-- Quiz setup -->
+    <section class="screen" id="screen-setup" hidden>
+      <h2 class="section-label" id="setup-label">Categories</h2>
+      <p class="hint" id="setup-hint">Pick one or more, or leave blank for a mix.</p>
+      <div class="chips" id="category-chips"></div>
+
+      <h2 class="section-label">Number of questions</h2>
+      <div class="segmented" id="amount-seg">
+        <button data-value="5">5</button>
+        <button data-value="10" class="on">10</button>
+        <button data-value="15">15</button>
+        <button data-value="20">20</button>
+      </div>
+
+      <h2 class="section-label">Difficulty</h2>
+      <div class="segmented" id="difficulty-seg">
+        <button data-value="any" class="on">Any</button>
+        <button data-value="easy">Easy</button>
+        <button data-value="medium">Medium</button>
+        <button data-value="hard">Hard</button>
+      </div>
+
+      <button class="primary-btn" id="start-btn">Start quiz</button>
+    </section>
+
+    <!-- JOE quiz -->
+    <section class="screen" id="screen-joe" hidden>
+      <div class="joe-hero" id="joe-hero"></div>
+      <h2 class="section-label">Previous weeks</h2>
+      <ol class="joe-list" id="joe-list"></ol>
+    </section>
+
+    <!-- Loading -->
+    <section class="screen center" id="screen-loading" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Pulling a pint of questions…</p>
+    </section>
+
+    <!-- Play -->
+    <section class="screen" id="screen-play" hidden>
+      <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+      <div class="play-meta">
+        <span id="q-count">Question 1 of 10</span>
+        <span id="q-score">Score 0</span>
+      </div>
+      <p class="note" id="quiz-note" hidden></p>
+      <div class="question-card">
+        <p class="q-category" id="q-category"></p>
+        <img class="q-image" id="q-image" alt="" hidden>
+        <h2 class="q-text" id="q-text"></h2>
+      </div>
+      <div class="options" id="options"></div>
+      <button class="primary-btn" id="next-btn" hidden>Next</button>
+    </section>
+
+    <!-- Results -->
+    <section class="screen" id="screen-results" hidden>
+      <div class="result-hero">
+        <div class="result-score" id="result-score"></div>
+        <p class="result-msg" id="result-msg"></p>
+      </div>
+      <div class="row">
+        <button class="primary-btn" id="again-btn">Play again</button>
+        <button class="secondary-btn" id="home-btn">Home</button>
+      </div>
+      <button class="secondary-btn full" id="share-btn">Share my score</button>
+      <h2 class="section-label">Answers</h2>
+      <ol class="review" id="review"></ol>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

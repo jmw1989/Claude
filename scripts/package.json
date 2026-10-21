@@ -1,0 +1,12 @@
+{
+  "name": "quiz-night-scripts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch-joe": "node fetch-joe-quiz.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0"
+  }
+}
