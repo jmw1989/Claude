@@ -1,0 +1,18 @@
+name: Inspect quizquizquiz results (temporary)
+on: workflow_dispatch
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+          echo "===== quiz.js via wayback"
+          curl -sSL -A "$UA" "https://web.archive.org/web/2id_/https://quizquizquiz.com/online-quiz/assets/quiz.js" | head -c 12000; echo
+          echo "===== quiz.js via jina (markdown)"
+          curl -sSL -A "$UA" "https://r.jina.ai/https://quizquizquiz.com/online-quiz/assets/quiz.js?v=932" | head -c 12000; echo
+          echo "===== GET /friday/submit via jina (no answers)"
+          curl -sSL -A "$UA" -H 'X-Return-Format: html' "https://r.jina.ai/https://quizquizquiz.com/friday/submit" | sed -e 's/<script[^>]*>.*<\/script>//g' | grep -v '^\s*$' | head -c 6000; echo
+          echo "===== headers of /friday/ via jina"
+          curl -sSL -A "$UA" -H 'X-Return-Format: html' -D - -o /dev/null "https://r.jina.ai/https://quizquizquiz.com/friday/" | head -40
+          echo "===== wayback captures of results pages"
+          curl -sSL "https://web.archive.org/cdx/search/cdx?url=quizquizquiz.com/friday*&output=txt&limit=40&from=2024" | head -40
