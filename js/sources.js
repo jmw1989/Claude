@@ -16,7 +16,8 @@ export const GENERAL_CATEGORIES = [
 
 // `tags` are The Trivia API tags for each sport.
 export const SPORTS = [
-  { id: 'football', label: 'Football', icon: '⚽', tags: ['football', 'soccer', 'premier_league', 'world_cup'] },
+  // Only 'soccer': The Trivia API also tags NFL questions with 'football'.
+  { id: 'football', label: 'Football', icon: '⚽', tags: ['soccer'] },
   { id: 'rugby', label: 'Rugby', icon: '🏉', tags: ['rugby', 'rugby_union', 'rugby_league'] },
   { id: 'gaa', label: 'GAA', icon: '🏑', tags: ['gaelic_football', 'hurling', 'gaa'] },
   { id: 'cricket', label: 'Cricket', icon: '🏏', tags: ['cricket'] },

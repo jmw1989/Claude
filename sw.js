@@ -1,5 +1,5 @@
 // Offline support: the app shell is cached; quiz data and APIs always try the network first.
-const CACHE = 'quiznight-v1';
+const CACHE = 'quiznight-v2';
 const SHELL = [
   './',
   'index.html',
@@ -27,8 +27,10 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
 
   // Network first, so new code and new weekly quizzes show up straight away.
+  // `no-cache` makes the browser check with the server instead of reusing a stale copy.
+  const request = e.request.mode === 'navigate' ? e.request : new Request(e.request, { cache: 'no-cache' });
   e.respondWith(
-    fetch(e.request)
+    fetch(request)
       .then((res) => {
         if (res.ok) {
           const copy = res.clone();
