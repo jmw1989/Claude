@@ -1,0 +1,88 @@
+{
+  "source": "QuizQuizQuiz",
+  "url": "https://quizquizquiz.com/friday/",
+  "fetchedAt": "2026-10-21T21:14:44.252Z",
+  "fetchedVia": "jina",
+  "title": "The QuizQuizQuiz Friday Quiz, 16th October 2026",
+  "quizId": "1303",
+  "submitUrl": "https://quizquizquiz.com/friday/submit",
+  "hidden": {
+    "quiz_id": "1303",
+    "email": "",
+    "key": "",
+    "time-taken": "0"
+  },
+  "questions": [
+    {
+      "number": 1,
+      "q": "Moyer, damson and greengage are types of which fruit?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-1-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "q": "What profession (besides anything to do with politics) links 2026 British by-election candidates Hannah Spencer and Rob Kenyon?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-2-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "q": "Which publisher of illustrated books took its name from two rivers, demonstrating that it intended to publish for both the British and American markets?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-3-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "q": "The name of which character from books, film and TV comes from a joke the author's wife made to him about him being the kind of man people would ask to help them at supermarkets?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-4-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "q": "Name five of the ten cities with the world's oldest metro systems (electrified rapid transit train systems).",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-5-0",
+          "label": "Metro system 1"
+        },
+        {
+          "name": "answer-5-1",
+          "label": "Metro system 2"
+        },
+        {
+          "name": "answer-5-2",
+          "label": "Metro system 3"
+        },
+        {
+          "name": "answer-5-3",
+          "label": "Metro system 4"
+        },
+        {
+          "name": "answer-5-4",
+          "label": "Metro system 5"
+        }
+      ]
+    }
+  ]
+}

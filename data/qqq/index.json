@@ -1,3 +1,11 @@
 {
-  "quizzes": []
+  "quizzes": [
+    {
+      "quizId": "1303",
+      "title": "The QuizQuizQuiz Friday Quiz, 16th October 2026",
+      "file": "quiz-1303.json",
+      "count": 5
+    }
+  ],
+  "updatedAt": "2026-10-21T21:14:44.252Z"
 }
