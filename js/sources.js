@@ -33,6 +33,14 @@ export const SPORTS = [
   { id: 'cycling', label: 'Cycling', icon: '🚴', tags: ['cycling'] },
 ];
 
+// The Trivia API tags some NFL questions as "football", so check the wording as well.
+const AMERICAN_FOOTBALL = /\b(NFL|Super ?Bowl|touchdowns?|quarterbacks?|gridiron|Heisman|American football|Lombardi Trophy|Patriots|Cowboys|Packers|Steelers|49ers|Seahawks|Broncos|Raiders)\b/i;
+
+function isAmericanFootball(q) {
+  if (q.tags?.some((t) => /american_football|nfl|super_bowl/i.test(t))) return true;
+  return AMERICAN_FOOTBALL.test([q.q, ...q.options.map((o) => o.text)].join(' '));
+}
+
 export function shuffle(list) {
   const a = [...list];
   for (let i = a.length - 1; i > 0; i--) {
@@ -77,6 +85,7 @@ async function fromTriviaApi({ amount, categories, tags, difficulty }) {
     makeQuestion(d.question?.text ?? d.question, d.correctAnswer, d.incorrectAnswers, {
       category: d.category,
       difficulty: d.difficulty,
+      tags: d.tags || [],
     }),
   );
 }
@@ -126,17 +135,21 @@ export async function buildQuiz({ kind, selection = [], amount = 10, difficulty 
 
   if (kind === 'sports') {
     const tags = SPORTS.filter((s) => selection.includes(s.id)).flatMap((s) => s.tags);
+    // Leave out NFL questions when specific sports are picked and NFL isn't one of them.
+    const keep = (q) => !selection.length || selection.includes('american_football') || !isAmericanFootball(q);
+    // Ask for extra so there are still enough after filtering.
+    const ask = Math.min(amount * 2, 50);
     try {
-      questions = await fromTriviaApi({ amount, categories: ['sport_and_leisure'], tags, difficulty });
+      questions = (await fromTriviaApi({ amount: ask, categories: ['sport_and_leisure'], tags, difficulty })).filter(keep);
       if (tags.length && questions.length < amount) {
-        const more = await fromTriviaApi({ amount: amount - questions.length + 5, categories: ['sport_and_leisure'], difficulty });
-        questions = dedupe([...questions, ...more]);
+        const more = await fromTriviaApi({ amount: ask, categories: ['sport_and_leisure'], difficulty });
+        questions = dedupe([...questions, ...more.filter(keep)]);
         notes.push('Not enough questions for those sports, so we added some general sport ones.');
       }
     } catch {
       try {
         source = 'Open Trivia DB';
-        questions = await fromOpenTdb({ amount, otdbCategory: 21, difficulty });
+        questions = (await fromOpenTdb({ amount: ask, otdbCategory: 21, difficulty })).filter(keep);
         if (tags.length) notes.push('Showing general sports questions (sport filters need The Trivia API, which is unavailable).');
       } catch {
         source = 'offline';
