@@ -446,6 +446,11 @@ async function loadBbc() {
   if (current === 'bbc') renderBbc();
 }
 
+// In the installed app, a same-window link to the BBC opens in the app's built-in browser
+// (iPhone: a sheet with Done; Android: a bar with ✕), so you come straight back here.
+// In an ordinary browser tab it opens a new tab instead, leaving the app where it was.
+const bbcLinkAttrs = () => (isStandalone() ? '' : ' target="_blank" rel="noopener"');
+
 const bbcHeadline = (title) => title.replace(/^(BBC News )?(weekly quiz|quiz of the week):\s*/i, '');
 
 function renderBbcCard() {
@@ -471,15 +476,19 @@ function renderBbc() {
         <p class="eyebrow">This week${date(latest) ? ` · ${date(latest)}` : ''}</p>
         <h2>${escapeHtml(latest.title)}</h2>
         ${latest.description ? `<p>${escapeHtml(latest.description)}</p>` : ''}
-        <a class="primary-btn" href="${escapeAttr(latest.url)}" target="_blank" rel="noopener" data-bbc="${escapeHtml(latest.id)}">Play on the BBC ↗</a>
-        <p class="hint">The BBC only lets this quiz run on its own website, so it opens there.</p>
+        <a class="primary-btn" href="${escapeAttr(latest.url)}"${bbcLinkAttrs()} data-bbc="${escapeHtml(latest.id)}">Play the quiz</a>
+        <p class="hint">${
+          isStandalone()
+            ? 'Opens the BBC quiz in the app’s built-in browser. Tap Done (or ✕) to come back.'
+            : 'The BBC only lets this quiz run on its own website, so it opens in a new tab. Add Quiz Night to your home screen to play it inside the app.'
+        }</p>
       </div>`
     : `<div class="joe-hero bbc-hero"><h2>No quiz yet</h2><p>The BBC's weekly news quiz will appear here when it's published.</p></div>`;
   $('#bbc-list').innerHTML = older.length
     ? older
         .map(
           (q) => `<li><span><b>${escapeHtml(bbcHeadline(q.title))}</b><small>${escapeHtml(date(q))}</small></span>
-            <a class="small-btn" href="${escapeAttr(q.url)}" target="_blank" rel="noopener" data-bbc="${escapeHtml(q.id)}">${opened[q.id] ? 'Again' : 'Play'} ↗</a></li>`,
+            <a class="small-btn" href="${escapeAttr(q.url)}"${bbcLinkAttrs()} data-bbc="${escapeHtml(q.id)}">${opened[q.id] ? 'Again' : 'Play'}</a></li>`,
         )
         .join('')
     : '<li class="empty">Past quizzes will build up here each week.</li>';
@@ -636,9 +645,12 @@ function escapeAttr(s) {
 }
 
 // ---------- Install hint & offline support ----------
+function isStandalone() {
+  return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+}
+
 function showInstallHint() {
-  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
-  if (standalone || store.get('hideInstall', false)) return;
+  if (isStandalone() || store.get('hideInstall', false)) return;
   const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
   const el = $('#install-hint');
   el.innerHTML = `📲 Add Quiz Night to your home screen: ${ios ? 'tap <b>Share</b> then <b>Add to Home Screen</b>' : 'open the browser menu and tap <b>Install app</b> / <b>Add to Home screen</b>'}. <button class="link-btn" id="hide-install">Dismiss</button>`;
