@@ -1,0 +1,39 @@
+name: Inspect BBC weekly quiz (temporary)
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        required: false
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - working-directory: scripts
+        run: npm install --no-audit --no-fund
+      - working-directory: scripts
+        run: |
+          cat > inspect.mjs <<'JS'
+          import { describePage } from './describe-page.mjs';
+          import { findQuizEmbeds } from './joe-parser.mjs';
+          const H = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', Accept: 'text/html,*/*', 'Accept-Language': 'en-GB,en;q=0.9' };
+          const get = async (u) => { const r = await fetch(u, { headers: H, redirect: 'follow', signal: AbortSignal.timeout(30000) }); const t = await r.text(); console.log(`----- ${u} -> ${r.status} ${r.url} ${t.length}b`); return t; };
+          const quizLinks = (html) => [...new Set([...html.matchAll(/href="([^"]+)"[^>]*>([^<]*(?:<[^a][^>]*>[^<]*)*?)(?=<\/a>)/g)].filter((m) => /quiz/i.test(m[0])).map((m) => m[1] + '  ::  ' + m[2].replace(/<[^>]+>/g, '').trim()))];
+          // Where the BBC lists quizzes
+          for (const u of ['https://www.bbc.co.uk/news/topics/cyg7kz8g88pt', 'https://www.bbc.co.uk/news/world-61915313', 'https://html.duckduckgo.com/html/?q=bbc+news+weekly+quiz', 'https://www.bing.com/search?q=site%3Abbc.co.uk+%22weekly+quiz%22&count=30']) {
+            try { const h = await get(u); console.log(quizLinks(h).slice(0, 40).join('\n')); console.log([...new Set([...h.matchAll(/bbc\.co(?:m|\.uk)\/news\/(?:articles\/[a-z0-9]+|[a-z-]+-\d{6,})/g)].map((m) => m[0]))].slice(0, 40).join('\n')); } catch (e) { console.log(u, e.message); }
+          }
+          const target = process.env.TARGET;
+          if (target) {
+            const h = await get(target);
+            console.log(describePage(h));
+            console.log('Embeds:', findQuizEmbeds(h, target));
+            for (const m of h.matchAll(/https?:[^"'\s]*(?:quiz|indepthtoolkit|riddle|vj-)[^"'\s]*/gi)) console.log('URL:', m[0]);
+          }
+          JS
+          node inspect.mjs
+        env:
+          TARGET: ${{ inputs.target }}
