@@ -21,19 +21,20 @@ jobs:
           import { findQuizEmbeds } from './joe-parser.mjs';
           const H = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', Accept: 'text/html,*/*', 'Accept-Language': 'en-GB,en;q=0.9' };
           const get = async (u) => { const r = await fetch(u, { headers: H, redirect: 'follow', signal: AbortSignal.timeout(30000) }); const t = await r.text(); console.log(`----- ${u} -> ${r.status} ${r.url} ${t.length}b`); return t; };
-          const quizLinks = (html) => [...new Set([...html.matchAll(/href="([^"]+)"[^>]*>([^<]*(?:<[^a][^>]*>[^<]*)*?)(?=<\/a>)/g)].filter((m) => /quiz/i.test(m[0])).map((m) => m[1] + '  ::  ' + m[2].replace(/<[^>]+>/g, '').trim()))];
-          // Where the BBC lists quizzes
-          for (const u of ['https://www.bbc.co.uk/news/topics/crxd18199v9t']) {
-            try { const h = await get(u); console.log(quizLinks(h).slice(0, 40).join('\n')); console.log([...new Set([...h.matchAll(/bbc\.co(?:m|\.uk)\/news\/(?:articles\/[a-z0-9]+|[a-z-]+-\d{6,})/g)].map((m) => m[0]))].slice(0, 40).join('\n')); } catch (e) { console.log(u, e.message); }
-          }
-          const target = process.env.TARGET;
-          if (target) {
-            const h = await get(target);
-            console.log(describePage(h));
-            const nd = /<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/.exec(h);
-            if (nd) { const s = nd[1]; for (const k of ['quiz', 'Quiz', 'question', 'answer', 'correct']) { let i = s.indexOf(k), n = 0; while (i >= 0 && n < 6) { console.log(`ND[${k}]…`, s.slice(Math.max(0, i - 200), i + 500)); i = s.indexOf(k, i + 2000); n++; } } }
-            console.log('Embeds:', findQuizEmbeds(h, target));
-            for (const m of h.matchAll(/https?:[^"'\s]*(?:quiz|indepthtoolkit|riddle|vj-)[^"'\s]*/gi)) console.log('URL:', m[0]);
+          const topic = await get('https://www.bbc.co.uk/news/topics/crxd18199v9t');
+          const arts = [...new Set([...topic.matchAll(/href="(\/news\/articles\/[a-z0-9]+)"/g)].map((m) => m[1]))].slice(0, 3);
+          console.log('Articles (topic order):', arts);
+          for (const a of arts.slice(0, 1)) {
+            const h = await get('https://www.bbc.co.uk' + a);
+            const pub = /"datePublished":"([^"]+)"/.exec(h); console.log('datePublished', pub && pub[1], 'title', /<title>([^<]*)/.exec(h)?.[1]);
+            const riddles = [...new Set([...h.matchAll(/https:\/\/www\.riddle\.com\/embed\/a\/[A-Za-z0-9]+/g)].map((m) => m[0]))];
+            console.log('Riddles:', riddles);
+            for (const r of riddles) {
+              const rh = await get(r);
+              console.log(describePage(rh).slice(0, 6000));
+              for (const k of ['isCorrect', 'correct', '"question', 'answers', 'items', 'blocks']) { let i = rh.indexOf(k), n = 0; while (i >= 0 && n < 3) { console.log(`R[${k}]…`, rh.slice(Math.max(0, i - 300), i + 700)); i = rh.indexOf(k, i + 3000); n++; } }
+              for (const m of rh.matchAll(/https?:\/\/[^"'\s]*riddle[^"'\s]*/g)) console.log('RURL:', m[0]);
+            }
           }
           JS
           node inspect.mjs
