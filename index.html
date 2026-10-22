@@ -43,6 +43,15 @@
         <span class="badge" id="qqq-badge" hidden>NEW</span>
       </button>
 
+      <button class="card card-bbc" id="bbc-card">
+        <span class="card-icon">📰</span>
+        <span class="card-body">
+          <span class="card-title">BBC News Quiz of the Week</span>
+          <span class="card-sub" id="bbc-card-sub">Checking for this week's quiz…</span>
+        </span>
+        <span class="badge" id="bbc-badge" hidden>NEW</span>
+      </button>
+
       <button class="card" data-kind="general">
         <span class="card-icon">🧠</span>
         <span class="card-body">
@@ -105,6 +114,13 @@
       <div id="qqq-body"></div>
       <h2 class="section-label">Previous weeks</h2>
       <ol class="joe-list" id="qqq-list"></ol>
+    </section>
+
+    <!-- BBC News weekly quiz: links only, as the BBC's quiz only runs on its own site -->
+    <section class="screen" id="screen-bbc" hidden>
+      <div id="bbc-body"></div>
+      <h2 class="section-label">Previous weeks</h2>
+      <ol class="joe-list" id="bbc-list"></ol>
     </section>
 
     <!-- Loading -->

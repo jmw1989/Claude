@@ -160,7 +160,7 @@ main { max-width: 640px; margin: 0 auto; padding: 16px; }
 .joe-list li span { display: flex; flex-direction: column; }
 .joe-list small { color: var(--muted); }
 .joe-list .empty { color: var(--muted); justify-content: center; }
-.small-btn { border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; padding: 8px 14px; border-radius: 99px; text-decoration: none; font-size: 0.9rem; }
+.small-btn { white-space: nowrap; flex: none; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; padding: 8px 14px; border-radius: 99px; text-decoration: none; font-size: 0.9rem; }
 
 /* QuizQuizQuiz */
 .card-qqq { background: #0f5e8c; border-color: transparent; color: #fff; }
@@ -183,6 +183,16 @@ main { max-width: 640px; margin: 0 auto; padding: 16px; }
 .qqq-results { scroll-margin-top: 80px; }
 .qqq-results iframe { width: 100%; height: 80vh; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
 .qqq-results .hint { margin-top: 8px; }
+
+/* BBC */
+.card-bbc { background: #b80000; border-color: transparent; color: #fff; }
+.card-bbc .card-title { color: #fff; }
+.card-bbc .card-sub { color: #ffd6d6; }
+.bbc-hero { background: #b80000; }
+.bbc-hero h2 { color: #fff; }
+.bbc-hero p, .bbc-hero .hint { color: #ffe3e3; }
+.bbc-hero .eyebrow { color: #ffc9c9; }
+.bbc-hero .primary-btn { background: #fff; color: #b80000; margin: 16px 0 10px; }
 
 /* Play */
 .progress { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }

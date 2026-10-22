@@ -2,9 +2,10 @@ name: Fetch Friday quizzes
 
 on:
   schedule:
-    # JOE usually publishes late Thursday or on Friday (UK time) and QuizQuizQuiz
-    # on Friday. Check a few times; runs after a quiz is saved finish straight away.
-    - cron: '0 18 * * 4'   # Thursday 18:00 UTC
+    # JOE and the BBC usually publish on Thursday afternoon or evening (UK time) and
+    # QuizQuizQuiz on Friday. Check a few times; runs after a quiz is saved finish
+    # straight away.
+    - cron: '30 19 * * 4'  # Thursday 19:30 UTC
     - cron: '0 7 * * 5'    # Friday 07:00 UTC
     - cron: '0 11 * * 5'   # Friday 11:00 UTC
     - cron: '0 16 * * 5'   # Friday 16:00 UTC
@@ -63,6 +64,12 @@ jobs:
         working-directory: scripts
         run: node fetch-qqq-quiz.mjs
 
+      - name: Fetch the latest BBC News weekly quiz
+        id: bbc
+        continue-on-error: true
+        working-directory: scripts
+        run: node fetch-bbc-quiz.mjs
+
       - name: Keep the page for debugging if it couldn't be read
         if: always()
         uses: actions/upload-artifact@v4
@@ -84,7 +91,7 @@ jobs:
           fi
 
       - name: Report a failed fetch
-        if: steps.joe.outcome == 'failure' || steps.qqq.outcome == 'failure'
+        if: steps.joe.outcome == 'failure' || steps.qqq.outcome == 'failure' || steps.bbc.outcome == 'failure'
         run: |
-          echo "::error::JOE: ${{ steps.joe.outcome }}, QuizQuizQuiz: ${{ steps.qqq.outcome }}. See the steps above."
+          echo "::error::JOE: ${{ steps.joe.outcome }}, QuizQuizQuiz: ${{ steps.qqq.outcome }}, BBC: ${{ steps.bbc.outcome }}. See the steps above."
           exit 1

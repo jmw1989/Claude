@@ -28,6 +28,7 @@ const state = {
   quiz: null,
   joe: { index: null, latest: null },
   qqq: { index: null, latest: null, shown: null },
+  bbc: null,
 };
 
 // ---------- Navigation ----------
@@ -36,6 +37,7 @@ const TITLES = {
   setup: 'New quiz',
   joe: 'JOE Friday Pub Quiz',
   qqq: 'QuizQuizQuiz Friday Quiz',
+  bbc: 'BBC News Quiz of the Week',
   loading: 'Loading',
   play: 'Quiz',
   results: 'Results',
@@ -88,6 +90,7 @@ function renderHome() {
     .join('');
   renderJoeCard();
   renderQqqCard();
+  renderBbcCard();
 }
 
 $$('.card[data-kind]').forEach((btn) =>
@@ -429,6 +432,69 @@ function postToQqq(url, fields, target) {
   form.remove();
 }
 
+// ---------- BBC News weekly quiz ----------
+// The BBC's quiz is a Riddle embed that only runs on the BBC's own site, so the app
+// shows what's new and links straight to it.
+async function loadBbc() {
+  try {
+    const res = await fetch(`data/bbc/index.json?t=${Math.floor(Date.now() / 60000)}`, { cache: 'no-store' });
+    state.bbc = res.ok ? await res.json() : { quizzes: [] };
+  } catch {
+    state.bbc = state.bbc || { quizzes: [] };
+  }
+  renderBbcCard();
+  if (current === 'bbc') renderBbc();
+}
+
+const bbcHeadline = (title) => title.replace(/^(BBC News )?(weekly quiz|quiz of the week):\s*/i, '');
+
+function renderBbcCard() {
+  if (!state.bbc) return;
+  const latest = state.bbc.quizzes[0];
+  const opened = latest && store.get('bbc.opened', {})[latest.id];
+  $('#bbc-card-sub').textContent = latest ? `${bbcHeadline(latest.title)} · ${opened ? 'opened' : 'tap to play on the BBC'}` : 'A new quiz lands here every week.';
+  $('#bbc-badge').hidden = !latest || Boolean(opened);
+}
+
+$('#bbc-card').addEventListener('click', () => {
+  renderBbc();
+  show('bbc');
+});
+
+function renderBbc() {
+  const [latest, ...older] = state.bbc?.quizzes || [];
+  const opened = store.get('bbc.opened', {});
+  const date = (q) => (q.publishedAt ? new Date(q.publishedAt).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }) : '');
+  $('#bbc-body').innerHTML = latest
+    ? `<div class="joe-hero bbc-hero">
+        ${latest.image ? `<img src="${escapeAttr(latest.image)}" alt="" class="joe-img" referrerpolicy="no-referrer">` : ''}
+        <p class="eyebrow">This week${date(latest) ? ` · ${date(latest)}` : ''}</p>
+        <h2>${escapeHtml(latest.title)}</h2>
+        ${latest.description ? `<p>${escapeHtml(latest.description)}</p>` : ''}
+        <a class="primary-btn" href="${escapeAttr(latest.url)}" target="_blank" rel="noopener" data-bbc="${escapeHtml(latest.id)}">Play on the BBC ↗</a>
+        <p class="hint">The BBC only lets this quiz run on its own website, so it opens there.</p>
+      </div>`
+    : `<div class="joe-hero bbc-hero"><h2>No quiz yet</h2><p>The BBC's weekly news quiz will appear here when it's published.</p></div>`;
+  $('#bbc-list').innerHTML = older.length
+    ? older
+        .map(
+          (q) => `<li><span><b>${escapeHtml(bbcHeadline(q.title))}</b><small>${escapeHtml(date(q))}</small></span>
+            <a class="small-btn" href="${escapeAttr(q.url)}" target="_blank" rel="noopener" data-bbc="${escapeHtml(q.id)}">${opened[q.id] ? 'Again' : 'Play'} ↗</a></li>`,
+        )
+        .join('')
+    : '<li class="empty">Past quizzes will build up here each week.</li>';
+}
+
+$('#screen-bbc').addEventListener('click', (e) => {
+  const link = e.target.closest('[data-bbc]');
+  if (!link) return;
+  const opened = store.get('bbc.opened', {});
+  opened[link.dataset.bbc] = new Date().toISOString();
+  store.set('bbc.opened', opened);
+  renderBbcCard();
+  setTimeout(renderBbc, 300);
+});
+
 // ---------- Playing ----------
 function startQuiz({ title, questions, note = '', joeWeek = null, replay = null }) {
   state.quiz = { title, questions, note, joeWeek, replay, idx: 0, score: 0, picks: [] };
@@ -592,3 +658,4 @@ show('home', { push: false });
 showInstallHint();
 loadJoe();
 loadQqq();
+loadBbc();
