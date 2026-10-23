@@ -1226,6 +1226,7 @@ const _go = go; go = function(p){ _go(p); watchSkins(); };
 try { if (navigator.wakeLock) document.addEventListener("click", () => navigator.wakeLock.request("screen").catch(()=>{}), {once:true}); } catch(e){}
 })();
 </script>
+<div class="wrap" style="padding-block:0"><p class="note" id="appversion"></p></div>
 <div class="wrap" id="clubbar" hidden style="padding-block:0 24px"><p class="note"><span id="clubtext"></span> <button class="btn small" id="clubchange" style="margin-left:6px">Change</button></p></div>
 <div id="join" hidden style="position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto">
   <div class="wrap" style="padding-block:max(48px,env(safe-area-inset-top,0px)) 32px">
@@ -1239,6 +1240,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
+const APP_VERSION = '11';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
@@ -1258,7 +1260,14 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   };
   document.getElementById('joinlocal').onclick = () => { try { sessionStorage.setItem('majors-tour-local', '1'); } catch (e) {} document.getElementById('join').hidden = true; };
 })();
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if ('serviceWorker' in navigator) window.addEventListener('load', () => {
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((r) => r.update()).catch(() => {});
+  // When a new version takes over, reload once so the screen shows it
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } });
+});
+document.getElementById('appversion').textContent = 'App version ' + APP_VERSION;
 </script>
 </body>
 </html>

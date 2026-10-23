@@ -28,6 +28,7 @@ cat <<'HEAD'
 HEAD
 cat artifact.html
 cat <<'TAIL'
+<div class="wrap" style="padding-block:0"><p class="note" id="appversion"></p></div>
 <div class="wrap" id="clubbar" hidden style="padding-block:0 24px"><p class="note"><span id="clubtext"></span> <button class="btn small" id="clubchange" style="margin-left:6px">Change</button></p></div>
 <div id="join" hidden style="position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto">
   <div class="wrap" style="padding-block:max(48px,env(safe-area-inset-top,0px)) 32px">
@@ -41,6 +42,7 @@ cat <<'TAIL'
   </div>
 </div>
 <script>
+const APP_VERSION = '__VERSION__';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
@@ -60,9 +62,19 @@ cat <<'TAIL'
   };
   document.getElementById('joinlocal').onclick = () => { try { sessionStorage.setItem('majors-tour-local', '1'); } catch (e) {} document.getElementById('join').hidden = true; };
 })();
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if ('serviceWorker' in navigator) window.addEventListener('load', () => {
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((r) => r.update()).catch(() => {});
+  // When a new version takes over, reload once so the screen shows it
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } });
+});
+document.getElementById('appversion').textContent = 'App version ' + APP_VERSION;
 </script>
 </body>
 </html>
 TAIL
 } > index.html
+# The version shown in the app matches the offline cache name in sw.js
+v=$(sed -n "s/^const CACHE = 'majors-tour-v\([0-9]*\)';/\1/p" sw.js)
+sed -i "s/__VERSION__/$v/" index.html
