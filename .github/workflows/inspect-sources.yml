@@ -42,11 +42,18 @@ jobs:
               const { html, via } = await get(url);
               const links = [...new Set([...html.matchAll(re)].map((m) => decodeURIComponent(m[0])))];
               console.log(`##### ${name} (${via}) links:\n` + links.slice(0, 15).join('\n'));
-              if (name === 'weeklynet') show(html, 'weeklyquiz.net page');
+              if (name === 'weeklynet') console.log('weeklynet links', links.filter((l) => /quiz/.test(l)).slice(0, 40).join('\n'));
             } catch (e) { console.log(`##### ${name} FAILED: ${e.message}`); }
           }
           for (const u of (process.env.URLS || '').split(/\s+/).filter(Boolean)) {
-            try { const { html, via } = await get(u); show(html, `${u} via ${via}`); } catch (e) { console.log(u, 'FAILED', e.message); }
+            try {
+              const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', Referer: 'https://example.org/' } });
+              const t = await r.text();
+              console.log(`===== RAW ${u} -> ${r.status} ${r.headers.get('content-type')} ${t.length}b`);
+              console.log(t.slice(0, 3000));
+              for (const k of ['correct', 'answer', 'question', 'rawc', 'puzzleData', 'api', 'json']) { let i = t.indexOf(k), n = 0; while (i >= 0 && n < 2) { console.log(`[${k}]…`, t.slice(Math.max(0, i - 200), i + 400).replace(/\s+/g, ' ')); i = t.indexOf(k, i + 3000); n++; } }
+              for (const m of new Set([...t.matchAll(/https?:\/\/[^"'\s<>\\]+/g)].map((m) => m[0]))) if (/api|json|quiz|data/i.test(m)) console.log('URL:', m);
+            } catch (e) { console.log(u, 'FAILED', e.message); }
           }
           JS
           node inspect.mjs
