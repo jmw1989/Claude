@@ -3,6 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Scoring for The Masters, Summer Series, Skins Major and New Year Major.">
+<meta name="theme-color" content="#1d6a3d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Majors">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -515,7 +524,7 @@ function renderHeader(){
 function syncNote(){
   const n = $("syncnote"); n.className = "note";
   if (mode === "shared") n.textContent = readOnly ? "Viewing live scores. You don't have permission to make changes on this page." : "Live: everything syncs to anyone who opens this page.";
-  else if (mode === "local") n.textContent = "Saved on this device only. Sign in to claude.ai to share live scores.";
+  else if (mode === "local") n.textContent = window.claude ? "Saved on this device only. Sign in to claude.ai to share live scores." : "Saved on this phone only.";
   else n.textContent = "Connecting…";
   if (readOnly) n.className = "note warn";
 }
@@ -1076,6 +1085,8 @@ const _go = go; go = function(p){ _go(p); watchSkins(); };
 try { if (navigator.wakeLock) document.addEventListener("click", () => navigator.wakeLock.request("screen").catch(()=>{}), {once:true}); } catch(e){}
 })();
 </script>
-
+<script>
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+</script>
 </body>
 </html>

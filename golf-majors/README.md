@@ -20,9 +20,19 @@ A scoring app for the four golf majors played each year by Jonty, Brandy and Pet
 - Net skins, with shots given off the lowest handicap by default. A tied hole carries its money to the next hole.
 - Running money totals for each player and a settle-up list of who pays whom.
 
+## Put it on your phone
+
+It installs the same way as the quiz app, from the GitHub Pages site at `https://jmw1989.github.io/Claude/golf-majors/`:
+
+- iPhone (Safari): open the link, tap **Share → Add to Home Screen**.
+- Android (Chrome): open the link, tap **⋮ → Install app** (or **Add to Home screen**).
+
+It works offline once it has been opened, so a weak signal on the course doesn't matter.
+
 ## Files
 
-- `index.html`: a complete page you can open in any browser or host on GitHub Pages.
+- `index.html`: the installable app (manifest, icons and offline support are wired up here).
+- `manifest.webmanifest`, `sw.js`, `icons/`: home-screen install and offline support.
 - `artifact.html`: the same app in the form published as a Claude artifact (no `<html>`/`<head>` wrapper).
 
 ## Where data is saved

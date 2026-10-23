@@ -507,7 +507,7 @@ function renderHeader(){
 function syncNote(){
   const n = $("syncnote"); n.className = "note";
   if (mode === "shared") n.textContent = readOnly ? "Viewing live scores. You don't have permission to make changes on this page." : "Live: everything syncs to anyone who opens this page.";
-  else if (mode === "local") n.textContent = "Saved on this device only. Sign in to claude.ai to share live scores.";
+  else if (mode === "local") n.textContent = window.claude ? "Saved on this device only. Sign in to claude.ai to share live scores." : "Saved on this phone only.";
   else n.textContent = "Connecting…";
   if (readOnly) n.className = "note warn";
 }
