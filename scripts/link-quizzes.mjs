@@ -59,7 +59,8 @@ export function parseArticleMeta(html) {
     } catch {}
   });
   return {
-    title: clean(meta('og:title') || $('h1').first().text()),
+    // Some sites add their name to og:title, e.g. "Sport quiz of the week | The National".
+    title: clean(meta('og:title') || $('h1').first().text()).replace(/\s+\|\s+The National$/i, ''),
     description: clean(meta('og:description') || meta('description')),
     image: meta('og:image'),
     publishedAt: publishedAt || $('time[datetime]').first().attr('datetime') || null,
