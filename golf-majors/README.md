@@ -38,4 +38,15 @@ It works offline once it has been opened, so a weak signal on the course doesn't
 ## Where data is saved
 
 - **As a Claude artifact:** scores, courses and the roll of honour sync live between everyone the artifact is shared with.
-- **Opened from this repo or GitHub Pages:** there's no shared database, so everything is saved in that browser on that device only.
+- **Installed from GitHub Pages:** syncs live through Firebase Firestore once `firebase-config.js` holds the project's settings. Each phone joins with a shared club code, and all data lives under `clubs/<club code>/` in Firestore. Scores entered with no signal are kept on the phone and sent when it reconnects. Without Firebase settings, everything stays on the phone it was entered on.
+
+## Live sync setup (Firebase)
+
+1. Create a Firebase project at https://console.firebase.google.com (Analytics not needed).
+2. **Firestore Database → Create database** (production mode, location `europe-west2`). Paste `firestore.rules` into the **Rules** tab and publish.
+3. **Project settings → Your apps → Web app**: register an app and copy its `firebaseConfig` into `firebase-config.js`.
+4. Each phone opens the app and enters the same club code.
+
+## Updating the app
+
+Edit `artifact.html` (the Claude version), then run `./build.sh` to rebuild `index.html`. Bump `CACHE` in `sw.js` so installed phones pick up the change.

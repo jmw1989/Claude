@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Each club's data sits at clubs/<club code>/<collection>/<doc>.
+    // The club code is the shared secret: there is no rule that lets anyone list clubs.
+    match /clubs/{club}/{collection}/{doc} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 // Offline support: the app is cached so it opens on the course with no signal; the network is tried first for updates.
-const CACHE = 'majors-tour-v1';
-const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
+const CACHE = 'majors-tour-v2';
+const SHELL = ['./', 'index.html', 'firebase-config.js', 'sync.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -14,7 +14,15 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+  if (e.request.method !== 'GET') return;
+  // The Firebase library is versioned, so keep a copy and use it first; the app then starts with no signal
+  if (url.host === 'www.gstatic.com' && url.pathname.startsWith('/firebasejs/')) {
+    e.respondWith(caches.match(e.request).then((hit) => hit || fetch(e.request).then((res) => {
+      const copy = res.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); return res;
+    })));
+    return;
+  }
+  if (url.origin !== location.origin) return;
   const request = e.request.mode === 'navigate' ? e.request : new Request(e.request, { cache: 'no-cache' });
   e.respondWith(
     fetch(request)
