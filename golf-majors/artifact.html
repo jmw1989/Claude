@@ -383,8 +383,10 @@ function majorCalc(key, year){
   return {m, rounds, tot, done, started};
 }
 /* Roll of honour: past winners entered by hand, plus majors finished in the app (those win for their year) */
+const DEFAULT_HONOURS = {newyear:{"2025":"Brandy"}, masters:{"2026":"Jonty"}, summer:{"2026":"Brandy"}};
+function honoursDoc(){ return docs["config/honours"] || DEFAULT_HONOURS; }
 function honours(key){
-  const manual = (docs["config/honours"] || {})[key] || {}, out = {};
+  const manual = honoursDoc()[key] || {}, out = {};
   Object.keys(manual).forEach(y => { if (manual[y]) out[y] = {year:+y, name:manual[y], auto:false}; });
   if (majorDef(key).kind === "skins"){
     const S = skinsState(), C = skinsCalc(S), top = Math.max(...C.net);
@@ -506,7 +508,7 @@ function renderHeader(){
 }
 function syncNote(){
   const n = $("syncnote"); n.className = "note";
-  if (mode === "shared") n.textContent = readOnly ? "Viewing live scores. You don't have permission to make changes on this page." : "Live: everything syncs to anyone who opens this page.";
+  if (mode === "shared") n.textContent = readOnly ? "Viewing live scores. You don't have permission to make changes on this page." : (window.majorsDbLabel || "Live: everything syncs to anyone who opens this page.");
   else if (mode === "local") n.textContent = window.claude ? "Saved on this device only. Sign in to claude.ai to share live scores." : "Saved on this phone only.";
   else n.textContent = "Connecting…";
   if (readOnly) n.className = "note warn";
@@ -964,10 +966,10 @@ function action(a, t){
   if (a === "add-honour"){
     const y = parseInt($("hy").value, 10), n = $("hn").value.trim();
     if (!y || !n){ (!n ? $("hn") : $("hy")).focus(); return; }
-    write("config/honours", {[ui.major]: {[y]: n}}); return;
+    replace("config/honours", deepMerge(clone(honoursDoc()), {[ui.major]: {[y]: n}})); return;
   }
   if (a === "del-honour"){
-    const all = clone(docs["config/honours"] || {}); if (all[ui.major]) delete all[ui.major][t.dataset.y];
+    const all = clone(honoursDoc()); if (all[ui.major]) delete all[ui.major][t.dataset.y];
     replace("config/honours", all); return;
   }
   if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule}); return; }
@@ -1055,14 +1057,15 @@ function watchSkins(){
   skinsWatched[p.setup] = 1; watchDoc(p.setup); watchDoc(p.scores);
 }
 (async () => {
-  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
+  // On the installed app (GitHub Pages) a Firebase adapter with the same calls stands in for Claude's db
+  try { db = window.majorsDb ? await window.majorsDb() : window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
   if (!db){ mode = "local"; render(); return; }
   mode = "shared";
   // Data shown before connecting came from this device; the shared store is the source of truth now
   docs = {}; persist();
   watchCollection("majors"); watchCollection("courses"); watchDoc("config/roster"); watchSkins();
   render();
-  try { const u = await window.claude.use("user"); if (u && u.can){ const c = await u.can("data.write"); if (c === false){ readOnly = true; render(); } } } catch(e){}
+  if (window.claude) try { const u = await window.claude.use("user"); if (u && u.can){ const c = await u.can("data.write"); if (c === false){ readOnly = true; render(); } } } catch(e){}
 })();
 const _go = go; go = function(p){ _go(p); watchSkins(); };
 try { if (navigator.wakeLock) document.addEventListener("click", () => navigator.wakeLock.request("screen").catch(()=>{}), {once:true}); } catch(e){}
