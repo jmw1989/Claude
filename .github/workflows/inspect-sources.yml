@@ -25,11 +25,10 @@ jobs:
           import { describePage } from './describe-page.mjs';
           import { get } from './fetch-page.mjs';
           const listings = {
-            guardian: ['https://www.theguardian.com/lifeandstyle/series/the-quiz-thomas-eaton', /theguardian\.com\/lifeandstyle\/\d{4}\/[a-z]{3}\/\d+\/[^"]+/g],
-            week: ['https://theweek.com/uk/puzzles-and-quizzes/archive/2026/10', /https?:\/\/theweek\.com\/[^"]*quiz-of-the-week[^"]*/g],
-            weeklyquiz: ['https://weeklyquiz.b-cdn.net/weekly-general-knowledge-quiz/', /https?:\/\/weeklyquiz[^"]+/g],
-            national: ['https://www.thenationalnews.com/sport/', /\/sport\/\d{4}\/\d{2}\/\d{2}\/sport-quiz-of-the-week[^"]*/g],
-            bbcsport: ['https://html.duckduckgo.com/html/?q=bbc+sport+quiz+of+the+week+site%3Abbc.co.uk', /bbc\.co\.uk%2Fsport%2F[^"&]+/g],
+            guardian: ['https://content.guardianapis.com/search?q=%22Thomas%20Eaton%22%20quiz&order-by=newest&page-size=10&show-fields=byline&api-key=test', /"webUrl":"[^"]+"|"webTitle":"[^"]+"/g],
+            guardian2: ['https://html.duckduckgo.com/html/?q=guardian+%22the+quiz%22+thomas+eaton', /theguardian\.com%2F[^"&]+/g],
+            weeklynet: ['https://weeklyquiz.net/', /https?:\/\/weeklyquiz\.net\/[^"]+/g],
+            bbcsport: ['https://www.bbc.co.uk/sport/quizzes', /href="([^"]*(?:\/sport\/articles\/|\/sport\/\d{6,})[^"]*)"[^>]*>[\s\S]{0,400}?<\/a>/g],
           };
           const only = (process.env.ONLY || '').split(',').filter(Boolean);
           const show = (h, label) => {
@@ -43,7 +42,7 @@ jobs:
               const { html, via } = await get(url);
               const links = [...new Set([...html.matchAll(re)].map((m) => decodeURIComponent(m[0])))];
               console.log(`##### ${name} (${via}) links:\n` + links.slice(0, 15).join('\n'));
-              if (name === 'weeklyquiz') show(html, 'weeklyquiz page');
+              if (name === 'weeklynet') show(html, 'weeklyquiz.net page');
             } catch (e) { console.log(`##### ${name} FAILED: ${e.message}`); }
           }
           for (const u of (process.env.URLS || '').split(/\s+/).filter(Boolean)) {
