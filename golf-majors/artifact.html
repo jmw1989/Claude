@@ -300,7 +300,7 @@ function skinsDefault(){
     tees:[{name:"White", rating:71.4, slope:129, par:72},{name:"Yellow", rating:69.9, slope:125, par:72},{name:"Red", rating:73.1, slope:128, par:74}],
     holes: SKINS_HOLES.map(([par,si,value]) => ({par,si,value})),
     players: r.players.map(p => ({name:p.name, hi:p.hi, tee:1})),
-    allowance:100, strokeMode:"low", moneyMode:"each", endTie:"split", playoffWinner:null, valueMode:"tee", example:true};
+    allowance:100, strokeMode:"low", endTie:"split", playoffWinner:null, valueMode:"tee", example:true};
 }
 function skinsState(){
   const p = skinsPaths(), s = docs[p.setup];
@@ -389,8 +389,8 @@ function honours(key){
   const manual = honoursDoc()[key] || {}, out = {};
   Object.keys(manual).forEach(y => { if (manual[y]) out[y] = {year:+y, name:manual[y], auto:false}; });
   if (majorDef(key).kind === "skins"){
-    const S = skinsState(), C = skinsCalc(S), top = Math.max(...C.net);
-    if (C.allDone && !C.leftover && top > 0.004) out[ui.year] = {year:ui.year, name:C.net.map((v,i) => v === top ? S.setup.players[i].name : null).filter(Boolean).join(" & "), auto:true};
+    const S = skinsState(), C = skinsCalc(S), top = Math.max(...C.won);
+    if (C.allDone && !C.leftover && top > 0.004) out[ui.year] = {year:ui.year, name:C.won.map((v,i) => v === top ? S.setup.players[i].name : null).filter(Boolean).join(" & "), auto:true};
   } else {
     Object.keys(docs).forEach(p => { const m = p.match(new RegExp("^majors/(\\d+)-" + key + "$")); if (!m) return;
       const M = majorCalc(key, +m[1]); if (M.done !== M.m.roundsCount) return;
@@ -456,25 +456,13 @@ function skinsCalc(S){
     else if (setup.playoffWinner != null){ won[setup.playoffWinner] += carry; skins[setup.playoffWinner]++; endNote = `${pn(setup.playoffWinner)} won the £${carry} playoff.`; }
     else { leftover = carry; endNote = `£${carry} is still up for grabs. Play it off, then pick the winner on the Money tab.`; }
   }
-  const total = sum(won);
-  // "each": both opponents pay the winner. "pot": everyone staked an equal share of the money awarded.
-  const net = setup.moneyMode === "each" ? won.map(w => w*N - total) : won.map(w => w - total/N);
+  // Every skin is paid out of the pot: 6 × £5 + 9 × £10 + 3 × £20 = £180 when values are picked on the tee
+  const total = sum(won), pot = onTee ? 180 : sum(setup.holes.map(h => +h.value || 0));
   // What's left of the 6 × £5, 9 × £10, 3 × £20 allowance when values are picked on the tee
   const left = {5:6, 10:9, 20:3};
   if (onTee) Object.values(picked).forEach(v => { if (left[v] != null) left[v]--; });
-  return {hc, res, won, skins, carry, allDone, leftover, endNote, net, total, get, onTee, left, valueOf,
+  return {hc, res, won, skins, carry, allDone, leftover, endNote, total, pot, get, onTee, left, valueOf,
     started: res.some(r => r.g && r.g.some(x => x != null)) || (onTee && Object.values(picked).some(Boolean))};
-}
-function settle(net){
-  const cr = [], dr = [];
-  net.forEach((v,i) => { if (v > 0.004) cr.push({i, v}); else if (v < -0.004) dr.push({i, v:-v}); });
-  const out = [];
-  while (cr.length && dr.length){
-    const c = cr[0], d = dr[0], amt = Math.min(c.v, d.v);
-    out.push({from:d.i, to:c.i, amt}); c.v -= amt; d.v -= amt;
-    if (c.v < 0.004) cr.shift(); if (d.v < 0.004) dr.shift();
-  }
-  return out;
 }
 
 /* ---------- Render shell ---------- */
@@ -508,7 +496,7 @@ function renderHeader(){
   else if (ui.view === "skins"){
     const S = skinsState(), C = skinsCalc(S);
     setHeader("Skins Major", `${ui.year} · ${S.setup.course}${S.saved ? "" : " · example setup"}`, true,
-      S.setup.players.map((p,i) => `<div class="pm"><div class="n">${esc(p.name)}</div><div class="v num">${money(C.net[i], true)}</div><div class="s num">${C.skins[i]} skin${C.skins[i]===1?"":"s"} · off ${C.hc[i].strokes}</div></div>`).join(""),
+      S.setup.players.map((p,i) => `<div class="pm"><div class="n">${esc(p.name)}</div><div class="v num">${money(C.won[i])}</div><div class="s num">${C.skins[i]} skin${C.skins[i]===1?"":"s"} · off ${C.hc[i].strokes}</div></div>`).join(""),
       [["hole","Hole"],["card","Card"],["money","Money"],["setup","Setup"]]);
   }
 }
@@ -539,9 +527,9 @@ function homeView(){
     if (def.kind === "skins"){
       const S = skinsState(), C = skinsCalc(S);
       if (!C.started) status = S.saved ? "Ready to play" : "Not set up yet";
-      else { const top = Math.max(...C.net), who = C.net.map((v,i) => v === top ? i : -1).filter(i => i >= 0);
+      else { const top = Math.max(...C.won), who = C.won.map((v,i) => v === top ? i : -1).filter(i => i >= 0);
         const done = C.allDone && !C.leftover;
-        status = top <= 0.004 ? "All square" : `<b>${who.map(i => esc(S.setup.players[i].name)).join(" & ")}</b> ${done ? "won" : who.length > 1 ? "lead on" : "leads on"} ${money(top, true)}`; }
+        status = top <= 0.004 ? "No skins won yet" : `<b>${who.map(i => esc(S.setup.players[i].name)).join(" & ")}</b> ${done ? "won the most with" : who.length > 1 ? "lead with" : "leads with"} ${money(top)}`; }
     } else {
       const M = majorCalc(def.key);
       if (!M.started && !Object.keys(M.m.rounds).length) status = "Not started";
@@ -942,19 +930,18 @@ function skinsCardView(S, C){
   return `<h2>Scorecard</h2><p class="note">Gross scores. Green marks the skin winner; dots show shots received; → means the money carried.</p>${half(1,9,"Out")}${half(10,18,"In")}`;
 }
 function skinsMoneyView(S, C){
-  const setup = S.setup, st = settle(C.net), pn = i => esc(setup.players[i].name);
+  const setup = S.setup, pn = i => esc(setup.players[i].name);
+  const order = range(0,N-1).sort((a,b) => C.won[b] - C.won[a]), toPlay = C.pot - C.total;
   const playoff = C.leftover > 0 ? `<section class="card"><div class="lbl">Playoff for £${C.leftover}</div>
     <div class="actions">${setup.players.map((p,i) => `<button class="btn primary" data-playoff="${i}" ${readOnly?"disabled":""}>${esc(p.name)} won</button>`).join("")}</div></section>` : "";
   const undo = setup.playoffWinner != null ? `<div class="actions"><button class="btn" data-playoff="none" ${readOnly?"disabled":""}>Undo playoff result</button></div>` : "";
   const played = C.res.filter(r => r.status === "won" || r.status === "carry").length;
   return `<h2>Money</h2>${playoff}
-  <section class="card ledger">${setup.players.map((p,i) => `<div class="row"><div><div class="pname">${esc(p.name)}</div>
-    <div class="pinfo num">${C.skins[i]} skin${C.skins[i]===1?"":"s"} worth ${money(C.won[i])}</div></div>
-    <div class="amt num ${C.net[i]>0.004?"pos":C.net[i]<-0.004?"neg":""}">${money(C.net[i], true)}</div></div>`).join("")}</section>
-  <p class="note">${played} of 18 holes settled.${C.carry && !C.allDone ? ` £${C.carry} currently carrying.` : ""} ${setup.moneyMode === "each" ? "Each opponent pays the skin winner the hole's value." : "Hole values come out of a pot everyone stakes equally."}</p>
+  <section class="card ledger">${order.map(i => `<div class="row"><div><div class="pname">${pn(i)}</div>
+    <div class="pinfo num">${C.skins[i]} skin${C.skins[i]===1?"":"s"}</div></div>
+    <div class="amt num ${C.won[i]>0.004?"pos":""}">${money(C.won[i])}</div></div>`).join("")}</section>
+  <p class="note num">Paid out of the £${C.pot} pot: ${money(C.total)} won so far, ${money(toPlay)} still to play for${C.carry && !C.allDone ? ` (£${C.carry} of it carrying over)` : ""}. ${played} of 18 holes settled.</p>
   ${C.endNote ? `<p class="note">${C.endNote}</p>` : ""}${undo}
-  <h2>Settle up</h2>
-  <section class="card ledger">${st.length ? st.map(t => `<div class="row"><div>${pn(t.from)} pays ${pn(t.to)}</div><div class="amt num">${money(t.amt)}</div></div>`).join("") : `<div class="row"><div class="pinfo">Nothing owed yet.</div></div>`}</section>
   ${rollView("skins")}
   <h2>Skins won</h2>
   <section class="card ledger">${C.res.filter(r => r.status === "won").map(r => `<div class="row"><div>Hole ${r.h} · ${pn(r.winner)}${r.carryIn ? ` <span class="pinfo">(incl. £${r.carryIn} carry)</span>` : ""}</div><div class="amt num">£${r.pot}</div></div>`).join("") || `<div class="row"><div class="pinfo">No skins won yet.</div></div>`}</section>`;
@@ -1003,8 +990,6 @@ function skinsSetupView(S){
     <div><div class="lbl">Handicap allowance</div><div class="seg">${[100,95,90,85,75].map(a => `<label><input type="radio" name="allow" data-f="allowance" value="${a}" ${+d.allowance===a?"checked":""}> ${a}%</label>`).join("")}</div></div>
     <div><div class="lbl">Shots</div><div class="seg"><label><input type="radio" name="sm" data-f="strokeMode" value="low" ${d.strokeMode==="low"?"checked":""}> Off the lowest handicap</label>
       <label><input type="radio" name="sm" data-f="strokeMode" value="full" ${d.strokeMode==="full"?"checked":""}> Full playing handicaps</label></div></div>
-    <div><div class="lbl">Paying out</div><div class="seg"><label><input type="radio" name="mm" data-f="moneyMode" value="each" ${d.moneyMode==="each"?"checked":""}> Each opponent pays the winner</label>
-      <label><input type="radio" name="mm" data-f="moneyMode" value="pot" ${d.moneyMode==="pot"?"checked":""}> Hole value is the whole pot</label></div></div>
     <div><div class="lbl">Tie on 18</div><div class="seg"><label><input type="radio" name="et" data-f="endTie" value="split" ${d.endTie==="split"?"checked":""}> Split between the tied players</label>
       <label><input type="radio" name="et" data-f="endTie" value="playoff" ${d.endTie==="playoff"?"checked":""}> Playoff for it</label></div></div>
   </section>

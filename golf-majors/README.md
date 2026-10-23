@@ -18,7 +18,7 @@ A scoring app for the four golf majors played each year by Jonty, Brandy and Pet
 
 **Skins**
 - Net skins, with shots given off the lowest handicap by default. A tied hole carries its money to the next hole.
-- Running money totals for each player and a settle-up list of who pays whom.
+- Every skin is paid out of the pot (£180 when values are picked on the tee). The app shows what each player has won and how much is still to play for.
 
 ## Put it on your phone
 
