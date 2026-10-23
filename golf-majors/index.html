@@ -1021,7 +1021,7 @@ function skinsSetupView(S){
   </section>
   <h2>Rules</h2>
   <section class="card opts">
-    <div><div class="lbl">Handicap allowance</div><div class="seg">${[100,90,85,75].map(a => `<label><input type="radio" name="allow" data-f="allowance" value="${a}" ${+d.allowance===a?"checked":""}> ${a}%</label>`).join("")}</div></div>
+    <div><div class="lbl">Handicap allowance</div><div class="seg">${[100,95,90,85,75].map(a => `<label><input type="radio" name="allow" data-f="allowance" value="${a}" ${+d.allowance===a?"checked":""}> ${a}%</label>`).join("")}</div></div>
     <div><div class="lbl">Shots</div><div class="seg"><label><input type="radio" name="sm" data-f="strokeMode" value="low" ${d.strokeMode==="low"?"checked":""}> Off the lowest handicap</label>
       <label><input type="radio" name="sm" data-f="strokeMode" value="full" ${d.strokeMode==="full"?"checked":""}> Full playing handicaps</label></div></div>
     <div><div class="lbl">Paying out</div><div class="seg"><label><input type="radio" name="mm" data-f="moneyMode" value="each" ${d.moneyMode==="each"?"checked":""}> Each opponent pays the winner</label>
