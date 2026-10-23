@@ -1,3 +1,125 @@
 {
-  "quizzes": []
+  "updatedAt": "2026-10-23T09:55:21.521Z",
+  "quizzes": [
+    {
+      "id": "quiz-of-the-week-10-16-october",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-10-16-october",
+      "title": "Quiz of The Week: 10 - 16 October",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/PkJKuAUn9GkC2Ay26WccxL-2000-80.jpg",
+      "publishedAt": "2026-10-16T09:51:47Z"
+    },
+    {
+      "id": "quiz-of-the-week-3-9-october",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-3-9-october",
+      "title": "Quiz of The Week: 3 - 9 October",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/DwYzaTZwYn2tYpWcudcAGm-2000-80.jpg",
+      "publishedAt": "2026-10-09T10:28:01Z"
+    },
+    {
+      "id": "quiz-of-the-week-26-september-2-october",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-26-september-2-october",
+      "title": "Quiz of The Week: 26 September - 2 October",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/B9tdrxnY7YZpUdYvBP3YwS-2000-80.jpg",
+      "publishedAt": "2026-10-02T09:39:41Z"
+    },
+    {
+      "id": "quiz-of-the-week-19-25-september",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-19-25-september",
+      "title": "Quiz of The Week: 19 - 25 September",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/2pEnRCPmo5BwLTtxJWsV5G-2000-80.jpg",
+      "publishedAt": "2026-09-25T10:46:01Z"
+    },
+    {
+      "id": "quiz-of-the-week-12-18-september",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-12-18-september",
+      "title": "Quiz of The Week: 12 - 18 September",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/vb6Y4BVAqij8mYFyg67ynZ-2000-80.jpg",
+      "publishedAt": "2026-09-18T11:04:38Z"
+    },
+    {
+      "id": "quiz-of-the-week-5-11-september",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-5-11-september",
+      "title": "Quiz of The Week: 5 - 11 September",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/qEyto9hgQHDYsn6uA8R3Bb-2000-80.jpg",
+      "publishedAt": "2026-09-11T10:09:56Z"
+    },
+    {
+      "id": "quiz-of-the-week-29-august-4-september",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-29-august-4-september",
+      "title": "Quiz of The Week: 29 August - 4 September",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/MxuSoZTgVC5zRP9DHoPxSZ-2000-80.jpg",
+      "publishedAt": "2026-09-04T09:28:45Z"
+    },
+    {
+      "id": "quiz-of-the-week-22-28-august",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-22-28-august",
+      "title": "Quiz of The Week: 22 - 28 August",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/x2JRerk336HsyuJuXeHUFL-2000-80.jpg",
+      "publishedAt": "2026-08-28T10:22:53Z"
+    },
+    {
+      "id": "quiz-of-the-week-15-21-august",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-15-21-august",
+      "title": "Quiz of The Week: 15 – 21 August",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/BLv5YGuMWbQwEt2LnJwwjV-2000-80.jpg",
+      "publishedAt": "2026-08-21T10:40:42Z"
+    },
+    {
+      "id": "quiz-of-the-week-8-14-august",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-8-14-august",
+      "title": "Quiz of The Week: 8 – 14 August",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/aZCcDtbzcVeSzqHRzhd7XV-2000-80.png",
+      "publishedAt": "2026-08-14T13:35:12Z"
+    },
+    {
+      "id": "quiz-of-the-week-1-7-august",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-1-7-august",
+      "title": "Quiz of The Week: 1 – 7 August",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/3Px3dYXEpZjoRfHiCWuRWS-2000-80.jpg",
+      "publishedAt": "2026-08-07T10:33:20Z"
+    },
+    {
+      "id": "quiz-of-the-week-25-31-july",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-25-31-july",
+      "title": "Quiz of The Week: 25 – 31 July",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/TqwvnZYxdKGLi8jvFPhUAg-2000-80.jpg",
+      "publishedAt": "2026-07-31T12:29:34Z"
+    },
+    {
+      "id": "quiz-of-the-week-18-24-july",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-18-24-july",
+      "title": "Quiz of The Week: 18 – 24 July",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/9amru7fH9Qf8b8gsw7EFEV-2000-80.jpg",
+      "publishedAt": "2026-07-24T09:17:35Z"
+    },
+    {
+      "id": "quiz-of-the-week-11-17-july",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-11-17-july",
+      "title": "Quiz of The Week: 11 – 17 July",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/ght6YvVcgeKAP7fcrm59Sa-2000-80.jpg",
+      "publishedAt": "2026-07-17T10:48:21Z"
+    },
+    {
+      "id": "quiz-of-the-week-3-10-july",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-3-10-july",
+      "title": "Quiz of The Week: 4 – 10 July",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/F3n6wAfCta98hkEg9NfWrj-2000-80.jpg",
+      "publishedAt": "2026-07-10T11:11:10Z"
+    }
+  ]
 }

@@ -1,3 +1,405 @@
 {
-  "quizzes": []
+  "quizzes": [
+    {
+      "id": "2026-oct-17",
+      "url": "https://www.theguardian.com/games/2026/oct/17/which-coffee-chain-was-founded-in-london-in-1971-the-saturday-quiz",
+      "title": "Which coffee chain was founded in London in 1971? The Saturday quiz",
+      "description": "From Divine, Frank Fiegel and Helen Kane to the West Sussex estate pioneering rewilding, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/2c184cfa6cd9ed17ee1220cbd1efbd11c17d423f/688_0_6880_5504/master/6880.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=e374adb51a8b0c93d4f111e6a1fcc76d",
+      "publishedAt": "2026-10-17T06:00:24.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "Which classic of political theory was dedicated to Lorenzo de Medici?",
+          "answer": "The Prince by Niccolò Machiavelli.",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "What is the only jazz act to win the Mercury Music prize?",
+          "answer": "Ezra Collective.",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "Spanish is an official language of which African country?",
+          "answer": "Equatorial Guinea.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "What 2026 release is said to be the most expensive entertainment product ever created?",
+          "answer": "Grand Theft Auto VI.",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "Which West Sussex estate is a pioneer of rewilding?",
+          "answer": "Knepp.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "Which gas is named from the Greek for “lazy”?",
+          "answer": "Argon.",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "US doctor Sara Cohen writes bestsellers under what pseudonym?",
+          "answer": "Freida McFadden (The Housemaid etc).",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Which coffee chain was founded in London in 1971?",
+          "answer": "Costa.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "c 6000BC; 79; 512; 1631; 1906; 1944?",
+          "answer": "Major eruptions of Mount Vesuvius.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Divine (witch); Frank Fiegel (sailor); Helen Kane (flapper); The Beatles (vultures)?",
+          "answer": "Inspired cartoon characters: Ursula in The Little Mermaid; Popeye; Betty Boop; in The Jungle Book.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Mark Brown; Mo Johnston; Kenny Miller; Steven Pressley?",
+          "answer": "Played football for both Rangers and Celtic.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Bag; dismiss; plunder; sherry for Falstaff?",
+          "answer": "Various definitions of sack.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Caring; Elvis; Famous Five; Revenge; Travolta?",
+          "answer": "Nicknames of dresses worn by Diana, Princess of Wales.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Grease; A Chorus Line; Cats; The Phantom of the Opera (currently)?",
+          "answer": "Musicals that have been the longest-running show in Broadway history.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Martin Gilbert; Roy Jenkins; William Manchester; Andrew Roberts?",
+          "answer": "Wrote major biographies of Churchill.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
+      "id": "2026-oct-10",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/oct/10/what-links-toothpaste-tomato-ketchup-and-silly-putty-the-saturday-quiz",
+      "title": "What links toothpaste, tomato ketchup and silly putty? The Saturday quiz",
+      "description": "From talking horses and savage humans to Home Alone, The Fugitive and The Untouchables, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/8bb1748c780b6a6c122784ad3641354239abdc31/560_0_5600_4480/master/5600.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=ccfa99913ce8a8914d18aaf1246b9987",
+      "publishedAt": "2026-10-10T06:00:49.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "Which high-profile US politician used to rap as Mr Cardamom?",
+          "answer": "Zohran Mamdani (NYC mayor).",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "What is Anguilla’s lucrative internet domain?",
+          "answer": ".ai.",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "Ostalgie is the yearning for aspects of life in which former country?",
+          "answer": "East Germany.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "Which church is recreated in Lego’s largest set?",
+          "answer": "Sagrada Família (12,060 pieces).",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "Which siblings lived at Dove Cottage, Grasmere?",
+          "answer": "William and Dorothy Wordsworth.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "How did Saffie Osborne make horse racing history in September?",
+          "answer": "First female jockey to win a British classic (St Leger).",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "Which challenge starts near Fort William and ends on Yr Wyddfa?",
+          "answer": "National Three Peaks.",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Which TV historian was at school with Gazza?",
+          "answer": "David Olusoga.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Benjamin Franklin; Francis Moore; Joseph Whitaker; John Wisden?",
+          "answer": "Founders of almanacs.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Lily Snowden-Fine; Cecily Bloom; Harley Bird; Amelie Bea Smith?",
+          "answer": "First four voices of Peppa Pig.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Burgundy; Aviz; Habsburg; Braganza?",
+          "answer": "Ruling dynasties of Portugal (12th century to 1910).",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "First of Shawwal and tenth of Dhul-Hijjah?",
+          "answer": "Dates of major Muslim festivals: Eid al-Fitr and Eid al-Adha.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Tiny people; giant people; impractical intellectuals; talking horses; savage humans?",
+          "answer": "Encountered by Gulliver in Gulliver’s Travels.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Ketchup; blood; paint; quicksand; silly putty; toothpaste?",
+          "answer": "Non-Newtonian fluids.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Ferris Bueller’s Day Off; Home Alone; The Fugitive; The Untouchables?",
+          "answer": "Films set in Chicago.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
+      "id": "2026-oct-03",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/oct/03/what-links-buzzard-jackdaw-and-rosebank-the-saturday-quiz",
+      "title": "What links Buzzard, Jackdaw and Rosebank? The Saturday quiz",
+      "description": "From the Geordie Springsteen to Bridalveil Fall and El Capitan, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/dd3bd679d8d6c17dff41f4bbc9cab24594187c3e/632_0_4324_3459/master/4324.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4792bf51effe9cfd7381f38fbc32f9c0",
+      "publishedAt": "2026-10-03T06:00:51.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "Whose funeral in 1989 attracted about 10 million mourners?",
+          "answer": "Ayatollah Khomeini (Iran).",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "What is the only major river to cross the equator twice?",
+          "answer": "Congo.",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "Which singer has been called the Geordie Springsteen?",
+          "answer": "Sam Fender.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "What is the largest surviving carnivorous marsupial?",
+          "answer": "Tasmanian devil.",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "What was added to 30 June 2015?",
+          "answer": "Extra/leap second.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "Which sci-fi epic was inspired by the shifting sands of the Oregon coast?",
+          "answer": "Dune (Frank Herbert).",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "Football and which other sport were banned in Scotland in 1457?",
+          "answer": "Golf.",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Which war memorial was designed by Yale student Maya Lin?",
+          "answer": "Vietnam Veterans Memorial, Washington DC.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Buzzard; Clair; Cygnus; Jackdaw; Rosebank?",
+          "answer": "Major UK oil and gasfields.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Dis; Duat; Helheim; Irkalla; Mictlan?",
+          "answer": "Underworld in various mythologies: Roman; ancient Egypt; Norse; Mesopotamian; Aztec.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "England: 188,900; Scotland: 37,200; Wales: 21,100?",
+          "answer": "Estimated total lengths of roads in Britain.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Susan Janet Ballion; Marianne Elliott-Said; Arianna Forster and Paloma Romero?",
+          "answer": "Original names of early punks: Siouxsie Sioux; Poly Styrene; Ari Up and Palmolive.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Bridalveil Fall; El Capitan; Half Dome; Mount Lyell; Sentinel Dome?",
+          "answer": "Natural landmarks in Yosemite national park, California.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Saving Private Ryan; Pressure; The Longest Day?",
+          "answer": "Films about D-day.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Everton (currently); Arsenal; Southampton; Norwich City?",
+          "answer": "Football allegiances of recent PMs: Burnham; Starmer; Sunak; Truss.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
+      "id": "2026-sep-26",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/sep/26/which-story-was-inspired-by-rogue-waves-hitting-the-queen-mary-the-saturday-quiz",
+      "title": "Which story was inspired by rogue waves hitting the Queen Mary? The Saturday quiz",
+      "description": "From the Battle of Watling Street and dingo dollars to Atomic Monster, Hammer and Troma, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/d89a6468b6d9165b561e6155cff20f7481c3c42a/199_0_4567_3654/master/4567.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=c14c66b5144ffabe32169afd5cf8f783",
+      "publishedAt": "2026-09-26T06:00:28.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "Which diarist was born on 2 April 1967?",
+          "answer": "Adrian Mole.",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "Which No 1 hit was a tribute to the most recorded female singer of all time?",
+          "answer": "Cornershop’s Brimful of Asha (Asha Bhosle).",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "What type of fossils does an ichnologist study?",
+          "answer": "Trace fossils (footprints, coprolites, bite marks etc).",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "Quinine is a traditional remedy for which disease?",
+          "answer": "Malaria.",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "What line divides the daylit and dark sides of a planet?",
+          "answer": "Terminator.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "Who was finally defeated at the so-called Battle of Watling Street?",
+          "answer": "Boudicca and her allies.",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "Where do contestants compete to win dingo dollars?",
+          "answer": "In I’m a Celebrity … Get Me Out of Here!",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Which story was inspired by rogue waves hitting the RMS Queen Mary?",
+          "answer": "The Poseidon Adventure by Paul Gallico.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Amicus; Atomic Monster; Blumhouse; Hammer; Troma?",
+          "answer": "Production companies known for horror films.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Reed; Newley; Kass; Holm; Gibson?",
+          "answer": "Surnames of husbands of Joan Collins.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Canada; Fortuna; Mio Babbino Caro; Superman?",
+          "answer": "Music titles that start with “O”: national anthem; in Carmina Burana; Puccini aria; Laurie Anderson hit.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Crato, Brazil (54 metres); Konotopie, Poland (55.6 metres); Batangas City, Philippines (98 metres)?",
+          "answer": "Tallest statues of the Virgin Mary (total heights).",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Australian Open, 1987; French Open (never); Wimbledon, 2026; US Open, 1974?",
+          "answer": "Last time tennis grand slams were played on grass (in the Open era).",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Antigua and Barbuda, and Newfoundland and Labrador; Ascension Island and Guyana; British Columbia and Seychelles?",
+          "answer": "Capitals share names: St John’s; Georgetown; Victoria.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Less Than Zero; The Goldfinch; The Fortress of Solitude?",
+          "answer": "Novels by Bennington College contemporaries: Bret Easton Ellis; Donna Tartt; Jonathan Lethem.",
+          "category": "What links"
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-10-23T09:55:17.119Z"
 }

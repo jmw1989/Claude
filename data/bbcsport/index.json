@@ -1,3 +1,21 @@
 {
-  "quizzes": []
+  "updatedAt": "2026-10-23T09:55:18.413Z",
+  "quizzes": [
+    {
+      "id": "c51kdwym8ej3o",
+      "url": "https://www.bbc.co.uk/sport/articles/c51kdwym8ej3o",
+      "title": "BBC Sport weekly quiz: How much did Cristiano Ronaldo get fined?",
+      "description": "How much attention have you paid to what's happened in the world of sport over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/d0f2/live/36505680-ccce-11f1-9a39-31b474234113.png",
+      "publishedAt": "2026-10-22T07:29:51.049Z"
+    },
+    {
+      "id": "c6vg0d4g051eo",
+      "url": "https://www.bbc.co.uk/sport/articles/c6vg0d4g051eo",
+      "title": "BBC Sport weekly quiz: How much is the cheapest Fury vs Joshua ticket?",
+      "description": "How much attention have you paid to what's happened in the world of sport over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/9da1/live/821fcf40-c7ca-11f1-9a39-31b474234113.png",
+      "publishedAt": "2026-10-15T06:35:31.172Z"
+    }
+  ]
 }
