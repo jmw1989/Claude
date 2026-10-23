@@ -88,9 +88,38 @@ function renderHome() {
     .slice(0, 5)
     .map((h) => `<li><span>${escapeHtml(h.title)}</span><b>${h.score}/${h.total}</b></li>`)
     .join('');
+  renderTopScores();
   renderJoeCard();
   renderQqqCard();
   renderBbcCard();
+}
+
+// Best five scores, highest percentage first; ties go to the higher score, then the earlier date.
+function topFive(entries) {
+  return entries
+    .filter((e) => e.total > 0)
+    .sort((a, b) => b.score / b.total - a.score / a.total || b.score - a.score || a.date.localeCompare(b.date))
+    .slice(0, 5);
+}
+
+const shortDate = (iso) => new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+
+function renderTopList(el, entries, emptyText) {
+  el.innerHTML = entries.length
+    ? entries
+        .map(
+          (e) => `<li><span class="top-label">${escapeHtml(e.label)}</span>
+            <b>${e.score}/${e.total}</b><small>${escapeHtml(shortDate(e.date))}</small></li>`,
+        )
+        .join('')
+    : `<li class="empty">${emptyText}</li>`;
+}
+
+function renderTopScores() {
+  const joe = Object.entries(joeResults()).map(([week, r]) => ({ ...r, label: `Week ${week}` }));
+  renderTopList($('#top-joe'), topFive(joe), 'Play a JOE quiz to get on the board.');
+  const qqq = Object.values(store.get('qqq.scores', {})).map((r) => ({ ...r, label: `${qqqShortTitle(r.title).replace(/,?\s*\d{4}$/, '')} quiz` }));
+  renderTopList($('#top-qqq'), topFive(qqq), 'Enter your QuizQuizQuiz score to get on the board.');
 }
 
 $$('.card[data-kind]').forEach((btn) =>
@@ -306,10 +335,11 @@ function renderQqqCard() {
   const latest = state.qqq.latest;
   if (!state.qqq.index) return;
   const done = latest && store.get('qqq.done', {})[latest.quizId];
+  const score = latest && store.get('qqq.scores', {})[latest.quizId];
   sub.textContent = !latest
     ? 'A new quiz lands here every Friday.'
-    : `${latest.title.replace(/^The QuizQuizQuiz Friday Quiz,?\s*/i, '')} · ${done ? 'answers submitted' : `${latest.questions.length} questions · tap to play`}`;
-  $('#qqq-badge').hidden = !latest || Boolean(done);
+    : `${qqqShortTitle(latest.title)} · ${score ? `you scored ${score.score}/${score.total}` : done ? 'answers submitted' : `${latest.questions.length} questions · tap to play`}`;
+  $('#qqq-badge').hidden = !latest || Boolean(done || score);
 }
 
 $('#qqq-card').addEventListener('click', () => {
@@ -358,22 +388,58 @@ function renderQqq(quiz) {
         <p class="hint">The results stay here until you leave this screen, so take a screenshot if you want to keep them.
           Nothing showing? <button class="link-btn" id="qqq-open-browser" type="button">Open the results in your browser</button></p>
       </section>
+      ${qqqScoreHtml(quiz)}
       <a class="secondary-btn full" href="${escapeAttr(quiz.url)}" target="_blank" rel="noopener">Play on QuizQuizQuiz instead ↗</a>`;
   }
 
   const older = (state.qqq.index?.quizzes || []).filter((q) => q.quizId !== quiz?.quizId);
+  const scores = store.get('qqq.scores', {});
   $('#qqq-list').innerHTML = older.length
     ? older
-        .map((q) => `<li><span><b>${escapeHtml(q.title.replace(/^The QuizQuizQuiz Friday Quiz,?\s*/i, ''))}</b><small>${q.count} questions</small></span><button class="small-btn" data-qqq="${escapeHtml(q.quizId)}">Open</button></li>`)
+        .map((q) => `<li><span><b>${escapeHtml(qqqShortTitle(q.title))}</b><small>${scores[q.quizId] ? `You scored ${scores[q.quizId].score}/${scores[q.quizId].total}` : `${q.count} questions`}</small></span><button class="small-btn" data-qqq="${escapeHtml(q.quizId)}">Open</button></li>`)
         .join('')
     : '<li class="empty">Past quizzes will build up here each week.</li>';
   state.qqq.startedAt = Date.now();
   state.qqq.submitted = null;
 }
 
+const qqqShortTitle = (title) => (title || '').replace(/^The QuizQuizQuiz Friday Quiz,?\s*/i, '') || 'QuizQuizQuiz';
+
+// One mark per answer box, which is how QuizQuizQuiz scores the Friday Quiz.
+const qqqMaxScore = (quiz) => quiz.questions.reduce((n, q) => n + q.fields.length, 0);
+
+function qqqScoreHtml(quiz) {
+  const saved = store.get('qqq.scores', {})[quiz.quizId];
+  return `<section class="panel qqq-score">
+      <h2>Your score</h2>
+      <p class="hint">Once QuizQuizQuiz has marked your answers, enter your score here to add it to your top scores.</p>
+      <form id="qqq-score-form" class="qqq-score-form">
+        <input type="number" name="score" min="0" max="99" inputmode="numeric" required aria-label="Your score" value="${saved ? saved.score : ''}">
+        <span>out of</span>
+        <input type="number" name="total" min="1" max="99" inputmode="numeric" required aria-label="Out of" value="${saved ? saved.total : qqqMaxScore(quiz)}">
+        <button class="small-btn" type="submit">${saved ? 'Update' : 'Save'}</button>
+      </form>
+      ${saved ? `<p class="done">Saved: <b>${saved.score}/${saved.total}</b> on ${escapeHtml(shortDate(saved.date))}</p>` : ''}
+    </section>`;
+}
+
+function saveQqqScore(form) {
+  const quiz = state.qqq.shown;
+  const score = Number(form.score.value);
+  const total = Number(form.total.value);
+  if (!Number.isInteger(score) || !Number.isInteger(total) || total < 1 || score < 0 || score > total) {
+    return toast('Enter a score between 0 and the total.');
+  }
+  const scores = store.get('qqq.scores', {});
+  scores[quiz.quizId] = { score, total, date: new Date().toISOString(), title: quiz.title };
+  store.set('qqq.scores', scores);
+  form.closest('.qqq-score').outerHTML = qqqScoreHtml(quiz);
+  toast('Score saved');
+}
+
 $('#screen-qqq').addEventListener('input', (e) => {
   const quiz = state.qqq.shown;
-  if (!quiz || !e.target.name) return;
+  if (!quiz || !e.target.name || !e.target.closest('#qqq-form')) return;
   const draft = store.get(`qqq.draft.${quiz.quizId}`, {});
   draft[e.target.name] = e.target.value;
   store.set(`qqq.draft.${quiz.quizId}`, draft);
@@ -395,6 +461,7 @@ $('#screen-qqq').addEventListener('click', async (e) => {
 
 $('#screen-qqq').addEventListener('submit', (e) => {
   e.preventDefault();
+  if (e.target.id === 'qqq-score-form') return saveQqqScore(e.target);
   const quiz = state.qqq.shown;
   const answers = Object.fromEntries(new FormData(e.target));
   if (!Object.values(answers).some((v) => v.trim())) return toast('Type at least one answer first.');
