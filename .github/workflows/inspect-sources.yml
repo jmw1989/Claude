@@ -50,7 +50,8 @@ jobs:
               const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', Referer: 'https://example.org/' } });
               const t = await r.text();
               console.log(`===== RAW ${u} -> ${r.status} ${r.headers.get('content-type')} ${t.length}b`);
-              console.log(t.slice(0, 3000));
+              console.log(t.slice(0, 1500));
+              if (/html/.test(r.headers.get('content-type') || '')) console.log(describePage(t).slice(0, 9000));
               for (const k of ['correct', 'answer', 'question', 'rawc', 'puzzleData', 'api', 'json']) { let i = t.indexOf(k), n = 0; while (i >= 0 && n < 2) { console.log(`[${k}]…`, t.slice(Math.max(0, i - 200), i + 400).replace(/\s+/g, ' ')); i = t.indexOf(k, i + 3000); n++; } }
               for (const m of new Set([...t.matchAll(/https?:\/\/[^"'\s<>\\]+/g)].map((m) => m[0]))) if (/api|json|quiz|data/i.test(m)) console.log('URL:', m);
             } catch (e) { console.log(u, 'FAILED', e.message); }
