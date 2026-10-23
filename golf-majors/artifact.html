@@ -289,7 +289,8 @@ function ctxKey(){ return ui.view === "skins" ? `${ui.year}-skins` : `${ui.year}
 function formFor(id, init){ if (!form || form.id !== id || !form.dirty) form = {id, data:init(), dirty:false}; return form.data; }
 
 /* ---------- Data accessors ---------- */
-function roster(){ const r = docs["config/roster"]; return r && Array.isArray(r.players) ? r : DEFAULT_ROSTER; }
+let rosterOverride = null;
+function roster(){ if (rosterOverride) return rosterOverride; const r = docs["config/roster"]; return r && Array.isArray(r.players) ? r : DEFAULT_ROSTER; }
 function courses(){ return Object.keys(docs).filter(p => p.startsWith("courses/")).map(p => Object.assign({id:p.slice(8)}, docs[p])).sort((a,b) => String(a.name).localeCompare(b.name)); }
 function majorDef(key){ return MAJORS.find(m => m.key === key); }
 function majorPath(key, year){ return `majors/${year || ui.year}-${key}`; }
@@ -433,7 +434,8 @@ function skinsHcps(s){
 }
 function skinsCalc(S){
   const {setup, scores} = S, hc = skinsHcps(setup);
-  const get = (p,h) => { const v = scores["p"+p] && scores["p"+p]["h"+h]; return typeof v === "number" && v > 0 ? v : null; };
+  // 0 means the player picked up: they can't win the hole
+  const get = (p,h) => { const v = scores["p"+p] && scores["p"+p]["h"+h]; return typeof v === "number" && v >= 0 ? v : null; };
   const res = [], won = Array(N).fill(0), skins = Array(N).fill(0);
   let carry = 0, blocked = false, allDone = true;
   const onTee = setup.valueMode === "tee", picked = scores.values || {};
@@ -442,12 +444,12 @@ function skinsCalc(S){
     const hole = setup.holes[h-1], value = valueOf(h);
     const st = hc.map(r => strokesOn(r.strokes, Number(hole.si)));
     const g = range(0,N-1).map(p => get(p,h));
-    const nets = g.map((x,i) => x == null ? null : x - st[i]);
+    const nets = g.map((x,i) => x == null ? null : x === 0 ? Infinity : x - st[i]);
     if (blocked || value == null || g.some(x => x == null)){
       res.push({h, status: blocked ? "blocked" : "pending", pot: blocked || value == null ? null : carry + value, carryIn: blocked ? null : carry, value, st, nets, g});
       blocked = true; allDone = false; continue;
     }
-    const pot = carry + value, min = Math.min(...nets);
+    const pot = carry + value, min = Math.min(...nets); // everyone picked up: min is Infinity, all tie, money carries
     const best = nets.map((n,i) => n === min ? i : -1).filter(i => i >= 0);
     if (best.length === 1){ won[best[0]] += pot; skins[best[0]]++; res.push({h, status:"won", winner:best[0], pot, carryIn:carry, value, st, nets, g}); carry = 0; }
     else { res.push({h, status:"carry", tied:best, pot, carryIn:carry, value, st, nets, g}); carry = pot; }
@@ -476,13 +478,20 @@ function setHeader(title, sub, back, strip, tabs){
   $("h1").textContent = title; $("sub").textContent = sub || "";
   $("back").hidden = !back;
   $("strip").hidden = !strip; if (strip) $("strip").innerHTML = strip;
-  $("tabs").hidden = !tabs; $("top").classList.toggle("hastabs", !!tabs);
+  $("tabs").hidden = !tabs; $("top").classList.toggle("hastabs", !!tabs); $("tabs").style.gridTemplateColumns = "";
   if (tabs) $("tabs").innerHTML = tabs.map(([k,l]) => `<button role="tab" data-sub="${k}" aria-selected="${ui.sub===k}">${l}</button>`).join("");
 }
 function renderHeader(){
   const R = roster().players;
   if (ui.view === "home") setHeader("Majors Tour", `${R.map(p => p.name).join(", ")} · ${ui.year} season`, false);
   else if (ui.view === "players") setHeader("Players", "Names and current handicaps", true);
+  else if (ui.view === "history") setHeader("Past rounds", "Every completed round, all majors", true);
+  else if (ui.view === "saved"){ const h = docs["history/" + ui.histId] || {}, def = majorDef(h.major) || {name:"Saved round"};
+    $("h1").textContent = def.name; $("sub").textContent = `${h.course || ""}${h.date ? " · " + fmtDate(h.date) + " " + (h.year || "") : ""}`;
+    $("back").hidden = false; $("strip").hidden = true; $("tabs").hidden = false; $("top").classList.add("hastabs");
+    const t = ui.histTab || "summary";
+    $("tabs").innerHTML = [["summary","Summary"],["card","Scorecard"]].map(([k,l]) => `<button role="tab" data-histtab="${k}" aria-selected="${t===k}">${l}</button>`).join("");
+    $("tabs").style.gridTemplateColumns = "1fr 1fr"; }
   else if (ui.view === "courses") setHeader("Courses", "Shared course library", true);
   else if (ui.view === "course") setHeader(ui.courseId ? "Edit course" : "New course", "Tees, pars and stroke indexes", true);
   else if (ui.view === "major"){
@@ -515,6 +524,8 @@ function renderMain(){
   const m = $("main"), v = ui.view;
   if (v === "home") m.innerHTML = homeView();
   else if (v === "players") m.innerHTML = playersView();
+  else if (v === "history") m.innerHTML = historyView();
+  else if (v === "saved") m.innerHTML = savedRoundView();
   else if (v === "courses") m.innerHTML = coursesView();
   else if (v === "course") m.innerHTML = courseEditView();
   else if (v === "major") m.innerHTML = majorView();
@@ -555,6 +566,7 @@ function homeView(){
   <div class="links">
     <button data-view="players"><div class="lt">Players</div><div class="ls">${R.map(p => esc(p.name) + " " + p.hi).join(" · ")}${roster().example ? " (example)" : ""}</div></button>
     <button data-view="courses"><div class="lt">Courses</div><div class="ls">${nc ? `${nc} saved` : "None saved yet"}</div></button>
+    <button data-view="history" style="grid-column:1 / -1"><div class="lt">Past rounds</div><div class="ls">${historyList().length ? `${historyList().length} completed round${historyList().length === 1 ? "" : "s"} saved` : "Completed rounds are saved here"}</div></button>
   </div>
   <p class="note">Stableford majors: 5, 3 and 1 points for 1st, 2nd and 3rd on stableford each round (a tie for 1st gets 5 each and 3rd gets 2); 3, 2, 1 for closest to the pin on each par 3 and for the longest drive (2, 1 when two qualify; 2 when only one does).</p>`;
 }
@@ -812,8 +824,8 @@ function roundHoleView(){
   <div class="holes">${strip}</div>
   <div class="legend"><span style="--sw:var(--v10)">Prize hole</span><span>P/U = picked up, 0 points</span></div>`;
 }
-function roundCardView(){
-  const M = getMajor(ui.major), rc = roundCalc(M, ui.round);
+function roundCardView(ctx){
+  const M = ctx ? ctx.M : getMajor(ui.major), rc = roundCalc(M, ctx ? ctx.rn : ui.round);
   if (!rc) return needSetup();
   const R = roster().players, c = rc.course;
   const half = (a,b,label) => {
@@ -895,12 +907,64 @@ function missingHoles(){
 }
 function completeRound(){
   const miss = missingHoles();
-  if (!miss.length){ completeMsg = ""; go({sub:"summary"}); return; }
+  if (!miss.length){ completeMsg = ""; saveToHistory(); go({sub:"summary"}); return; }
   const what = ui.view === "skins" ? "scores or a hole value" : "scores";
   completeMsg = `<div class="confirm" style="margin-top:12px"><p style="margin:0 0 10px">Still missing ${what} on hole${miss.length > 1 ? "s" : ""} ${miss.join(", ")}.</p>
     <div class="actions" style="margin:0">${miss.slice(0,6).map(h => `<button class="btn small" data-go="${h}">Hole ${h}</button>`).join("")}</div></div>`;
   renderMain();
 }
+/* ---------- Past rounds: each completed round is saved with everything needed to redraw it ---------- */
+function todayISO(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function saveToHistory(){
+  if (readOnly) return;
+  if (ui.view === "skins"){
+    const S = skinsState(), C = skinsCalc(S), raw = docs[skinsPaths().scores] || {};
+    if (!C.allDone) return;
+    const top = Math.max(...C.won), who = range(0,N-1).filter(i => C.won[i] === top);
+    replace(`history/${ui.year}-skins-${raw.cleared || 0}`, {kind:"skins", major:"skins", year:ui.year, date: todayISO(), course: S.setup.course,
+      title: top > 0 ? `${who.map(i => S.setup.players[i].name).join(" & ")} ${who.length > 1 ? "shared top spot" : "won"} with ${money(top)}` : "No skins won",
+      setup: clone(S.setup), scores: clone(raw), savedAt: Date.now()});
+    return;
+  }
+  const M = getMajor(ui.major), rc = roundCalc(M, ui.round); if (!rc || !rc.complete) return;
+  const MC = majorCalc(ui.major);
+  replace(`history/${ui.year}-${ui.major}-r${ui.round}`, {kind:"stable", major:ui.major, year:ui.year, round:ui.round, date: rc.round.date || todayISO(), course: rc.course.name,
+    title: `${rc.leaders.map(i => roster().players[i].name).join(" & ")} ${rc.leaders.length > 1 ? "tied" : "won"} with ${rc.players[rc.leaders[0]].total} pts`,
+    majorCfg: {allowance:M.allowance, tieRule:M.tieRule, roundsCount:M.roundsCount}, roundDoc: clone(rc.round),
+    players: clone(roster().players), standings: {total: MC.tot.total, done: MC.done, of: MC.m.roundsCount}, savedAt: Date.now()});
+}
+function historyList(){ return Object.keys(docs).filter(p => p.startsWith("history/")).map(p => Object.assign({id:p.slice(8)}, docs[p]))
+  .sort((a,b) => String(b.date).localeCompare(String(a.date)) || (b.savedAt||0) - (a.savedAt||0)); }
+function historyView(){
+  const all = historyList(), f = ui.histFilter || "all";
+  const list = f === "all" ? all : all.filter(h => h.major === f);
+  const chips = [["all","All"]].concat(MAJORS.map(m => [m.key, m.name])).map(([k,l]) =>
+    `<button class="chip ${f === k ? "prize" : ""}" data-histfilter="${k}" style="cursor:pointer">${l}</button>`).join("");
+  const rows = list.length ? list.map(h => { const def = majorDef(h.major) || {name:h.major};
+    return `<button class="rcard" data-hist="${esc(h.id)}"><div><div class="rs">${esc(def.name)}${h.kind === "stable" && h.majorCfg && h.majorCfg.roundsCount > 1 ? ` · round ${h.round}` : ""} · ${fmtDate(h.date)} ${h.year}</div>
+      <div class="rt" style="font-size:19px">${esc(h.course)}</div><div class="rs">${esc(h.title)}</div></div><span class="go">›</span></button>`; }).join("")
+    : `<div class="card empty"><b>No rounds saved yet</b>When you finish a round and tap Complete round, its summary and scorecard are saved here.</div>`;
+  return `<div class="counts" style="margin-top:14px">${chips}</div><div class="rlist" style="margin-top:12px">${rows}</div>`;
+}
+function withSavedRound(h, fn){
+  // draw a saved round with the names, course and settings it was played with
+  if (h.kind === "skins"){ const S = {setup: Object.assign(skinsDefault(), h.setup), scores: Object.assign({}, h.scores)}; delete S.scores.cleared; return fn({S, C: skinsCalc(S)}); }
+  rosterOverride = {players: h.players};
+  try { return fn({M: Object.assign({roundsCount:1, allowance:95, tieRule:"split"}, h.majorCfg, {rounds: {["r"+h.round]: h.roundDoc}}), rn: h.round, major: h.major, standings: h.standings}); }
+  finally { rosterOverride = null; }
+}
+function savedRoundView(){
+  const h = docs["history/" + ui.histId]; if (!h) return `<div class="card empty"><b>This round isn't saved any more</b></div>`;
+  const tab = ui.histTab || "summary";
+  const body = withSavedRound(h, x => h.kind === "skins"
+    ? (tab === "card" ? skinsCardView(x.S, x.C) : skinsSummaryView(x.S, x.C, true))
+    : (tab === "card" ? roundCardView(x) : roundSummaryView(x)));
+  return `${body}
+  <div class="actions"><button class="btn danger" data-act="ask-del-hist" ${readOnly?"disabled":""}>Delete this saved round</button></div>
+  ${confirm === "del-hist" ? `<div class="confirm"><p style="margin:0 0 10px">Delete this saved round? This can't be undone. Scores in the major itself aren't affected.</p>
+    <div class="actions" style="margin:0"><button class="btn danger" data-act="del-hist">Delete</button><button class="btn" data-act="cancel">Keep it</button></div></div>` : ""}`;
+}
+
 function hl(label, value, sub){ return `<div class="row"><div><div class="pname" style="font-size:16px;white-space:normal">${label}</div>${sub ? `<div class="pinfo">${sub}</div>` : ""}</div><div class="amt num" style="font-size:22px;text-align:right">${value}</div></div>`; }
 function banner(title, sub){ return `<section class="card" style="background:var(--green);color:var(--on-green);border-color:transparent;text-align:center;padding:22px 14px">
   <div class="lbl" style="color:var(--on-green);opacity:.85">Round complete</div>
@@ -914,7 +978,7 @@ function grossStats(names, grossOf, parOf){
     return {n, b, e, pars, tot, par, pu}; });
 }
 function vsPar(d){ return d === 0 ? "level" : d > 0 ? "+" + d : String(d); }
-function skinsSummaryView(S, C){
+function skinsSummaryView(S, C, archived){
   const setup = S.setup, pn = i => esc(setup.players[i].name), names = setup.players.map(p => p.name);
   const top = Math.max(...C.won), who = range(0,N-1).filter(i => C.won[i] === top);
   const title = top <= 0 ? "No skins won" : `${who.map(pn).join(" & ")} ${who.length > 1 ? "share top spot" : "wins"}`;
@@ -937,19 +1001,19 @@ function skinsSummaryView(S, C){
   rows.push(hl("Holes halved", `${carried}`, carried ? "The money carried over each time" : "Every hole was won outright"));
   return `${banner(title, top > 0 ? `${money(top)} from the £${C.pot} pot` : `£${C.pot} pot`)}
   <h2>Money</h2>
-  <section class="card ledger">${order.map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">${C.skins[i]} skin${C.skins[i]===1?"":"s"} · ${gs[i].pu ? "" : `gross ${gs[i].tot} (${vsPar(gs[i].tot - gs[i].par)})`}</div></div><div class="amt num ${C.won[i] > 0 ? "pos" : ""}">${money(C.won[i])}</div></div>`).join("")}</section>
+  <section class="card ledger">${order.map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">${C.skins[i]} skin${C.skins[i]===1?"":"s"}${gs[i].pu ? " · picked up on a hole" : ` · gross ${gs[i].tot} (${vsPar(gs[i].tot - gs[i].par)})`}</div></div><div class="amt num ${C.won[i] > 0 ? "pos" : ""}">${money(C.won[i])}</div></div>`).join("")}</section>
   ${C.endNote ? `<p class="note">${C.endNote}</p>` : ""}
   <h2>Highlights</h2>
   <section class="card ledger">${rows.join("")}</section>
   <h2>Hole by hole</h2>
   <section class="card ledger">${C.res.map(r => `<div class="row"><div>Hole ${r.h} <span class="pinfo">· £${r.value}${r.carryIn ? ` + £${r.carryIn}` : ""}</span></div><div class="${r.status === "won" ? "pos" : "pinfo"}" style="font-weight:600">${r.status === "won" ? `${pn(r.winner)} £${r.pot}` : r.h === H ? "Tied" : "Carried"}</div></div>`).join("")}</section>
-  <div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="home">Home</button></div>`;
+  ${archived ? "" : `<div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="home">Home</button></div>`}`;
 }
-function roundSummaryView(){
-  const M = getMajor(ui.major), rc = roundCalc(M, ui.round), def = majorDef(ui.major);
+function roundSummaryView(ctx){
+  const rn = ctx ? ctx.rn : ui.round, M = ctx ? ctx.M : getMajor(ui.major), rc = roundCalc(M, rn), def = majorDef(ctx ? ctx.major : ui.major);
   if (!rc) return needSetup();
   const R = roster().players, pn = i => esc(R[i].name), c = rc.course;
-  const roundName = M.roundsCount > 1 ? `round ${ui.round}` : "the round";
+  const roundName = M.roundsCount > 1 ? `round ${rn}` : "the round";
   const title = rc.complete ? `${names(rc.leaders)} ${rc.leaders.length > 1 ? "tie" : "wins"} ${roundName}` : "Round in progress";
   const gs = grossStats(R.map(p => p.name), (i,h) => rc.players[i].holes[h-1].gross, h => +c.holes[h-1].par);
   const rows = [];
@@ -971,7 +1035,9 @@ function roundSummaryView(){
   const ld = rc.round.ld || [];
   const ldRow = rc.round.ldHole ? hl(`Longest drive, hole ${rc.round.ldHole}`, ld.length ? pn(ld[0]) : "–", ld.length ? ld.map((p,k) => `${ord(k)} ${esc(R[p].name)}`).join(" · ") : "Nobody on the fairway") : "";
   const order = range(0,N-1).sort((a,b) => rc.total[b] - rc.total[a] || rc.players[b].total - rc.players[a].total);
-  const MC = majorCalc(ui.major), standing = range(0,N-1).sort((a,b) => MC.tot.total[b] - MC.tot.total[a]);
+  const MCl = ctx ? null : majorCalc(ui.major);
+  const st = ctx ? ctx.standings : {total: MCl.tot.total, done: MCl.done, of: MCl.m.roundsCount};
+  const standing = range(0,N-1).sort((a,b) => st.total[b] - st.total[a]);
   return `${banner(title, `${esc(c.name)}${rc.round.date ? " · " + fmtDate(rc.round.date) : ""}`)}
   <h2>Stableford</h2>
   <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">Out ${halves[i][0]} · In ${halves[i][1]}${gs[i].pu ? "" : ` · gross ${gs[i].tot}`}</div></div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
@@ -984,10 +1050,10 @@ function roundSummaryView(){
   <section class="card ledger">${rows.join("")}</section>
   <h2>Prizes</h2>
   <section class="card ledger">${ctpRows.join("")}${ldRow}</section>
-  ${M.roundsCount > 1 ? `<h2>${esc(def.name)} standings</h2>
-  <section class="card ledger">${standing.map((i,k) => `<div class="row"><div><div class="pname">${k+1}. ${pn(i)}</div></div><div class="amt num">${pts(MC.tot.total[i])}</div></div>`).join("")}</section>
-  <p class="note">${MC.done} of ${MC.m.roundsCount} rounds complete.</p>` : ""}
-  <div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="major">${esc(def.name)}</button></div>`;
+  ${M.roundsCount > 1 ? `<h2>${esc(def.name)} standings${ctx ? " after this round" : ""}</h2>
+  <section class="card ledger">${standing.map((i,k) => `<div class="row"><div><div class="pname">${k+1}. ${pn(i)}</div></div><div class="amt num">${pts(st.total[i])}</div></div>`).join("")}</section>
+  <p class="note">${st.done} of ${st.of} rounds complete${ctx ? " at the time" : ""}.</p>` : ""}
+  ${ctx ? "" : `<div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="major">${esc(def.name)}</button></div>`}`;
 }
 function ordinal(n){ const s = ["th","st","nd","rd"], v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); }
 
@@ -1003,8 +1069,8 @@ function skinsHoleView(S, C){
   const known = r.nets.filter(x => x != null), min = known.length === N ? Math.min(...known) : null;
   const rows = setup.players.map((p,i) => {
     const g = C.get(i, cur), s = r.st[i];
-    const info = `${s > 0 ? `Gets ${s} shot${s>1?"s":""}` : s < 0 ? `Gives ${-s}` : "No shot"}${g != null ? ` · net ${g - s}` : ""}`;
-    return stepperRow(p.name, i, g, s, info, min != null && r.nets[i] === min, false);
+    const info = `${s > 0 ? `Gets ${s} shot${s>1?"s":""}` : s < 0 ? `Gives ${-s}` : "No shot"}${g === 0 ? " · picked up" : g != null ? ` · net ${g - s}` : ""}`;
+    return stepperRow(p.name, i, g, s, info, min != null && isFinite(min) && r.nets[i] === min, true);
   }).join("");
   let res;
   if (r.status === "won") res = `<div class="result won">${esc(setup.players[r.winner].name)} wins the skin · £${r.pot}</div>`;
@@ -1036,7 +1102,7 @@ function skinsCardView(S, C){
     t += `<tr><td class="l">£</td>${range(a,b).map(h => `<td>${C.valueOf(h) ?? ""}</td>`).join("")}<td>${sum(range(a,b).map(h => C.valueOf(h) || 0)) || ""}</td></tr>`;
     t += setup.players.map((p,i) => { const gs = range(a,b).map(h => C.get(i,h));
       return `<tr><td class="l">${esc(p.name)}</td>${range(a,b).map((h,k) => { const r = C.res[h-1], g = gs[k];
-        return `<td class="${r.status==="won"&&r.winner===i?"win":""}">${g ?? ""}${r.st[i]>0&&g!=null?`<span class="sup">${"•".repeat(r.st[i])}</span>`:""}</td>`; }).join("")}<td>${gs.some(x=>x!=null) ? sum(gs.filter(x=>x!=null)) : ""}</td></tr>`; }).join("");
+        return `<td class="${r.status==="won"&&r.winner===i?"win":""}">${g === 0 ? "P/U" : g ?? ""}${r.st[i]>0&&g!=null?`<span class="sup">${"•".repeat(r.st[i])}</span>`:""}</td>`; }).join("")}<td>${gs.some(x=>x!=null) ? sum(gs.filter(x=>x!=null)) : ""}</td></tr>`; }).join("");
     t += `<tr class="tot"><td class="l">Skin</td>${range(a,b).map(h => { const r = C.res[h-1];
       return `<td>${r.status==="won" ? esc(setup.players[r.winner].name.slice(0,1)) + `<span class="sup">£${r.pot}</span>` : r.status==="carry" ? "→" : ""}</td>`; }).join("")}<td></td></tr>`;
     return `<div class="scroll card" style="padding:6px 8px;margin-top:12px"><table>${t}</table></div>`;
@@ -1119,6 +1185,7 @@ document.addEventListener("click", e => {
   const ds = t.dataset;
   if (t.id === "back"){
     if (ui.view === "round") go({view:"major"});
+    else if (ui.view === "saved") go({view:"history"});
     else if (ui.view === "course") go(ui.back ? Object.assign({}, ui.back, {back:null}) : {view:"courses"});
     else go({view:"home"});
     return;
@@ -1128,7 +1195,11 @@ document.addEventListener("click", e => {
   if (ds.view){ go({view:ds.view}); return; }
   if (ds.course){ go({view:"course", courseId:ds.course, back:null}); return; }
   if (ds.round){ const has = getMajor(ui.major).rounds["r"+ds.round]; go({view:"round", round:+ds.round, sub: has ? "hole" : "setup"}); return; }
+  if (ds.sub === "summary"){ completeRound(); return; }
   if (ds.sub){ go({sub:ds.sub}); return; }
+  if (ds.histfilter){ ui.histFilter = ds.histfilter; persist(); renderMain(); return; }
+  if (ds.hist){ go({view:"saved", histId:ds.hist, histTab:"summary"}); return; }
+  if (ds.histtab){ ui.histTab = ds.histtab; persist(); render(); window.scrollTo(0,0); return; }
   if (ds.go){ const h = +ds.go; completeMsg = ""; if (h >= 1 && h <= H){ if (ui.sub !== "hole") { ui.sub = "hole"; } setHole(h); } return; }
   if (ds.act === "complete-round"){ completeRound(); return; }
   if (ds.step && !readOnly){ stepScore(+ds.p, +ds.step); return; }
@@ -1164,6 +1235,8 @@ function togglePrize(kind, hole, p){
 function slug(s){ return (String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "course") + "-" + Math.random().toString(36).slice(2, 7); }
 function action(a, t){
   if (a === "cancel"){ confirm = null; renderMain(); return; }
+  if (a === "ask-del-hist"){ confirm = "del-hist"; renderMain(); return; }
+  if (a === "del-hist"){ const id = ui.histId; go({view:"history"}); removeDoc("history/" + id); return; }
   if (readOnly) return;
   if (a === "save-players"){ const d = clone(form.data); d.example = false; form.dirty = false; replace("config/roster", d); return; }
   if (a === "new-course"){ finder = {q:"", loading:false, results:null, error:"", note:""}; go({view:"course", courseId:null, back:null}); return; }
@@ -1297,7 +1370,7 @@ function watchSkins(){
   mode = "shared";
   // Data shown before connecting came from this device; the shared store is the source of truth now
   docs = {}; persist();
-  watchCollection("majors"); watchCollection("courses"); watchDoc("config/roster"); watchSkins();
+  watchCollection("majors"); watchCollection("courses"); watchCollection("history"); watchDoc("config/roster"); watchSkins();
   render();
   if (window.claude) try { const u = await window.claude.use("user"); if (u && u.can){ const c = await u.can("data.write"); if (c === false){ readOnly = true; render(); } } } catch(e){}
 })();
