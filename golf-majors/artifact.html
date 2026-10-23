@@ -1,0 +1,1070 @@
+<title>Majors Tour</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column like a scorecard in a back pocket; sticky green bar with back button, live strip and tabs. */
+:root{
+  --bg:#eef3ef; --card:#ffffff; --ink:#13241a; --muted:#5a6d61; --line:#d3ded6;
+  --green:#1d6a3d; --on-green:#ffffff; --green-soft:#dcebe1;
+  --v5:#cfe5d6; --v5-ink:#1d4a2e; --v10:#1d6a3d; --v10-ink:#ffffff; --v20:#d4a024; --v20-ink:#2a1e00;
+  --pos:#1d7a43; --neg:#b23a2b; --carry:#8a6a12;
+  --mk-masters:#1d6a3d; --mk-summer:#d4a024; --mk-skins:#b2482b; --mk-newyear:#2f437e;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1510; --card:#16211a; --ink:#e4eee7; --muted:#92a69a; --line:#2a3b30;
+  --green:#4cb276; --on-green:#07120b; --green-soft:#1d3326;
+  --v5:#24402e; --v5-ink:#bfe3cb; --v10:#4cb276; --v10-ink:#07120b; --v20:#e2b443; --v20-ink:#241a00;
+  --pos:#5cc98a; --neg:#ef7c6c; --carry:#e2b443;
+  --mk-masters:#4cb276; --mk-summer:#e2b443; --mk-skins:#e5795b; --mk-newyear:#8ea4e8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1510; --card:#16211a; --ink:#e4eee7; --muted:#92a69a; --line:#2a3b30;
+  --green:#4cb276; --on-green:#07120b; --green-soft:#1d3326;
+  --v5:#24402e; --v5-ink:#bfe3cb; --v10:#4cb276; --v10-ink:#07120b; --v20:#e2b443; --v20-ink:#241a00;
+  --pos:#5cc98a; --neg:#ef7c6c; --carry:#e2b443;
+  --mk-masters:#4cb276; --mk-summer:#e2b443; --mk-skins:#e5795b; --mk-newyear:#8ea4e8; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--body);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--green)}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--v20);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--green);color:var(--on-green);
+  margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+header.top.hastabs{padding-bottom:0}
+.bar{display:flex;align-items:center;gap:10px;min-width:0}
+.back{background:rgba(255,255,255,.14);border:0;color:var(--on-green);border-radius:8px;width:36px;height:36px;font-size:22px;line-height:1;flex:none}
+.ttl{min-width:0;flex:1}
+.ttl h1{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.02em;margin:0;text-transform:uppercase;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttl .sub{font-size:13px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.pm{background:rgba(255,255,255,.12);border-radius:8px;padding:6px 10px;min-width:0}
+.pm .n{font-size:13px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm .v{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.1}
+.pm .s{font-size:12px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);margin-top:10px}
+nav.tabs button{background:none;border:0;border-bottom:3px solid transparent;color:var(--on-green);opacity:.75;padding:10px 0 9px;
+  font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.06em;text-transform:uppercase}
+nav.tabs button[aria-selected="true"]{opacity:1;border-bottom-color:var(--v20)}
+
+.note{font-size:13px;color:var(--muted);margin:10px 0 0}
+.note.warn{color:var(--neg)}
+section{margin-top:16px}
+h2{font-family:var(--display);font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.03em;margin:22px 0 8px;text-wrap:balance}
+h2:first-child{margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+
+/* Home */
+.yearbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}
+.yearbar .yr{font-family:var(--display);font-weight:700;font-size:30px}
+.yearbar button{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:20px}
+.majors{display:grid;gap:12px;margin-top:12px}
+.mcard{display:grid;grid-template-columns:8px minmax(0,1fr) auto;gap:14px;align-items:center;text-align:left;width:100%;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 14px 14px 0;overflow:hidden}
+.mcard .flag{align-self:stretch;margin:-14px 0;background:var(--mk)}
+.mcard .when{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mcard .mn{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.05;text-transform:uppercase}
+.mcard .ms{font-size:14px;color:var(--muted);margin-top:2px}
+.mcard .ms b{color:var(--ink)}
+.mcard .go{font-size:22px;color:var(--muted)}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.links button{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.links .lt{font-weight:600}
+.links .ls{font-size:13px;color:var(--muted)}
+
+/* Hole view */
+.holehead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.holehead .big{font-family:var(--display);font-weight:700;font-size:56px;line-height:.9}
+.holehead .big small{font-size:20px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block}
+.meta{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--display);font-weight:600;font-size:16px;border-radius:999px;padding:2px 10px;border:1px solid var(--line);white-space:nowrap}
+.val5{background:var(--v5);color:var(--v5-ink);border-color:transparent}
+.val10,.prize{background:var(--v10);color:var(--v10-ink);border-color:transparent}
+.val20{background:var(--v20);color:var(--v20-ink);border-color:transparent}
+.pot{margin:12px 0 4px;font-size:15px;color:var(--muted)}
+.pot b{font-family:var(--display);font-size:22px;color:var(--ink)}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.prow:first-of-type{border-top:0}
+.pname{font-weight:600;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pinfo{font-size:13px;color:var(--muted)}
+.pinfo b{color:var(--ink)}
+.pu{border:1px solid var(--line);background:var(--bg);border-radius:6px;font-size:12px;font-weight:600;padding:1px 6px;margin-left:4px}
+.pu[aria-pressed="true"]{background:var(--neg);color:var(--card);border-color:transparent}
+.dots{color:var(--green);letter-spacing:2px;font-size:14px}
+.dots.minus{color:var(--neg)}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:26px;font-weight:600;line-height:1}
+.stepper button:active{transform:scale(.96)}
+.gross{width:52px;text-align:center}
+.gross .g{font-family:var(--display);font-weight:700;font-size:34px;line-height:1}
+.gross .nt{font-size:12px;color:var(--muted)}
+.prow.best .gross .g{color:var(--pos)}
+.result{margin-top:12px;border-radius:10px;padding:12px 14px;font-weight:600;text-align:center}
+.result.won{background:var(--green);color:var(--on-green)}
+.result.carry{background:var(--v20);color:var(--v20-ink)}
+.result.pending{background:var(--bg);color:var(--muted);border:1px dashed var(--line)}
+.navrow{display:flex;gap:10px;margin-top:14px}
+.btn{border-radius:10px;border:1px solid var(--line);background:var(--card);padding:12px 14px;font-weight:600;flex:1}
+.btn.primary{background:var(--green);color:var(--on-green);border-color:transparent}
+.btn.danger{color:var(--neg)}
+.btn.small{flex:none;padding:8px 12px;font-size:14px}
+.btn[disabled]{opacity:.4;cursor:default}
+.holes{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;margin-top:16px}
+.hb{border-radius:8px;border:1px solid var(--line);background:var(--card);padding:4px 0 3px;text-align:center;min-width:0}
+.hb .hn{font-family:var(--display);font-weight:700;font-size:17px;line-height:1.1}
+.hb .hs{font-size:11px;line-height:1.2;color:var(--muted);white-space:nowrap;overflow:hidden}
+.hb.v5{box-shadow:inset 0 -4px 0 var(--v5)}
+.hb.v10,.hb.pz{box-shadow:inset 0 -4px 0 var(--v10)}
+.hb.v20{box-shadow:inset 0 -4px 0 var(--v20)}
+.hb.cur{outline:2px solid var(--ink);outline-offset:-1px}
+.hb .hs.w{color:var(--pos);font-weight:600}
+.hb .hs.c{color:var(--carry);font-weight:600}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px;background:var(--sw)}
+
+/* Prize ranking */
+.prizebox{margin-top:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);padding:12px}
+.prizebox .pt{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.prizebox .ptt{font-family:var(--display);font-weight:700;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.rank{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.rank button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 6px;display:grid;gap:2px;justify-items:center;min-width:0}
+.rank button .rn{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.rank button .rp{font-size:12px;color:var(--muted)}
+.rank button.on{background:var(--green);color:var(--on-green);border-color:transparent}
+.rank button.on .rp{color:var(--on-green);opacity:.9}
+
+/* Tables */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:6px 6px;text-align:center;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
+th{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+td.l,th.l{text-align:left}
+td.win{color:var(--pos);font-weight:700}
+td .sup{font-size:10px;color:var(--muted);vertical-align:super}
+tr.tot td{font-weight:700;border-bottom:0}
+td.big{font-family:var(--display);font-weight:700;font-size:20px}
+
+.ledger .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.ledger .row:first-child{border-top:0}
+.ledger .amt{font-family:var(--display);font-weight:700;font-size:26px}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+.rlist{display:grid;gap:10px}
+.rcard{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.rcard .rt{font-family:var(--display);font-weight:700;font-size:20px;text-transform:uppercase}
+.rcard .rs{font-size:13px;color:var(--muted)}
+.state{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap;border:1px solid var(--line)}
+.state.done{background:var(--green);color:var(--on-green);border-color:transparent}
+.state.live{background:var(--v20);color:var(--v20-ink);border-color:transparent}
+
+/* Forms */
+.field{display:grid;gap:4px}
+.field label,.lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+input[type=text],input[type=number],input[type=date],select{width:100%;min-width:0;padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end}
+.grid3{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:8px;align-items:end}
+.stack{display:grid;gap:12px}
+.players .pl{display:grid;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.players .pl:first-child{border-top:0;padding-top:0}
+.calc{font-size:13px;color:var(--muted)}
+.calc b{color:var(--ink)}
+.tees td input{padding:6px 6px;text-align:center}
+.tees td.l input{text-align:left}
+.hcfg td input,.hcfg td select{padding:6px 4px;text-align:center}
+.opts{display:grid;gap:14px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.seg label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;background:var(--bg);flex:1 1 140px;cursor:pointer}
+.seg input{accent-color:var(--green)}
+.counts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.confirm{margin-top:10px;padding:12px;border-radius:10px;border:1px solid var(--neg)}
+.example{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--v20);color:var(--v20-ink);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.empty{text-align:center;padding:24px 14px;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:380px){.stepper button{width:42px;height:42px}.holehead .big{font-size:46px}.mcard .mn{font-size:24px}}
+</style>
+
+<div class="wrap">
+  <header class="top" id="top">
+    <div class="bar"><button class="back" id="back" aria-label="Back" hidden>‹</button><div class="ttl"><h1 id="h1">Majors Tour</h1><div class="sub" id="sub"></div></div></div>
+    <div class="strip" id="strip" hidden></div>
+    <nav class="tabs" id="tabs" role="tablist" hidden></nav>
+  </header>
+  <p class="note" id="syncnote">Connecting…</p>
+  <main id="main"></main>
+</div>
+
+<script>
+(function(){
+const N = 3, H = 18, LS = "majors-tour-v1", OLD_LS = "skins-major-v1", LEGACY_YEAR = 2026;
+const PRIZE = {1:[2], 2:[2,1], 3:[3,2,1]};
+const MAJORS = [
+  {key:"masters", name:"The Masters", kind:"stable", rounds:4, when:"Abroad", blurb:"Four rounds, stableford and prizes"},
+  {key:"summer", name:"Summer Series", kind:"stable", rounds:4, when:"UK summer", blurb:"Same format, played in the UK"},
+  {key:"skins", name:"Skins Major", kind:"skins", when:"One round", blurb:"18-hole skins for £5, £10 and £20"},
+  {key:"newyear", name:"New Year Major", kind:"stable", rounds:1, when:"31 December", blurb:"One round, stableford and prizes"}
+];
+const DEFAULT_ROSTER = {players:[{name:"Jonty", hi:12.4},{name:"Brandy", hi:18.0},{name:"Pete", hi:8.6}], example:true};
+const SKINS_HOLES = [[4,7,5],[3,15,5],[5,1,5],[4,11,5],[4,3,5],[4,9,10],[3,17,10],[5,5,10],[4,13,20],
+  [4,8,10],[4,2,10],[3,16,10],[5,6,10],[4,10,10],[4,12,10],[3,18,10],[5,4,20],[4,14,20]];
+
+/* ---------- Utilities ---------- */
+function clone(o){ return o == null ? o : JSON.parse(JSON.stringify(o)); }
+function isObj(v){ return v && typeof v === "object" && !Array.isArray(v); }
+function deepMerge(t, s){ for (const k in s){ if (isObj(s[k]) && isObj(t[k])) deepMerge(t[k], s[k]); else t[k] = clone(s[k]); } return t; }
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function range(a,b){ const r=[]; for(let i=a;i<=b;i++) r.push(i); return r; }
+function sum(a){ return a.reduce((x,y)=>x+(+y||0),0); }
+function pts(v){ return Number.isInteger(v) ? String(v) : v.toFixed(1); }
+function money(v, sign){ const a = Math.abs(v); const s = "£" + (Number.isInteger(Math.round(a*100)/100) ? Math.round(a) : a.toFixed(2));
+  if (!sign) return s; if (a < 0.005) return "£0"; return (v > 0 ? "+" : "−") + s; }
+function ord(n){ return ["1st","2nd","3rd"][n] || (n+1)+"th"; }
+function names(idx){ return idx.map(i => esc(roster().players[i].name)).join(" & "); }
+function fmtDate(d){ if (!d) return ""; const x = new Date(d + "T12:00:00"); return isNaN(x) ? d : x.toLocaleDateString("en-GB", {day:"numeric", month:"short"}); }
+const $ = id => document.getElementById(id);
+
+/* ---------- Store: shared db when available, this device otherwise ---------- */
+let docs = {}, mode = "starting", readOnly = false, db = null;
+const serverExists = new Set(), queues = {};
+let local = {docs:{}, ui:{}};
+try { local = Object.assign(local, JSON.parse(localStorage.getItem(LS) || "{}")); } catch(e){}
+docs = local.docs || {};
+try { // bring over a round saved by the earlier skins-only version
+  const old = JSON.parse(localStorage.getItem(OLD_LS) || "null");
+  if (old && old.setup && !docs["round/setup"]){ docs["round/setup"] = old.setup; docs["round/scores"] = old.scores || {}; }
+} catch(e){}
+function persist(){ try { localStorage.setItem(LS, JSON.stringify({docs, ui})); } catch(e){} }
+
+function enqueue(path, fn){ queues[path] = (queues[path] || Promise.resolve()).then(fn).catch(handleWriteError); }
+function write(path, patch){
+  docs[path] = deepMerge(docs[path] ? clone(docs[path]) : {}, patch);
+  persist(); render();
+  if (mode !== "shared") return;
+  enqueue(path, async () => {
+    const ref = db.doc(path);
+    if (serverExists.has(path)) await ref.update(clone(patch));
+    else { await ref.set(clone(docs[path])); serverExists.add(path); }
+  });
+}
+function replace(path, data){
+  docs[path] = clone(data); persist(); render();
+  if (mode !== "shared") return;
+  enqueue(path, async () => { await db.doc(path).set(clone(data)); serverExists.add(path); });
+}
+function removeDoc(path){
+  delete docs[path]; persist(); render();
+  if (mode !== "shared") return;
+  enqueue(path, async () => { await db.doc(path).delete(); serverExists.delete(path); });
+}
+function handleWriteError(e){
+  if (e && (e.code === "invalid_argument" || e.code === "not_granted" || e.code === "revoked")){ readOnly = true; render(); }
+  else { const n = $("syncnote"); n.className = "note warn"; n.textContent = "Couldn't save that change. Check your signal and try again."; }
+}
+
+/* ---------- UI state ---------- */
+let ui = Object.assign({view:"home", year:new Date().getFullYear(), major:null, round:1, sub:"hole", cur:{}, courseId:null, back:null}, local.ui || {});
+const HASHES = {masters:1, summer:1, skins:1, newyear:1, courses:1, players:1};
+const h0 = (location.hash || "").replace("#","");
+if (HASHES[h0]){ if (h0 === "courses" || h0 === "players") ui.view = h0; else { ui.major = h0; ui.view = h0 === "skins" ? "skins" : "major"; } }
+let form = null, confirm = null;
+function go(patch){ Object.assign(ui, patch); form = null; confirm = null; persist(); render(); window.scrollTo(0,0); }
+function curHole(){ const k = ctxKey(); return ui.cur[k] || 1; }
+function setHole(h){ ui.cur[ctxKey()] = h; persist(); render(); }
+function ctxKey(){ return ui.view === "skins" ? `${ui.year}-skins` : `${ui.year}-${ui.major}-r${ui.round}`; }
+function formFor(id, init){ if (!form || form.id !== id || !form.dirty) form = {id, data:init(), dirty:false}; return form.data; }
+
+/* ---------- Data accessors ---------- */
+function roster(){ const r = docs["config/roster"]; return r && Array.isArray(r.players) ? r : DEFAULT_ROSTER; }
+function courses(){ return Object.keys(docs).filter(p => p.startsWith("courses/")).map(p => Object.assign({id:p.slice(8)}, docs[p])).sort((a,b) => String(a.name).localeCompare(b.name)); }
+function majorDef(key){ return MAJORS.find(m => m.key === key); }
+function majorPath(key, year){ return `majors/${year || ui.year}-${key}`; }
+function getMajor(key, year){
+  const def = majorDef(key), d = docs[majorPath(key, year)] || {};
+  return Object.assign({roundsCount:def.rounds || 1, allowance:95, tieRule:"split"}, d, {rounds: d.rounds || {}});
+}
+function skinsPaths(){ return ui.year === LEGACY_YEAR ? {setup:"round/setup", scores:"round/scores"} : {setup:`skins-${ui.year}/setup`, scores:`skins-${ui.year}/scores`}; }
+function skinsDefault(){
+  const r = roster();
+  return {course:"Your golf club",
+    tees:[{name:"White", rating:71.4, slope:129, par:72},{name:"Yellow", rating:69.9, slope:125, par:72},{name:"Red", rating:73.1, slope:128, par:74}],
+    holes: SKINS_HOLES.map(([par,si,value]) => ({par,si,value})),
+    players: r.players.map(p => ({name:p.name, hi:p.hi, tee:1})),
+    allowance:100, strokeMode:"low", moneyMode:"each", endTie:"split", playoffWinner:null, example:true};
+}
+function skinsState(){
+  const p = skinsPaths(), s = docs[p.setup];
+  const setup = s ? Object.assign(skinsDefault(), clone(s)) : skinsDefault();
+  const scores = clone(docs[p.scores] || {}); delete scores.cleared;
+  return {setup, scores, saved: !!s};
+}
+
+/* ---------- Handicaps ---------- */
+function courseHcp(hi, tee){
+  const t = tee || {}; const slope = Number(t.slope) || 113, rating = Number(t.rating), par = Number(t.par);
+  return Math.round((parseFloat(hi) || 0) * slope / 113 + ((isNaN(rating) || isNaN(par) || !t.rating) ? 0 : rating - par));
+}
+function strokesOn(hcp, si){
+  if (hcp >= 0) return Math.floor(hcp/18) + (si <= hcp % 18 ? 1 : 0);
+  const a = -hcp; return -(Math.floor(a/18) + (si > 18 - (a % 18) ? 1 : 0));
+}
+function sisOk(holes){ return holes.map(h => +h.si).sort((a,b)=>a-b).join(",") === range(1,18).join(","); }
+
+/* ---------- Stableford majors ---------- */
+function roundCalc(major, rn){
+  const round = major.rounds["r"+rn];
+  if (!round || !round.course) return null;
+  const c = round.course, R = roster().players;
+  const players = R.map((p,i) => {
+    const tee = c.tees[(round.tees || [])[i] || 0] || c.tees[0];
+    const hi = (round.hi || [])[i] ?? p.hi;
+    const ch = courseHcp(hi, tee), ph = Math.round(ch * (Number(major.allowance) || 100) / 100);
+    const holes = c.holes.map((h, k) => {
+      const st = strokesOn(ph, Number(h.si));
+      const raw = round.scores && round.scores["p"+i] && round.scores["p"+i]["h"+(k+1)];
+      const gross = typeof raw === "number" ? raw : null;
+      const p_ = gross == null ? null : gross === 0 ? 0 : Math.max(0, Number(h.par) + 2 - (gross - st));
+      return {gross, st, pts:p_};
+    });
+    const total = sum(holes.map(x => x.pts || 0)), thru = holes.filter(x => x.gross != null).length;
+    return {hi, tee, ch, ph, holes, total, thru};
+  });
+  const complete = players.every(p => p.thru === H);
+  const win = Array(N).fill(0), ctp = Array(N).fill(0), ld = Array(N).fill(0);
+  const best = Math.max(...players.map(p => p.total));
+  let leaders = players.map((p,i) => p.total === best ? i : -1).filter(i => i >= 0);
+  let tiers = null;
+  if (complete){
+    tiers = placeTiers(players, major.tieRule === "countback");
+    const pts_ = PLACE_PTS[tiers.map(t => t.length).join(",")] || [];
+    tiers.forEach((t,k) => t.forEach(i => win[i] = pts_[k]));
+    leaders = tiers[0];
+  }
+  const par3s = c.holes.map((h,k) => +h.par === 3 ? k+1 : 0).filter(Boolean);
+  par3s.forEach(h => prizePts((round.ctp || {})["h"+h]).forEach((v,i) => ctp[i] += v));
+  if (round.ldHole) prizePts(round.ld).forEach((v,i) => ld[i] += v);
+  const total = players.map((p,i) => win[i] + ctp[i] + ld[i]);
+  return {round, course:c, players, complete, leaders, tiers, win, ctp, ld, total, par3s, started: players.some(p => p.thru > 0)};
+}
+/* Stableford places: 5, 3, 1. Tied players get the higher place's points; a tie for first leaves third on 2. */
+const PLACE_PTS = {"1,1,1":[5,3,1], "2,1":[5,2], "1,2":[5,3], "3":[5]};
+function placeTiers(players, countback){
+  // key per player: total, then (with countback) back 9, back 6, back 3, 18th
+  const key = i => { const h = players[i].holes.map(x => x.pts || 0);
+    return countback ? [sum(h), sum(h.slice(9)), sum(h.slice(12)), sum(h.slice(15)), h[17]] : [sum(h)]; };
+  const ks = range(0,N-1).map(key);
+  const cmp = (a,b) => { for (let k = 0; k < ks[a].length; k++) if (ks[a][k] !== ks[b][k]) return ks[b][k] - ks[a][k]; return 0; };
+  const order = range(0,N-1).sort(cmp), tiers = [];
+  order.forEach(i => { const last = tiers[tiers.length-1]; if (last && cmp(last[0], i) === 0) last.push(i); else tiers.push([i]); });
+  return tiers;
+}
+function prizePts(order){
+  const out = Array(N).fill(0); const o = (order || []).filter(i => i >= 0 && i < N);
+  const table = PRIZE[o.length] || [];
+  o.forEach((p,k) => out[p] += table[k] || 0);
+  return out;
+}
+function majorCalc(key, year){
+  const m = getMajor(key, year); const rounds = [];
+  for (let r = 1; r <= m.roundsCount; r++) rounds.push(roundCalc(m, r));
+  const tot = {win:Array(N).fill(0), ctp:Array(N).fill(0), ld:Array(N).fill(0), total:Array(N).fill(0), stab:Array(N).fill(0), roundWins:Array(N).fill(0)};
+  rounds.forEach(rc => { if (!rc) return; for (let i = 0; i < N; i++){ tot.win[i] += rc.win[i]; tot.ctp[i] += rc.ctp[i]; tot.ld[i] += rc.ld[i]; tot.total[i] += rc.total[i]; tot.stab[i] += rc.players[i].total; if (rc.win[i]) tot.roundWins[i]++; } });
+  const done = rounds.filter(r => r && r.complete).length, started = rounds.filter(r => r && r.started).length;
+  return {m, rounds, tot, done, started};
+}
+/* Roll of honour: past winners entered by hand, plus majors finished in the app (those win for their year) */
+function honours(key){
+  const manual = (docs["config/honours"] || {})[key] || {}, out = {};
+  Object.keys(manual).forEach(y => { if (manual[y]) out[y] = {year:+y, name:manual[y], auto:false}; });
+  if (majorDef(key).kind === "skins"){
+    const S = skinsState(), C = skinsCalc(S), top = Math.max(...C.net);
+    if (C.allDone && !C.leftover && top > 0.004) out[ui.year] = {year:ui.year, name:C.net.map((v,i) => v === top ? S.setup.players[i].name : null).filter(Boolean).join(" & "), auto:true};
+  } else {
+    Object.keys(docs).forEach(p => { const m = p.match(new RegExp("^majors/(\\d+)-" + key + "$")); if (!m) return;
+      const M = majorCalc(key, +m[1]); if (M.done !== M.m.roundsCount) return;
+      const top = Math.max(...M.tot.total); if (top <= 0) return;
+      out[m[1]] = {year:+m[1], name:M.tot.total.map((v,i) => v === top ? roster().players[i].name : null).filter(Boolean).join(" & "), auto:true}; });
+  }
+  return Object.values(out).sort((a,b) => b.year - a.year);
+}
+function holderLine(key){
+  const h = honours(key)[0];
+  return h ? `Holder: <b>${esc(h.name)}</b> (${h.year})` : "Inaugural year · no holder yet";
+}
+function rollView(key){
+  const list = honours(key);
+  return `<h2>Roll of honour</h2>
+  <section class="card ledger">${list.length ? list.map(h => `<div class="row"><div><div class="pname">${esc(h.name)}</div><div class="pinfo">${h.auto ? "Won in this app" : "Past winner"}</div></div>
+    <div style="display:flex;gap:10px;align-items:center"><div class="amt num">${h.year}</div>${h.auto ? "" : `<button class="btn small" data-act="del-honour" data-y="${h.year}" aria-label="Remove ${h.year}" ${readOnly?"disabled":""}>✕</button>`}</div></div>`).join("")
+    : `<div class="row"><div class="pinfo">The first winner becomes the inaugural champion.</div></div>`}</section>
+  <section class="card"><div class="grid3">
+    <div class="field"><label for="hy">Year</label><input type="number" inputmode="numeric" id="hy" value="${ui.year - 1}"></div>
+    <div class="field"><label for="hn">Winner</label><input type="text" id="hn" list="hnl" placeholder="Name"></div>
+    <button class="btn" data-act="add-honour" ${readOnly?"disabled":""}>Add winner</button>
+  </div><datalist id="hnl">${roster().players.map(p => `<option value="${esc(p.name)}">`).join("")}</datalist></section>`;
+}
+
+/* ---------- Skins ---------- */
+function skinsHcps(s){
+  const rows = s.players.map(p => {
+    const t = s.tees[p.tee] || s.tees[0];
+    const ch = courseHcp(p.hi, t);
+    return {ch, ph: Math.round(ch * (Number(s.allowance)||100) / 100)};
+  });
+  const low = Math.min(...rows.map(r => r.ph));
+  rows.forEach(r => r.strokes = s.strokeMode === "low" ? r.ph - low : r.ph);
+  return rows;
+}
+function skinsCalc(S){
+  const {setup, scores} = S, hc = skinsHcps(setup);
+  const get = (p,h) => { const v = scores["p"+p] && scores["p"+p]["h"+h]; return typeof v === "number" && v > 0 ? v : null; };
+  const res = [], won = Array(N).fill(0), skins = Array(N).fill(0);
+  let carry = 0, blocked = false, allDone = true;
+  for (let h = 1; h <= H; h++){
+    const hole = setup.holes[h-1], value = Number(hole.value);
+    const st = hc.map(r => strokesOn(r.strokes, Number(hole.si)));
+    const g = range(0,N-1).map(p => get(p,h));
+    const nets = g.map((x,i) => x == null ? null : x - st[i]);
+    if (blocked || g.some(x => x == null)){
+      res.push({h, status: blocked ? "blocked" : "pending", pot: blocked ? null : carry + value, carryIn: blocked ? null : carry, value, st, nets, g});
+      blocked = true; allDone = false; continue;
+    }
+    const pot = carry + value, min = Math.min(...nets);
+    const best = nets.map((n,i) => n === min ? i : -1).filter(i => i >= 0);
+    if (best.length === 1){ won[best[0]] += pot; skins[best[0]]++; res.push({h, status:"won", winner:best[0], pot, carryIn:carry, value, st, nets, g}); carry = 0; }
+    else { res.push({h, status:"carry", tied:best, pot, carryIn:carry, value, st, nets, g}); carry = pot; }
+  }
+  let leftover = 0, endNote = "";
+  const pn = i => esc(setup.players[i].name);
+  if (allDone && carry > 0){
+    const last = res[H-1];
+    if (setup.endTie === "split"){ last.tied.forEach(i => won[i] += carry / last.tied.length); endNote = `£${carry} carried past 18, split between ${last.tied.map(pn).join(" & ")}.`; }
+    else if (setup.playoffWinner != null){ won[setup.playoffWinner] += carry; skins[setup.playoffWinner]++; endNote = `${pn(setup.playoffWinner)} won the £${carry} playoff.`; }
+    else { leftover = carry; endNote = `£${carry} is still up for grabs. Play it off, then pick the winner on the Money tab.`; }
+  }
+  const total = sum(won);
+  // "each": both opponents pay the winner. "pot": everyone staked an equal share of the money awarded.
+  const net = setup.moneyMode === "each" ? won.map(w => w*N - total) : won.map(w => w - total/N);
+  return {hc, res, won, skins, carry, allDone, leftover, endNote, net, total, get, started: res.some(r => r.g && r.g.some(x => x != null))};
+}
+function settle(net){
+  const cr = [], dr = [];
+  net.forEach((v,i) => { if (v > 0.004) cr.push({i, v}); else if (v < -0.004) dr.push({i, v:-v}); });
+  const out = [];
+  while (cr.length && dr.length){
+    const c = cr[0], d = dr[0], amt = Math.min(c.v, d.v);
+    out.push({from:d.i, to:c.i, amt}); c.v -= amt; d.v -= amt;
+    if (c.v < 0.004) cr.shift(); if (d.v < 0.004) dr.shift();
+  }
+  return out;
+}
+
+/* ---------- Render shell ---------- */
+function render(){ renderHeader(); renderMain(); syncNote(); }
+function renderRemote(){ if (form && form.dirty) { renderHeader(); syncNote(); } else render(); }
+function setHeader(title, sub, back, strip, tabs){
+  $("h1").textContent = title; $("sub").textContent = sub || "";
+  $("back").hidden = !back;
+  $("strip").hidden = !strip; if (strip) $("strip").innerHTML = strip;
+  $("tabs").hidden = !tabs; $("top").classList.toggle("hastabs", !!tabs);
+  if (tabs) $("tabs").innerHTML = tabs.map(([k,l]) => `<button role="tab" data-sub="${k}" aria-selected="${ui.sub===k}">${l}</button>`).join("");
+}
+function renderHeader(){
+  const R = roster().players;
+  if (ui.view === "home") setHeader("Majors Tour", `${R.map(p => p.name).join(", ")} · ${ui.year} season`, false);
+  else if (ui.view === "players") setHeader("Players", "Names and current handicaps", true);
+  else if (ui.view === "courses") setHeader("Courses", "Shared course library", true);
+  else if (ui.view === "course") setHeader(ui.courseId ? "Edit course" : "New course", "Tees, pars and stroke indexes", true);
+  else if (ui.view === "major"){
+    const M = majorCalc(ui.major), def = majorDef(ui.major);
+    setHeader(def.name, `${ui.year} · ${M.m.roundsCount} round${M.m.roundsCount>1?"s":""} · ${def.when}`, true,
+      R.map((p,i) => `<div class="pm"><div class="n">${esc(p.name)}</div><div class="v num">${pts(M.tot.total[i])}</div><div class="s">major points</div></div>`).join(""));
+  }
+  else if (ui.view === "round"){
+    const M = getMajor(ui.major), rc = roundCalc(M, ui.round), def = majorDef(ui.major);
+    const multi = M.roundsCount > 1 ? `Round ${ui.round} · ` : "";
+    setHeader(def.name, multi + (rc ? rc.course.name : "Not set up yet"), true,
+      rc ? R.map((p,i) => `<div class="pm"><div class="n">${esc(p.name)}</div><div class="v num">${rc.players[i].total} pts</div><div class="s num">${rc.players[i].thru ? `thru ${rc.players[i].thru}` : "not started"} · ${pts(rc.total[i])} major</div></div>`).join("") : null,
+      [["hole","Hole"],["card","Card"],["prizes","Points"],["setup","Setup"]]);
+  }
+  else if (ui.view === "skins"){
+    const S = skinsState(), C = skinsCalc(S);
+    setHeader("Skins Major", `${ui.year} · ${S.setup.course}${S.saved ? "" : " · example setup"}`, true,
+      S.setup.players.map((p,i) => `<div class="pm"><div class="n">${esc(p.name)}</div><div class="v num">${money(C.net[i], true)}</div><div class="s num">${C.skins[i]} skin${C.skins[i]===1?"":"s"} · off ${C.hc[i].strokes}</div></div>`).join(""),
+      [["hole","Hole"],["card","Card"],["money","Money"],["setup","Setup"]]);
+  }
+}
+function syncNote(){
+  const n = $("syncnote"); n.className = "note";
+  if (mode === "shared") n.textContent = readOnly ? "Viewing live scores. You don't have permission to make changes on this page." : "Live: everything syncs to anyone who opens this page.";
+  else if (mode === "local") n.textContent = "Saved on this device only. Sign in to claude.ai to share live scores.";
+  else n.textContent = "Connecting…";
+  if (readOnly) n.className = "note warn";
+}
+function renderMain(){
+  const m = $("main"), v = ui.view;
+  if (v === "home") m.innerHTML = homeView();
+  else if (v === "players") m.innerHTML = playersView();
+  else if (v === "courses") m.innerHTML = coursesView();
+  else if (v === "course") m.innerHTML = courseEditView();
+  else if (v === "major") m.innerHTML = majorView();
+  else if (v === "round") m.innerHTML = ui.sub === "card" ? roundCardView() : ui.sub === "prizes" ? roundPointsView() : ui.sub === "setup" ? roundSetupView() : roundHoleView();
+  else if (v === "skins"){ const S = skinsState(), C = skinsCalc(S);
+    m.innerHTML = ui.sub === "card" ? skinsCardView(S,C) : ui.sub === "money" ? skinsMoneyView(S,C) : ui.sub === "setup" ? skinsSetupView(S) : skinsHoleView(S,C); }
+}
+
+/* ---------- Home ---------- */
+function homeView(){
+  const R = roster().players;
+  const cards = MAJORS.map(def => {
+    let status;
+    if (def.kind === "skins"){
+      const S = skinsState(), C = skinsCalc(S);
+      if (!C.started) status = S.saved ? "Ready to play" : "Not set up yet";
+      else { const top = Math.max(...C.net), who = C.net.map((v,i) => v === top ? i : -1).filter(i => i >= 0);
+        const done = C.allDone && !C.leftover;
+        status = top <= 0.004 ? "All square" : `<b>${who.map(i => esc(S.setup.players[i].name)).join(" & ")}</b> ${done ? "won" : who.length > 1 ? "lead on" : "leads on"} ${money(top, true)}`; }
+    } else {
+      const M = majorCalc(def.key);
+      if (!M.started && !Object.keys(M.m.rounds).length) status = "Not started";
+      else {
+        const top = Math.max(...M.tot.total), who = M.tot.total.map((v,i) => v === top ? i : -1).filter(i => i >= 0);
+        const finished = M.done === M.m.roundsCount;
+        const prog = M.m.roundsCount > 1 ? ` · ${M.done} of ${M.m.roundsCount} rounds done` : "";
+        status = top === 0 ? `Under way${prog}` : `<b>${names(who)}</b> ${finished ? (who.length > 1 ? "tied on" : "won with") : (who.length > 1 ? "lead on" : "leads on")} ${pts(top)} pts${prog}`;
+      }
+    }
+    return `<button class="mcard" style="--mk:var(--mk-${def.key})" data-major="${def.key}">
+      <span class="flag"></span>
+      <div><div class="when">${def.when}</div><div class="mn">${def.name}</div><div class="ms">${status}</div><div class="ms">${holderLine(def.key)}</div></div>
+      <span class="go">›</span></button>`;
+  }).join("");
+  const nc = courses().length;
+  return `<div class="yearbar"><button data-year="-1" aria-label="Previous season">‹</button><div class="yr num">${ui.year}</div><button data-year="1" aria-label="Next season">›</button></div>
+  <div class="majors">${cards}</div>
+  <div class="links">
+    <button data-view="players"><div class="lt">Players</div><div class="ls">${R.map(p => esc(p.name) + " " + p.hi).join(" · ")}${roster().example ? " (example)" : ""}</div></button>
+    <button data-view="courses"><div class="lt">Courses</div><div class="ls">${nc ? `${nc} saved` : "None saved yet"}</div></button>
+  </div>
+  <p class="note">Stableford majors: 5, 3 and 1 points for 1st, 2nd and 3rd on stableford each round (a tie for 1st gets 5 each and 3rd gets 2); 3, 2, 1 for closest to the pin on each par 3 and for the longest drive (2, 1 when two qualify; 2 when only one does).</p>`;
+}
+
+/* ---------- Players ---------- */
+function playersView(){
+  const d = formFor("players", () => clone(roster()));
+  return `<h2>Players${d.example ? `<span class="example">Example</span>` : ""}</h2>
+  <section class="card players">${d.players.map((p,i) => `<div class="pl"><div class="grid2">
+    <div class="field"><label for="rn${i}">Name</label><input type="text" id="rn${i}" data-f="players.${i}.name" value="${esc(p.name)}"></div>
+    <div class="field"><label for="rh${i}">Handicap index</label><input type="number" inputmode="decimal" step="0.1" id="rh${i}" data-f="players.${i}.hi" value="${esc(p.hi)}"></div>
+  </div></div>`).join("")}</section>
+  <p class="note">New rounds start with these handicap indexes. Each round keeps its own copy, so updating them later doesn't change finished rounds.</p>
+  <div class="actions"><button class="btn primary" data-act="save-players" ${readOnly?"disabled":""}>${form.dirty ? "Save players" : "Saved"}</button></div>`;
+}
+
+/* ---------- Courses ---------- */
+function coursesView(){
+  const cs = courses();
+  const list = cs.length ? cs.map(c => {
+    const par = sum(c.holes.map(h => +h.par)), p3 = c.holes.filter(h => +h.par === 3).length;
+    return `<button class="rcard" data-course="${esc(c.id)}"><div><div class="rt">${esc(c.name)}</div>
+      <div class="rs">${esc(c.country || "")}${c.country ? " · " : ""}Par ${par} · ${p3} par 3s · ${c.tees.map(t => esc(t.name)).join(", ")}</div></div><span class="go">›</span></button>`;
+  }).join("") : `<div class="card empty"><b>No courses yet</b>Add each course once and pick it when you set up a round.</div>`;
+  return `<h2>Courses</h2><div class="rlist">${list}</div>
+  <div class="actions"><button class="btn primary" data-act="new-course" ${readOnly?"disabled":""}>Add a course</button></div>`;
+}
+function blankCourse(){
+  return {name:"", country:"", tees:[{name:"Yellow", rating:"", slope:"", par:72},{name:"White", rating:"", slope:"", par:72}],
+    holes: range(1,18).map(h => ({par:4, si:h}))};
+}
+function courseEditView(){
+  const d = formFor("course:" + (ui.courseId || "new"), () => ui.courseId && docs["courses/"+ui.courseId] ? clone(docs["courses/"+ui.courseId]) : blankCourse());
+  const par = sum(d.holes.map(h => +h.par)), p3 = d.holes.map((h,k) => +h.par === 3 ? k+1 : 0).filter(Boolean);
+  const half = (a,b) => `<div class="scroll"><table class="hcfg"><tr><th class="l">Hole</th>${range(a,b).map(h => `<th>${h}</th>`).join("")}</tr>
+    <tr><td class="l">Par</td>${range(a,b).map(h => `<td><input type="number" inputmode="numeric" style="width:44px" id="cp${h}" aria-label="Hole ${h} par" data-f="holes.${h-1}.par" value="${d.holes[h-1].par}"></td>`).join("")}</tr>
+    <tr><td class="l">SI</td>${range(a,b).map(h => `<td><input type="number" inputmode="numeric" style="width:44px" id="cs${h}" aria-label="Hole ${h} stroke index" data-f="holes.${h-1}.si" value="${d.holes[h-1].si}"></td>`).join("")}</tr></table></div>`;
+  return `<h2>Course</h2>
+  <section class="card stack">
+    <div class="field"><label for="cn">Club and course</label><input type="text" id="cn" data-f="name" value="${esc(d.name)}" placeholder="e.g. La Manga – South"></div>
+    <div class="field"><label for="cc">Country</label><input type="text" id="cc" data-f="country" value="${esc(d.country)}" placeholder="e.g. Spain"></div>
+  </section>
+  <h2>Tees</h2>
+  <section class="card">
+    <div class="scroll"><table class="tees"><tr><th class="l">Tees</th><th>Rating</th><th>Slope</th><th>Par</th><th></th></tr>
+    ${d.tees.map((t,k) => `<tr><td class="l"><input type="text" id="ct${k}" aria-label="Tee name" data-f="tees.${k}.name" value="${esc(t.name)}"></td>
+      <td><input type="number" inputmode="decimal" step="0.1" id="cr${k}" aria-label="Course rating" data-f="tees.${k}.rating" value="${esc(t.rating)}"></td>
+      <td><input type="number" inputmode="numeric" id="cl${k}" aria-label="Slope" data-f="tees.${k}.slope" value="${esc(t.slope)}"></td>
+      <td><input type="number" inputmode="numeric" id="ca${k}" aria-label="Par" data-f="tees.${k}.par" value="${esc(t.par)}"></td>
+      <td><button class="btn small" data-act="del-tee" data-k="${k}" ${d.tees.length < 2 ? "disabled" : ""} aria-label="Remove ${esc(t.name)} tees">✕</button></td></tr>`).join("")}</table></div>
+    <div class="actions"><button class="btn small" data-act="add-tee">Add tees</button></div>
+    <p class="note">Rating and slope are on the scorecard or the club's website. If a course abroad has no slope, leave both blank and handicaps are used as they are.</p>
+  </section>
+  <h2>Holes</h2>
+  <section class="card stack">
+    <div class="counts"><span class="chip">Par ${par}</span><span class="chip prize">Par 3s: ${p3.join(", ") || "none"}</span></div>
+    ${sisOk(d.holes) ? "" : `<p class="note warn" style="margin:0">Stroke indexes should use each number from 1 to 18 once.</p>`}
+    ${half(1,9)}${half(10,18)}
+  </section>
+  <div class="actions"><button class="btn primary" data-act="save-course" ${readOnly?"disabled":""}>${form.dirty ? "Save course" : (ui.courseId ? "Saved" : "Save course")}</button>
+    ${ui.courseId ? `<button class="btn danger" data-act="ask-del-course" ${readOnly?"disabled":""}>Delete course</button>` : ""}</div>
+  ${confirm === "del-course" ? `<div class="confirm"><p style="margin:0 0 10px">Delete ${esc(d.name || "this course")} from the library? Rounds already played on it keep their own copy.</p>
+    <div class="actions" style="margin:0"><button class="btn danger" data-act="del-course">Delete</button><button class="btn" data-act="cancel">Keep it</button></div></div>` : ""}`;
+}
+
+/* ---------- Stableford major ---------- */
+function majorView(){
+  const M = majorCalc(ui.major), R = roster().players;
+  const order = range(0,N-1).sort((a,b) => M.tot.total[b] - M.tot.total[a]);
+  const table = `<div class="scroll card" style="padding:6px 10px"><table>
+    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th><th>Pts</th></tr>
+    ${order.map(i => `<tr><td class="l"><b>${esc(R[i].name)}</b></td><td>${M.tot.stab[i]}</td><td>${pts(M.tot.win[i])}</td><td>${pts(M.tot.ctp[i])}</td><td>${pts(M.tot.ld[i])}</td><td class="big">${pts(M.tot.total[i])}</td></tr>`).join("")}
+  </table></div>`;
+  const rounds = range(1, M.m.roundsCount).map(r => {
+    const rc = M.rounds[r-1];
+    let state = `<span class="state">Set up</span>`, line = "Pick the course and longest drive hole";
+    if (rc){
+      state = rc.complete ? `<span class="state done">Done</span>` : rc.started ? `<span class="state live">Thru ${Math.min(...rc.players.map(p => p.thru))}</span>` : `<span class="state">Ready</span>`;
+      const date = rc.round.date ? fmtDate(rc.round.date) + " · " : "";
+      const res = rc.complete ? ` · ${names(rc.leaders)} won (${rc.players[rc.leaders[0]].total} pts)` : "";
+      line = `${date}${esc(rc.course.name)}${res}`;
+    }
+    return `<button class="rcard" data-round="${r}"><div><div class="rt">${M.m.roundsCount > 1 ? "Round " + r : "The round"}</div><div class="rs">${line}</div></div>${state}</button>`;
+  }).join("");
+  const d = formFor("major:" + ui.major, () => ({roundsCount:M.m.roundsCount, allowance:M.m.allowance, tieRule:M.m.tieRule}));
+  return `<h2>Standings</h2>${table}
+  <p class="note">Place = 5, 3 or 1 points for finishing 1st, 2nd or 3rd on stableford in a round. CTP = closest to the pin on the par 3s. LD = longest drive.</p>
+  <h2>Rounds</h2><div class="rlist">${rounds}</div>
+  ${rollView(ui.major)}
+  <h2>Format</h2>
+  <section class="card opts">
+    <div class="field"><label for="mrc">Number of rounds</label><select id="mrc" data-f="roundsCount">${range(1,6).map(n => `<option value="${n}" ${+d.roundsCount===n?"selected":""}>${n}</option>`).join("")}</select></div>
+    <div><div class="lbl">Handicap allowance</div>
+      <div class="seg">${[100,95,90,85].map(a => `<label><input type="radio" name="mal" data-f="allowance" value="${a}" ${+d.allowance===a?"checked":""}> ${a}%</label>`).join("")}</div></div>
+    <div><div class="lbl">Tied on stableford</div>
+      <div class="seg"><label><input type="radio" name="mtr" data-f="tieRule" value="split" ${d.tieRule==="split"?"checked":""}> Tied players get the higher points</label>
+      <label><input type="radio" name="mtr" data-f="tieRule" value="countback" ${d.tieRule==="countback"?"checked":""}> Countback (back 9, 6, 3, 18th)</label></div></div>
+    <div class="actions" style="margin:0"><button class="btn primary" data-act="save-major" ${readOnly?"disabled":""}>${form.dirty ? "Save format" : "Saved"}</button></div>
+  </section>
+  <p class="note">95% is the World Handicap System allowance for individual stableford.</p>`;
+}
+
+/* ---------- Round ---------- */
+function needSetup(){ return `<div class="card empty"><b>This round isn't set up yet</b>Choose the course, tees and longest drive hole first.
+  <div class="actions" style="justify-content:center"><button class="btn primary" data-sub="setup" style="flex:none">Set up the round</button></div></div>`; }
+function stepperRow(name, i, gross, st, info, best, puOK){
+  const dots = st > 0 ? `<span class="dots" title="${st} shot${st>1?"s":""}">${"●".repeat(st)}</span>` : st < 0 ? `<span class="dots minus">${"+".repeat(-st)}</span>` : "";
+  const g = gross === 0 ? "P/U" : gross ?? "–";
+  return `<div class="prow ${best ? "best" : ""}">
+    <div><div class="pname">${esc(name)} ${dots}</div><div class="pinfo num">${info}${puOK ? ` <button class="pu" data-pu="${i}" aria-pressed="${gross===0}" ${readOnly?"disabled":""}>P/U</button>` : ""}</div></div>
+    <div class="stepper">
+      <button aria-label="One fewer for ${esc(name)}" data-step="-1" data-p="${i}" ${readOnly?"disabled":""}>−</button>
+      <div class="gross"><div class="g num" style="${gross===0?"font-size:22px":""}">${g}</div><div class="nt">gross</div></div>
+      <button aria-label="One more for ${esc(name)}" data-step="1" data-p="${i}" ${readOnly?"disabled":""}>+</button>
+    </div></div>`;
+}
+function prizeBox(kind, hole, order){
+  const R = roster().players, o = order || [], p = prizePts(o);
+  const title = kind === "ctp" ? "Closest to the pin" : "Longest drive";
+  const help = kind === "ctp" ? "Tap the players on the green, closest first." : "Tap the players on the fairway, longest first.";
+  return `<div class="prizebox"><div class="pt"><div class="ptt">${title}</div><div class="pinfo">Hole ${hole}</div></div>
+    <div class="pinfo">${help}${o.length ? "" : " Nobody yet."}</div>
+    <div class="rank">${R.map((pl,i) => { const k = o.indexOf(i);
+      return `<button class="${k>=0?"on":""}" data-prize="${kind}" data-hole="${hole}" data-p="${i}" ${readOnly?"disabled":""}><span class="rn">${esc(pl.name)}</span><span class="rp">${k>=0 ? `${ord(k)} · ${p[i]} pt${p[i]===1?"":"s"}` : "–"}</span></button>`; }).join("")}</div></div>`;
+}
+function roundHoleView(){
+  const M = getMajor(ui.major), rc = roundCalc(M, ui.round);
+  if (!rc) return needSetup();
+  const cur = curHole(), hole = rc.course.holes[cur-1], R = roster().players;
+  const isP3 = +hole.par === 3, isLD = +rc.round.ldHole === cur;
+  const holePts = rc.players.map(p => p.holes[cur-1].pts);
+  const known = holePts.filter(x => x != null);
+  const bestPts = known.length === N ? Math.max(...holePts) : null;
+  const rows = R.map((pl,i) => {
+    const ph = rc.players[i], hh = ph.holes[cur-1];
+    const shots = hh.st > 0 ? `Gets ${hh.st} shot${hh.st>1?"s":""}` : hh.st < 0 ? `Gives ${-hh.st}` : "No shot";
+    const info = `${shots}${hh.pts != null ? ` · <b>${hh.pts} pt${hh.pts===1?"":"s"}</b>` : ""} · ${ph.total} total`;
+    return stepperRow(pl.name, i, hh.gross, hh.st, info, bestPts != null && hh.pts === bestPts && bestPts > 0, true);
+  }).join("");
+  const strip = rc.course.holes.map((h,k) => {
+    const n = k+1, prize = +h.par === 3 ? "CTP" : +rc.round.ldHole === n ? "LD" : "";
+    const done = rc.players.every(p => p.holes[k].gross != null);
+    return `<button class="hb ${prize ? "pz" : ""} ${n === cur ? "cur" : ""}" data-go="${n}" aria-label="Hole ${n}"><div class="hn">${n}</div><div class="hs ${done ? "w" : ""}">${prize || (done ? "✓" : "par " + h.par)}</div></button>`;
+  }).join("");
+  return `<section class="card">
+    <div class="holehead"><div class="big num"><small>Hole</small>${cur}</div>
+      <div class="meta"><span class="chip">Par ${hole.par}</span><span class="chip">SI ${hole.si}</span>${isP3 ? `<span class="chip prize">CTP</span>` : ""}${isLD ? `<span class="chip val20">Longest drive</span>` : ""}</div></div>
+    ${rows}
+    ${isP3 ? prizeBox("ctp", cur, (rc.round.ctp || {})["h"+cur]) : ""}
+    ${isLD ? prizeBox("ld", cur, rc.round.ld) : ""}
+    <div class="navrow"><button class="btn" data-go="${cur-1}" ${cur===1?"disabled":""}>‹ Hole ${Math.max(1,cur-1)}</button>
+      <button class="btn primary" data-go="${cur+1}" ${cur===H?"disabled":""}>Hole ${Math.min(H,cur+1)} ›</button></div>
+  </section>
+  <div class="holes">${strip}</div>
+  <div class="legend"><span style="--sw:var(--v10)">Prize hole</span><span>P/U = picked up, 0 points</span></div>`;
+}
+function roundCardView(){
+  const M = getMajor(ui.major), rc = roundCalc(M, ui.round);
+  if (!rc) return needSetup();
+  const R = roster().players, c = rc.course;
+  const half = (a,b,label) => {
+    let t = `<tr><th class="l">Hole</th>${range(a,b).map(h => `<th>${h}</th>`).join("")}<th>${label}</th></tr>`;
+    t += `<tr><td class="l">Par</td>${range(a,b).map(h => `<td>${c.holes[h-1].par}</td>`).join("")}<td>${sum(range(a,b).map(h => +c.holes[h-1].par))}</td></tr>`;
+    t += `<tr><td class="l">SI</td>${range(a,b).map(h => `<td>${c.holes[h-1].si}</td>`).join("")}<td></td></tr>`;
+    t += R.map((p,i) => { const hs = range(a,b).map(h => rc.players[i].holes[h-1]);
+      return `<tr><td class="l">${esc(p.name)}</td>${hs.map(x => `<td>${x.gross == null ? "" : x.gross === 0 ? "–" : x.gross}${x.pts != null ? `<span class="sup">${x.pts}</span>` : ""}</td>`).join("")}<td><b>${sum(hs.map(x => x.pts || 0))}</b></td></tr>`; }).join("");
+    return `<div class="scroll card" style="padding:6px 8px;margin-top:12px"><table>${t}</table></div>`;
+  };
+  return `<h2>Scorecard</h2><p class="note">Gross score with stableford points raised. Totals are points.</p>${half(1,9,"Out")}${half(10,18,"In")}
+  <section class="card ledger">${R.map((p,i) => `<div class="row"><div><div class="pname">${esc(p.name)}</div><div class="pinfo">Playing handicap ${rc.players[i].ph} · ${esc(rc.players[i].tee.name)} tees</div></div><div class="amt num">${rc.players[i].total}</div></div>`).join("")}</section>`;
+}
+function roundPointsView(){
+  const M = getMajor(ui.major), rc = roundCalc(M, ui.round);
+  if (!rc) return needSetup();
+  const R = roster().players;
+  const winNote = rc.complete ? rc.tiers.map((t,k) => `${names(t)} ${t.length > 1 ? "tie" : ""} ${["1st","2nd","3rd"][rc.tiers.slice(0,k).flat().length]}`.replace("  "," ")).join(", ") + " on stableford."
+    : rc.started ? `${names(rc.leaders)} ${rc.leaders.length > 1 ? "are level" : "leads"} on stableford. Place points (5, 3, 1) are awarded when all 18 holes are in.` : "No scores yet.";
+  return `<h2>Major points this round</h2>
+  <div class="scroll card" style="padding:6px 10px"><table>
+    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th><th>Pts</th></tr>
+    ${R.map((p,i) => `<tr><td class="l"><b>${esc(p.name)}</b></td><td>${rc.players[i].total}</td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td><td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
+  </table></div>
+  <p class="note">${winNote}</p>
+  <h2>Closest to the pin</h2>
+  ${rc.par3s.length ? rc.par3s.map(h => prizeBox("ctp", h, (rc.round.ctp || {})["h"+h])).join("") : `<p class="note">This course has no par 3s.</p>`}
+  <h2>Longest drive</h2>
+  ${rc.round.ldHole ? prizeBox("ld", rc.round.ldHole, rc.round.ld) : `<p class="note">Pick the longest drive hole on the Setup tab.</p>`}`;
+}
+function roundSetupView(){
+  const M = getMajor(ui.major), saved = M.rounds["r"+ui.round], R = roster().players, cs = courses();
+  const d = formFor(`round:${ui.major}:${ui.round}`, () => saved ? clone(saved) : {date:"", courseId:"", course:null, tees:[0,0,0], hi:R.map(p => p.hi), ldHole:""});
+  const c = d.course;
+  const courseOpts = `<option value="">Choose a course…</option>` + cs.map(x => `<option value="${esc(x.id)}" ${x.id===d.courseId?"selected":""}>${esc(x.name)}</option>`).join("")
+    + (c && !cs.some(x => x.id === d.courseId) ? `<option value="${esc(d.courseId)}" selected>${esc(c.name)} (saved with round)</option>` : "");
+  let rest = "";
+  if (c){
+    const p3 = c.holes.map((h,k) => +h.par === 3 ? k+1 : 0).filter(Boolean);
+    const ldOpts = c.holes.map((h,k) => +h.par !== 3 ? `<option value="${k+1}" ${+d.ldHole===k+1?"selected":""}>Hole ${k+1} · par ${h.par}</option>` : "").join("");
+    rest = `<h2>Players</h2><section class="card players">${R.map((p,i) => {
+      const tee = c.tees[d.tees[i] || 0] || c.tees[0], ch = courseHcp(d.hi[i], tee), ph = Math.round(ch * M.allowance / 100);
+      return `<div class="pl"><div class="grid3">
+        <div class="field"><span class="lbl">Player</span><div class="pname" style="padding:8px 0">${esc(p.name)}</div></div>
+        <div class="field"><label for="sh${i}">Handicap index</label><input type="number" inputmode="decimal" step="0.1" id="sh${i}" data-f="hi.${i}" value="${esc(d.hi[i])}"></div>
+        <div class="field"><label for="st${i}">Tees</label><select id="st${i}" data-f="tees.${i}">${c.tees.map((t,k) => `<option value="${k}" ${+d.tees[i]===k?"selected":""}>${esc(t.name)}</option>`).join("")}</select></div>
+      </div><div class="calc num" data-calc="${i}">Course handicap <b>${ch}</b> · Playing handicap (${M.allowance}%) <b>${ph}</b></div></div>`; }).join("")}</section>
+    <h2>Prize holes</h2><section class="card stack">
+      <div><div class="lbl">Closest to the pin</div><div class="counts">${p3.length ? p3.map(h => `<span class="chip prize">Hole ${h}</span>`).join("") : `<span class="pinfo">No par 3s on this course</span>`}</div></div>
+      <div class="field"><label for="sld">Longest drive hole</label><select id="sld" data-f="ldHole"><option value="">Choose a hole…</option>${ldOpts}</select></div>
+    </section>`;
+  }
+  return `<h2>${M.roundsCount > 1 ? "Round " + ui.round : "The round"}</h2>
+  <section class="card stack">
+    <div class="field"><label for="scs">Course</label><select id="scs" data-f="courseId">${courseOpts}</select></div>
+    ${cs.length ? "" : `<p class="note" style="margin:0">Your course library is empty.</p>`}
+    <div class="actions" style="margin:0"><button class="btn small" data-act="new-course-from-round">Add a course</button></div>
+    <div class="field"><label for="sdt">Date</label><input type="date" id="sdt" data-f="date" value="${esc(d.date)}"></div>
+  </section>
+  ${rest}
+  <div class="actions"><button class="btn primary" data-act="save-round" ${readOnly || !c ? "disabled" : ""}>${form.dirty || !saved ? "Save round setup" : "Saved"}</button>
+    ${saved ? `<button class="btn danger" data-act="ask-clear-round" ${readOnly?"disabled":""}>Clear scores</button>` : ""}</div>
+  ${confirm === "clear-round" ? `<div class="confirm"><p style="margin:0 0 10px">Delete every score and prize result for this round? The setup stays.</p>
+    <div class="actions" style="margin:0"><button class="btn danger" data-act="clear-round">Yes, clear them</button><button class="btn" data-act="cancel">Keep them</button></div></div>` : ""}
+  <p class="note">The course is copied into the round when you save, so later edits to the library don't change it. Choose the course again to pull in edits.</p>`;
+}
+
+/* ---------- Skins views ---------- */
+function skinsHoleView(S, C){
+  const setup = S.setup, cur = curHole(), hole = setup.holes[cur-1], r = C.res[cur-1];
+  const pot = r.status === "blocked" ? `Finish earlier holes to see what this hole is worth.` : `Playing for <b class="num">£${r.pot}</b>${r.carryIn ? ` (£${r.value} + £${r.carryIn} carried)` : ""}`;
+  const known = r.nets.filter(x => x != null), min = known.length === N ? Math.min(...known) : null;
+  const rows = setup.players.map((p,i) => {
+    const g = C.get(i, cur), s = r.st[i];
+    const info = `${s > 0 ? `Gets ${s} shot${s>1?"s":""}` : s < 0 ? `Gives ${-s}` : "No shot"}${g != null ? ` · net ${g - s}` : ""}`;
+    return stepperRow(p.name, i, g, s, info, min != null && r.nets[i] === min, false);
+  }).join("");
+  let res;
+  if (r.status === "won") res = `<div class="result won">${esc(setup.players[r.winner].name)} wins the skin · £${r.pot}</div>`;
+  else if (r.status === "carry") res = cur === H ? `<div class="result carry">Tied on 18 · £${r.pot} ${setup.endTie === "split" ? "split between the tied players" : "goes to a playoff"}</div>`
+    : `<div class="result carry">Tied · £${r.pot} carries to hole ${cur+1}</div>`;
+  else res = `<div class="result pending">Enter all three scores to settle this hole</div>`;
+  const strip = C.res.map(x => {
+    let s = `£${x.value}`, c = "";
+    if (x.status === "won"){ s = esc(setup.players[x.winner].name.slice(0,3)); c = "w"; }
+    else if (x.status === "carry"){ s = "carry"; c = "c"; }
+    return `<button class="hb v${x.value} ${x.h === cur ? "cur" : ""}" data-go="${x.h}" aria-label="Hole ${x.h}"><div class="hn">${x.h}</div><div class="hs ${c}">${s}</div></button>`;
+  }).join("");
+  return `<section class="card">
+    <div class="holehead"><div class="big num"><small>Hole</small>${cur}</div>
+      <div class="meta"><span class="chip">Par ${hole.par}</span><span class="chip">SI ${hole.si}</span><span class="chip val${hole.value}">£${hole.value}</span></div></div>
+    <p class="pot">${pot}</p>${rows}${res}
+    <div class="navrow"><button class="btn" data-go="${cur-1}" ${cur===1?"disabled":""}>‹ Hole ${Math.max(1,cur-1)}</button>
+      <button class="btn primary" data-go="${cur+1}" ${cur===H?"disabled":""}>Hole ${Math.min(H,cur+1)} ›</button></div>
+  </section>
+  <div class="holes">${strip}</div>
+  <div class="legend"><span style="--sw:var(--v5)">£5 hole</span><span style="--sw:var(--v10)">£10 hole</span><span style="--sw:var(--v20)">£20 hole</span></div>
+  ${C.endNote ? `<p class="note">${C.endNote}</p>` : ""}`;
+}
+function skinsCardView(S, C){
+  const setup = S.setup;
+  const half = (a,b,label) => {
+    let t = `<tr><th class="l">Hole</th>${range(a,b).map(h => `<th>${h}</th>`).join("")}<th>${label}</th></tr>`;
+    t += `<tr><td class="l">Par</td>${range(a,b).map(h => `<td>${setup.holes[h-1].par}</td>`).join("")}<td>${sum(range(a,b).map(h => +setup.holes[h-1].par))}</td></tr>`;
+    t += `<tr><td class="l">£</td>${range(a,b).map(h => `<td>${setup.holes[h-1].value}</td>`).join("")}<td>${sum(range(a,b).map(h => +setup.holes[h-1].value))}</td></tr>`;
+    t += setup.players.map((p,i) => { const gs = range(a,b).map(h => C.get(i,h));
+      return `<tr><td class="l">${esc(p.name)}</td>${range(a,b).map((h,k) => { const r = C.res[h-1], g = gs[k];
+        return `<td class="${r.status==="won"&&r.winner===i?"win":""}">${g ?? ""}${r.st[i]>0&&g!=null?`<span class="sup">${"•".repeat(r.st[i])}</span>`:""}</td>`; }).join("")}<td>${gs.some(x=>x!=null) ? sum(gs.filter(x=>x!=null)) : ""}</td></tr>`; }).join("");
+    t += `<tr class="tot"><td class="l">Skin</td>${range(a,b).map(h => { const r = C.res[h-1];
+      return `<td>${r.status==="won" ? esc(setup.players[r.winner].name.slice(0,1)) + `<span class="sup">£${r.pot}</span>` : r.status==="carry" ? "→" : ""}</td>`; }).join("")}<td></td></tr>`;
+    return `<div class="scroll card" style="padding:6px 8px;margin-top:12px"><table>${t}</table></div>`;
+  };
+  return `<h2>Scorecard</h2><p class="note">Gross scores. Green marks the skin winner; dots show shots received; → means the money carried.</p>${half(1,9,"Out")}${half(10,18,"In")}`;
+}
+function skinsMoneyView(S, C){
+  const setup = S.setup, st = settle(C.net), pn = i => esc(setup.players[i].name);
+  const playoff = C.leftover > 0 ? `<section class="card"><div class="lbl">Playoff for £${C.leftover}</div>
+    <div class="actions">${setup.players.map((p,i) => `<button class="btn primary" data-playoff="${i}" ${readOnly?"disabled":""}>${esc(p.name)} won</button>`).join("")}</div></section>` : "";
+  const undo = setup.playoffWinner != null ? `<div class="actions"><button class="btn" data-playoff="none" ${readOnly?"disabled":""}>Undo playoff result</button></div>` : "";
+  const played = C.res.filter(r => r.status === "won" || r.status === "carry").length;
+  return `<h2>Money</h2>${playoff}
+  <section class="card ledger">${setup.players.map((p,i) => `<div class="row"><div><div class="pname">${esc(p.name)}</div>
+    <div class="pinfo num">${C.skins[i]} skin${C.skins[i]===1?"":"s"} worth ${money(C.won[i])}</div></div>
+    <div class="amt num ${C.net[i]>0.004?"pos":C.net[i]<-0.004?"neg":""}">${money(C.net[i], true)}</div></div>`).join("")}</section>
+  <p class="note">${played} of 18 holes settled.${C.carry && !C.allDone ? ` £${C.carry} currently carrying.` : ""} ${setup.moneyMode === "each" ? "Each opponent pays the skin winner the hole's value." : "Hole values come out of a pot everyone stakes equally."}</p>
+  ${C.endNote ? `<p class="note">${C.endNote}</p>` : ""}${undo}
+  <h2>Settle up</h2>
+  <section class="card ledger">${st.length ? st.map(t => `<div class="row"><div>${pn(t.from)} pays ${pn(t.to)}</div><div class="amt num">${money(t.amt)}</div></div>`).join("") : `<div class="row"><div class="pinfo">Nothing owed yet.</div></div>`}</section>
+  ${rollView("skins")}
+  <h2>Skins won</h2>
+  <section class="card ledger">${C.res.filter(r => r.status === "won").map(r => `<div class="row"><div>Hole ${r.h} · ${pn(r.winner)}${r.carryIn ? ` <span class="pinfo">(incl. £${r.carryIn} carry)</span>` : ""}</div><div class="amt num">£${r.pot}</div></div>`).join("") || `<div class="row"><div class="pinfo">No skins won yet.</div></div>`}</section>`;
+}
+function skinsSetupView(S){
+  const d = formFor("skins:" + ui.year, () => clone(S.setup)), hc = skinsHcps(d);
+  const counts = {5:0,10:0,20:0}; d.holes.forEach(h => counts[h.value] = (counts[h.value]||0)+1);
+  const ok = counts[5]===5 && counts[10]===10 && counts[20]===3, cs = courses();
+  return `<h2>Players${S.saved ? "" : `<span class="example">Example</span>`}</h2>
+  <section class="card players">${d.players.map((p,i) => `<div class="pl">
+    <div class="grid3">
+      <div class="field"><label for="pn${i}">Name</label><input type="text" id="pn${i}" data-f="players.${i}.name" value="${esc(p.name)}"></div>
+      <div class="field"><label for="ph${i}">Handicap index</label><input type="number" inputmode="decimal" step="0.1" id="ph${i}" data-f="players.${i}.hi" value="${esc(p.hi)}"></div>
+      <div class="field"><label for="pt${i}">Tees</label><select id="pt${i}" data-f="players.${i}.tee">${d.tees.map((t,k) => `<option value="${k}" ${+p.tee===k?"selected":""}>${esc(t.name)}</option>`).join("")}</select></div>
+    </div>
+    <div class="calc num" data-calc="${i}">Course handicap <b>${hc[i].ch}</b> · Playing handicap <b>${hc[i].ph}</b> · Shots in this game <b>${hc[i].strokes}</b></div>
+  </div>`).join("")}</section>
+  <p class="note">Course handicap = index × slope ÷ 113 + (course rating − par), rounded. Playing handicap applies the allowance below.</p>
+  <h2>Course</h2>
+  <section class="card stack">
+    ${cs.length ? `<div class="field"><label for="slib">Copy from your course library</label><select id="slib" data-act-change="copy-course"><option value="">Choose a course…</option>${cs.map(x => `<option value="${esc(x.id)}">${esc(x.name)}</option>`).join("")}</select></div>` : ""}
+    <div class="field"><label for="cname">Club and course</label><input type="text" id="cname" data-f="course" value="${esc(d.course)}"></div>
+    <div class="scroll"><table class="tees"><tr><th class="l">Tees</th><th>Rating</th><th>Slope</th><th>Par</th></tr>
+    ${d.tees.map((t,k) => `<tr><td class="l"><input type="text" id="tn${k}" aria-label="Tee name" data-f="tees.${k}.name" value="${esc(t.name)}"></td>
+      <td><input type="number" inputmode="decimal" step="0.1" id="tr${k}" aria-label="Course rating" data-f="tees.${k}.rating" value="${esc(t.rating)}"></td>
+      <td><input type="number" inputmode="numeric" id="ts${k}" aria-label="Slope" data-f="tees.${k}.slope" value="${esc(t.slope)}"></td>
+      <td><input type="number" inputmode="numeric" id="tp${k}" aria-label="Par" data-f="tees.${k}.par" value="${esc(t.par)}"></td></tr>`).join("")}</table></div>
+  </section>
+  <h2>Holes</h2>
+  <section class="card">
+    <div class="counts"><span class="chip val5">${counts[5]} × £5</span><span class="chip val10">${counts[10]} × £10</span><span class="chip val20">${counts[20]} × £20</span><span class="chip">£${sum(d.holes.map(h=>+h.value))} total</span></div>
+    ${ok ? "" : `<p class="note warn">Your format is 5 × £5, 10 × £10 and 3 × £20.</p>`}
+    ${sisOk(d.holes) ? "" : `<p class="note warn">Stroke indexes should use each number from 1 to 18 once.</p>`}
+    <div class="scroll" style="margin-top:10px"><table class="hcfg"><tr><th>Hole</th><th>Par</th><th>SI</th><th>Value</th></tr>
+    ${d.holes.map((h,k) => `<tr><td><b>${k+1}</b></td>
+      <td><input type="number" inputmode="numeric" id="hp${k}" aria-label="Hole ${k+1} par" data-f="holes.${k}.par" value="${h.par}"></td>
+      <td><input type="number" inputmode="numeric" id="hs${k}" aria-label="Hole ${k+1} stroke index" data-f="holes.${k}.si" value="${h.si}"></td>
+      <td><select id="hv${k}" aria-label="Hole ${k+1} value" data-f="holes.${k}.value">${[5,10,20].map(v => `<option value="${v}" ${+h.value===v?"selected":""}>£${v}</option>`).join("")}</select></td></tr>`).join("")}
+    </table></div>
+  </section>
+  <h2>Rules</h2>
+  <section class="card opts">
+    <div><div class="lbl">Handicap allowance</div><div class="seg">${[100,90,85,75].map(a => `<label><input type="radio" name="allow" data-f="allowance" value="${a}" ${+d.allowance===a?"checked":""}> ${a}%</label>`).join("")}</div></div>
+    <div><div class="lbl">Shots</div><div class="seg"><label><input type="radio" name="sm" data-f="strokeMode" value="low" ${d.strokeMode==="low"?"checked":""}> Off the lowest handicap</label>
+      <label><input type="radio" name="sm" data-f="strokeMode" value="full" ${d.strokeMode==="full"?"checked":""}> Full playing handicaps</label></div></div>
+    <div><div class="lbl">Paying out</div><div class="seg"><label><input type="radio" name="mm" data-f="moneyMode" value="each" ${d.moneyMode==="each"?"checked":""}> Each opponent pays the winner</label>
+      <label><input type="radio" name="mm" data-f="moneyMode" value="pot" ${d.moneyMode==="pot"?"checked":""}> Hole value is the whole pot</label></div></div>
+    <div><div class="lbl">Tie on 18</div><div class="seg"><label><input type="radio" name="et" data-f="endTie" value="split" ${d.endTie==="split"?"checked":""}> Split between the tied players</label>
+      <label><input type="radio" name="et" data-f="endTie" value="playoff" ${d.endTie==="playoff"?"checked":""}> Playoff for it</label></div></div>
+  </section>
+  <div class="actions"><button class="btn primary" data-act="save-skins" ${readOnly?"disabled":""}>${form.dirty || !S.saved ? "Save setup" : "Setup saved"}</button>
+    <button class="btn danger" data-act="ask-clear-skins" ${readOnly?"disabled":""}>Clear all scores</button></div>
+  ${confirm === "clear-skins" ? `<div class="confirm"><p style="margin:0 0 10px">Delete every score for all three players? Setup stays as it is.</p>
+    <div class="actions" style="margin:0"><button class="btn danger" data-act="clear-skins">Yes, clear scores</button><button class="btn" data-act="cancel">Keep scores</button></div></div>` : ""}`;
+}
+
+/* ---------- Events ---------- */
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t || t.disabled) return;
+  const ds = t.dataset;
+  if (t.id === "back"){
+    if (ui.view === "round") go({view:"major"});
+    else if (ui.view === "course") go(ui.back ? Object.assign({}, ui.back, {back:null}) : {view:"courses"});
+    else go({view:"home"});
+    return;
+  }
+  if (ds.year){ go({year: ui.year + (+ds.year)}); return; }
+  if (ds.major){ const def = majorDef(ds.major); go(def.kind === "skins" ? {view:"skins", major:"skins", sub: skinsState().saved ? "hole" : "setup"} : {view:"major", major:ds.major}); return; }
+  if (ds.view){ go({view:ds.view}); return; }
+  if (ds.course){ go({view:"course", courseId:ds.course, back:null}); return; }
+  if (ds.round){ const has = getMajor(ui.major).rounds["r"+ds.round]; go({view:"round", round:+ds.round, sub: has ? "hole" : "setup"}); return; }
+  if (ds.sub){ go({sub:ds.sub}); return; }
+  if (ds.go){ const h = +ds.go; if (h >= 1 && h <= H) setHole(h); return; }
+  if (ds.step && !readOnly){ stepScore(+ds.p, +ds.step); return; }
+  if (ds.pu && !readOnly){ const p = +ds.pu, cur = curHole(), g = currentGross(p, cur); writeGross(p, cur, g === 0 ? null : 0); return; }
+  if (ds.prize && !readOnly){ togglePrize(ds.prize, +ds.hole, +ds.p); return; }
+  if (ds.playoff && !readOnly){ const p = skinsPaths(), s = skinsState().setup; s.playoffWinner = ds.playoff === "none" ? null : +ds.playoff; replace(p.setup, s); return; }
+  if (ds.act) action(ds.act, t);
+});
+function currentGross(p, h){
+  if (ui.view === "skins"){ const v = skinsState().scores["p"+p]?.["h"+h]; return typeof v === "number" ? v : null; }
+  const r = getMajor(ui.major).rounds["r"+ui.round]; const v = r && r.scores && r.scores["p"+p] && r.scores["p"+p]["h"+h]; return typeof v === "number" ? v : null;
+}
+function stepScore(p, dir){
+  const cur = curHole();
+  const par = ui.view === "skins" ? +skinsState().setup.holes[cur-1].par : +getMajor(ui.major).rounds["r"+ui.round].course.holes[cur-1].par;
+  const g = currentGross(p, cur);
+  let v = (g == null || g === 0) ? (dir > 0 ? par : par - 1) : g + dir;
+  writeGross(p, cur, Math.max(1, Math.min(15, v)));
+}
+function writeGross(p, h, v){
+  if (ui.view === "skins") write(skinsPaths().scores, {["p"+p]: {["h"+h]: v}});
+  else write(majorPath(ui.major), {rounds: {["r"+ui.round]: {scores: {["p"+p]: {["h"+h]: v}}}}});
+}
+function togglePrize(kind, hole, p){
+  const r = getMajor(ui.major).rounds["r"+ui.round];
+  const cur = kind === "ctp" ? ((r.ctp || {})["h"+hole] || []) : (r.ld || []);
+  const next = cur.includes(p) ? cur.filter(x => x !== p) : cur.concat(p).slice(0, N);
+  const patch = kind === "ctp" ? {ctp: {["h"+hole]: next}} : {ld: next};
+  write(majorPath(ui.major), {rounds: {["r"+ui.round]: patch}});
+}
+function slug(s){ return (String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "course") + "-" + Math.random().toString(36).slice(2, 7); }
+function action(a, t){
+  if (a === "cancel"){ confirm = null; renderMain(); return; }
+  if (readOnly) return;
+  if (a === "save-players"){ const d = clone(form.data); d.example = false; form.dirty = false; replace("config/roster", d); return; }
+  if (a === "new-course"){ go({view:"course", courseId:null, back:null}); return; }
+  if (a === "new-course-from-round"){ go({view:"course", courseId:null, back:{view:"round", sub:"setup"}}); return; }
+  if (a === "add-tee"){ form.data.tees.push({name:"", rating:"", slope:"", par: form.data.tees[0] ? form.data.tees[0].par : 72}); form.dirty = true; renderMain(); return; }
+  if (a === "del-tee"){ form.data.tees.splice(+t.dataset.k, 1); form.dirty = true; renderMain(); return; }
+  if (a === "save-course"){
+    const d = clone(form.data);
+    if (!String(d.name).trim()){ const n = $("cn"); if (n){ n.focus(); n.placeholder = "Give the course a name"; } return; }
+    const id = ui.courseId || slug(d.name);
+    form.dirty = false; replace("courses/" + id, d);
+    if (ui.back) go(Object.assign({}, ui.back, {back:null})); else go({view:"courses"});
+    return;
+  }
+  if (a === "ask-del-course"){ confirm = "del-course"; renderMain(); return; }
+  if (a === "del-course"){ const id = ui.courseId; go({view:"courses", courseId:null}); removeDoc("courses/" + id); return; }
+  if (a === "add-honour"){
+    const y = parseInt($("hy").value, 10), n = $("hn").value.trim();
+    if (!y || !n){ (!n ? $("hn") : $("hy")).focus(); return; }
+    write("config/honours", {[ui.major]: {[y]: n}}); return;
+  }
+  if (a === "del-honour"){
+    const all = clone(docs["config/honours"] || {}); if (all[ui.major]) delete all[ui.major][t.dataset.y];
+    replace("config/honours", all); return;
+  }
+  if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule}); return; }
+  if (a === "save-round"){
+    const d = clone(form.data); if (!d.course) return;
+    const saved = getMajor(ui.major).rounds["r"+ui.round] || {};
+    const base = {date:d.date || "", courseId:d.courseId, course:d.course, tees:d.tees.map(Number), hi:d.hi.map(x => x === "" ? 0 : Number(x)), ldHole: d.ldHole ? +d.ldHole : null};
+    // A different course or LD hole invalidates prize results tied to the old holes
+    if (saved.courseId && saved.courseId !== d.courseId){ base.ctp = {}; base.ld = []; }
+    if (saved.ldHole && +saved.ldHole !== +d.ldHole) base.ld = [];
+    const M = getMajor(ui.major);
+    form.dirty = false;
+    const roundDoc = Object.assign({}, saved, base);
+    if (base.ctp){ // a nested merge can't drop old prize keys, so replace the whole major doc
+      const all = clone(docs[majorPath(ui.major)]); all.rounds["r"+ui.round] = roundDoc; replace(majorPath(ui.major), all);
+    } else write(majorPath(ui.major), {roundsCount: M.roundsCount, allowance: M.allowance, tieRule: M.tieRule, rounds: {["r"+ui.round]: roundDoc}});
+    go({sub:"hole"});
+    return;
+  }
+  if (a === "ask-clear-round"){ confirm = "clear-round"; renderMain(); return; }
+  if (a === "clear-round"){
+    const all = clone(docs[majorPath(ui.major)]); const r = all.rounds["r"+ui.round];
+    r.scores = {}; r.ctp = {}; r.ld = []; confirm = null; replace(majorPath(ui.major), all); return;
+  }
+  if (a === "save-skins"){ const d = clone(form.data); d.example = false; form.dirty = false; replace(skinsPaths().setup, d); return; }
+  if (a === "ask-clear-skins"){ confirm = "clear-skins"; renderMain(); return; }
+  if (a === "clear-skins"){ confirm = null; replace(skinsPaths().scores, {cleared: Date.now()}); return; }
+}
+const NUMERIC = ["hi","tee","rating","slope","par","si","value","allowance","roundsCount","ldHole"];
+document.addEventListener("input", e => {
+  const el = e.target;
+  if (el.dataset && el.dataset.actChange === "copy-course" && form){
+    const c = docs["courses/" + el.value]; if (!c) return;
+    const d = form.data; d.course = c.name; d.tees = clone(c.tees);
+    d.holes = c.holes.map((h,k) => ({par:h.par, si:h.si, value:(d.holes[k] || {}).value || 10}));
+    d.players.forEach(p => { if (p.tee >= d.tees.length) p.tee = 0; });
+    form.dirty = true; renderMain(); return;
+  }
+  if (!el.dataset || !el.dataset.f || !form) return;
+  const path = el.dataset.f.split(".");
+  let o = form.data; for (let i = 0; i < path.length - 1; i++) o = o[path[i]];
+  const k = path[path.length-1];
+  const numeric = NUMERIC.includes(k) || /^\d+$/.test(k);
+  o[k] = numeric ? (el.value === "" ? "" : Number(el.value)) : el.value;
+  if (k === "courseId"){ // picking a course copies it into the round
+    const c = docs["courses/" + el.value];
+    form.data.course = c ? clone(c) : null;
+    if (c){ form.data.tees = form.data.tees.map(x => x < c.tees.length ? x : 0);
+      if (form.data.ldHole && +((c.holes[form.data.ldHole-1] || {}).par) === 3) form.data.ldHole = ""; }
+  }
+  form.dirty = true;
+  if (el.tagName === "SELECT" || el.type === "radio") renderMain();
+  else liveRefresh();
+});
+function liveRefresh(){
+  // update computed text without rebuilding the input being typed in
+  if (ui.view === "skins" && form){ const hc = skinsHcps(form.data);
+    document.querySelectorAll("[data-calc]").forEach(c => { const i = +c.dataset.calc; c.innerHTML = `Course handicap <b>${hc[i].ch}</b> · Playing handicap <b>${hc[i].ph}</b> · Shots in this game <b>${hc[i].strokes}</b>`; }); }
+  if (ui.view === "round" && form && form.data.course){ const M = getMajor(ui.major), c = form.data.course;
+    document.querySelectorAll("[data-calc]").forEach(el => { const i = +el.dataset.calc, tee = c.tees[form.data.tees[i] || 0] || c.tees[0], ch = courseHcp(form.data.hi[i], tee);
+      el.innerHTML = `Course handicap <b>${ch}</b> · Playing handicap (${M.allowance}%) <b>${Math.round(ch * M.allowance / 100)}</b>`; }); }
+  const b = document.querySelector('[data-act^="save-"]'); if (b) b.textContent = b.textContent.replace(/^(Saved|Setup saved)$/, "Save changes");
+}
+
+/* ---------- Boot ---------- */
+render();
+const subs = [];
+function watchCollection(name){
+  subs.push(db.collection(name).onSnapshot(qs => {
+    Object.keys(docs).forEach(p => { if (p.startsWith(name + "/")) delete docs[p]; });
+    qs.docs.forEach(d => { if (d.exists){ docs[name + "/" + d.id] = clone(d.data()); serverExists.add(name + "/" + d.id); } });
+    persist(); renderRemote();
+  }, () => {}));
+}
+function watchDoc(path){
+  subs.push(db.doc(path).onSnapshot(s => {
+    if (s.exists){ docs[path] = clone(s.data()); serverExists.add(path); } else { delete docs[path]; serverExists.delete(path); }
+    persist(); renderRemote();
+  }, () => {}));
+}
+let skinsWatched = {};
+function watchSkins(){
+  if (mode !== "shared") return;
+  const p = skinsPaths(); if (skinsWatched[p.setup]) return;
+  skinsWatched[p.setup] = 1; watchDoc(p.setup); watchDoc(p.scores);
+}
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
+  if (!db){ mode = "local"; render(); return; }
+  mode = "shared";
+  // Data shown before connecting came from this device; the shared store is the source of truth now
+  docs = {}; persist();
+  watchCollection("majors"); watchCollection("courses"); watchDoc("config/roster"); watchSkins();
+  render();
+  try { const u = await window.claude.use("user"); if (u && u.can){ const c = await u.can("data.write"); if (c === false){ readOnly = true; render(); } } } catch(e){}
+})();
+const _go = go; go = function(p){ _go(p); watchSkins(); };
+try { if (navigator.wakeLock) document.addEventListener("click", () => navigator.wakeLock.request("screen").catch(()=>{}), {once:true}); } catch(e){}
+})();
+</script>
