@@ -24,37 +24,13 @@ jobs:
           cat > inspect.mjs <<'JS'
           import { describePage } from './describe-page.mjs';
           import { get } from './fetch-page.mjs';
-          const listings = {
-            guardian: ['https://content.guardianapis.com/search?q=%22Thomas%20Eaton%22%20quiz&order-by=newest&page-size=10&show-fields=byline&api-key=test', /"webUrl":"[^"]+"|"webTitle":"[^"]+"/g],
-            guardian2: ['https://html.duckduckgo.com/html/?q=guardian+%22the+quiz%22+thomas+eaton', /theguardian\.com%2F[^"&]+/g],
-            weeklynet: ['https://weeklyquiz.net/', /https?:\/\/weeklyquiz\.net\/[^"]+/g],
-            bbcsport: ['https://www.bbc.co.uk/sport/quizzes', /href="([^"]*(?:\/sport\/articles\/|\/sport\/\d{6,})[^"]*)"[^>]*>[\s\S]{0,400}?<\/a>/g],
-          };
-          const only = (process.env.ONLY || '').split(',').filter(Boolean);
-          const show = (h, label) => {
-            console.log(`=== ${label}\n` + describePage(h).slice(0, 7000));
-            for (const m of new Set([...h.matchAll(/https?:\/\/[^"'\s<>]*(?:riddle|playbuzz|interact|quiz|apester|outgrow|typeform|embed)[^"'\s<>]*/gi)].map((m) => m[0]))) console.log('EMBED-ish:', m);
-            const ld = [...h.matchAll(/<script[^>]*ld\+json[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1].slice(0, 400)); console.log('LD:', ld);
-          };
-          for (const [name, [url, re]] of Object.entries(listings)) {
-            if (only.length && !only.includes(name)) continue;
-            try {
-              const { html, via } = await get(url);
-              const links = [...new Set([...html.matchAll(re)].map((m) => decodeURIComponent(m[0])))];
-              console.log(`##### ${name} (${via}) links:\n` + links.slice(0, 15).join('\n'));
-              if (name === 'weeklynet') console.log('weeklynet links', links.filter((l) => /quiz/.test(l)).slice(0, 40).join('\n'));
-            } catch (e) { console.log(`##### ${name} FAILED: ${e.message}`); }
-          }
-          for (const u of (process.env.URLS || '').split(/\s+/).filter(Boolean)) {
-            try {
-              const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', Referer: 'https://example.org/' } });
-              const t = await r.text();
-              console.log(`===== RAW ${u} -> ${r.status} ${r.headers.get('content-type')} ${t.length}b`);
-              console.log(t.slice(0, 1500));
-              if (/html/.test(r.headers.get('content-type') || '')) console.log(describePage(t).slice(0, 9000));
-              for (const k of ['correct', 'answer', 'question', 'rawc', 'puzzleData', 'api', 'json']) { let i = t.indexOf(k), n = 0; while (i >= 0 && n < 2) { console.log(`[${k}]…`, t.slice(Math.max(0, i - 200), i + 400).replace(/\s+/g, ' ')); i = t.indexOf(k, i + 3000); n++; } }
-              for (const m of new Set([...t.matchAll(/https?:\/\/[^"'\s<>\\]+/g)].map((m) => m[0]))) if (/api|json|quiz|data/i.test(m)) console.log('URL:', m);
-            } catch (e) { console.log(u, 'FAILED', e.message); }
-          }
+          import * as cheerio from 'cheerio';
+          const series = await get('https://www.theguardian.com/theguardian/series/the-quiz-thomas-eaton');
+          const links = [...new Set([...series.html.matchAll(/href="(https:\/\/www\.theguardian\.com\/[a-z-]+\/\d{4}\/[a-z]{3}\/\d{2}\/[^"#?]+)"/g)].map((m) => m[1]))];
+          console.log('SERIES links:\n' + links.slice(0, 12).join('\n'));
+          const art = await get(links[0]);
+          const $ = cheerio.load(art.html);
+          console.log('TITLE', $('title').text(), '| published', $('meta[property="article:published_time"]').attr('content'));
+          $('[data-gu-name="body"] p, [data-gu-name="body"] h2, article p, article h2').slice(0, 90).each((i, el) => console.log(`${el.tagName}: ${$(el).html().slice(0, 300)}`));
           JS
           node inspect.mjs
