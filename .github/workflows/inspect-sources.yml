@@ -1,0 +1,53 @@
+name: Inspect new quiz sources (temporary)
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        required: false
+      urls:
+        required: false
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - working-directory: scripts
+        run: npm install --no-audit --no-fund
+      - working-directory: scripts
+        env:
+          ONLY: ${{ inputs.only }}
+          URLS: ${{ inputs.urls }}
+        run: |
+          cat > inspect.mjs <<'JS'
+          import { describePage } from './describe-page.mjs';
+          import { get } from './fetch-page.mjs';
+          const listings = {
+            guardian: ['https://www.theguardian.com/lifeandstyle/series/the-quiz-thomas-eaton', /theguardian\.com\/lifeandstyle\/\d{4}\/[a-z]{3}\/\d+\/[^"]+/g],
+            week: ['https://theweek.com/uk/puzzles-and-quizzes/archive/2026/10', /https?:\/\/theweek\.com\/[^"]*quiz-of-the-week[^"]*/g],
+            weeklyquiz: ['https://weeklyquiz.b-cdn.net/weekly-general-knowledge-quiz/', /https?:\/\/weeklyquiz[^"]+/g],
+            national: ['https://www.thenationalnews.com/sport/', /\/sport\/\d{4}\/\d{2}\/\d{2}\/sport-quiz-of-the-week[^"]*/g],
+            bbcsport: ['https://html.duckduckgo.com/html/?q=bbc+sport+quiz+of+the+week+site%3Abbc.co.uk', /bbc\.co\.uk%2Fsport%2F[^"&]+/g],
+          };
+          const only = (process.env.ONLY || '').split(',').filter(Boolean);
+          const show = (h, label) => {
+            console.log(`=== ${label}\n` + describePage(h).slice(0, 7000));
+            for (const m of new Set([...h.matchAll(/https?:\/\/[^"'\s<>]*(?:riddle|playbuzz|interact|quiz|apester|outgrow|typeform|embed)[^"'\s<>]*/gi)].map((m) => m[0]))) console.log('EMBED-ish:', m);
+            const ld = [...h.matchAll(/<script[^>]*ld\+json[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1].slice(0, 400)); console.log('LD:', ld);
+          };
+          for (const [name, [url, re]] of Object.entries(listings)) {
+            if (only.length && !only.includes(name)) continue;
+            try {
+              const { html, via } = await get(url);
+              const links = [...new Set([...html.matchAll(re)].map((m) => decodeURIComponent(m[0])))];
+              console.log(`##### ${name} (${via}) links:\n` + links.slice(0, 15).join('\n'));
+              if (name === 'weeklyquiz') show(html, 'weeklyquiz page');
+            } catch (e) { console.log(`##### ${name} FAILED: ${e.message}`); }
+          }
+          for (const u of (process.env.URLS || '').split(/\s+/).filter(Boolean)) {
+            try { const { html, via } = await get(u); show(html, `${u} via ${via}`); } catch (e) { console.log(u, 'FAILED', e.message); }
+          }
+          JS
+          node inspect.mjs
