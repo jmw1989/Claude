@@ -47,6 +47,14 @@ It works offline once it has been opened, so a weak signal on the course doesn't
 3. **Project settings → Your apps → Web app**: register an app and copy its `firebaseConfig` into `firebase-config.js`.
 4. Each phone opens the app and enters the same club code.
 
+## Course search
+
+In the installed app, **Courses → Add a course** has a search box. Picking a result fills in the tees (rating, slope, par) and every hole's par and stroke index, ready to check and save.
+
+- With no key it uses [OpenGolfAPI](https://github.com/opengolfapi/api) (free, no signup).
+- With a free [GolfCourseAPI](https://golfcourseapi.com) key entered on the Courses page it uses that instead. The key is stored in the club's Firestore data, not in this repo.
+- Search isn't available in the Claude artifact, because the Claude viewer blocks requests to other websites.
+
 ## Updating the app
 
 Edit `artifact.html` (the Claude version), then run `./build.sh` to rebuild `index.html`. Bump `CACHE` in `sw.js` so installed phones pick up the change.

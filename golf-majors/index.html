@@ -602,9 +602,105 @@ function coursesView(){
     return `<button class="rcard" data-course="${esc(c.id)}"><div><div class="rt">${esc(c.name)}</div>
       <div class="rs">${esc(c.country || "")}${c.country ? " · " : ""}Par ${par} · ${p3} par 3s · ${c.tees.map(t => esc(t.name)).join(", ")}</div></div><span class="go">›</span></button>`;
   }).join("") : `<div class="card empty"><b>No courses yet</b>Add each course once and pick it when you set up a round.</div>`;
+  const key = integrations().golfCourseApiKey || "";
   return `<h2>Courses</h2><div class="rlist">${list}</div>
-  <div class="actions"><button class="btn primary" data-act="new-course" ${readOnly?"disabled":""}>Add a course</button></div>`;
+  <div class="actions"><button class="btn primary" data-act="new-course" ${readOnly?"disabled":""}>Add a course</button></div>
+  ${canSearch() ? `<h2>Course search</h2>
+  <section class="card stack">
+    <p style="margin:0">Course search works without a key. For more courses, add a free key from <b>golfcourseapi.com</b>.</p>
+    <div class="field"><label for="gcakey">GolfCourseAPI key (optional)</label><input type="text" id="gcakey" autocomplete="off" autocapitalize="none" spellcheck="false" value="${esc(key)}"></div>
+    <div class="actions" style="margin:0"><button class="btn" data-act="save-key" ${readOnly?"disabled":""}>Save key</button></div>
+  </section>` : ""}`;
 }
+/* ---------- Course search (installed app only: the Claude viewer blocks other websites) ---------- */
+const GCA = "https://api.golfcourseapi.com/v1", OGA = "https://api.opengolfapi.org/v1";
+let finder = {q:"", loading:false, results:null, error:"", note:""};
+function canSearch(){ return !window.claude && typeof fetch === "function"; }
+function integrations(){ return docs["config/integrations"] || {}; }
+function num(v){ const n = parseFloat(v); return isNaN(n) ? "" : n; }
+function pick(o, keys){ for (const k of keys) if (o && o[k] != null && o[k] !== "") return o[k]; return undefined; }
+function listOf(j, keys){ if (Array.isArray(j)) return j; for (const k of keys) if (j && Array.isArray(j[k])) return j[k]; return []; }
+async function getJSON(url, headers){
+  let r;
+  try { r = await fetch(url, {headers: headers || {}}); } catch(e){ throw new Error("Couldn't reach the course database. Check your signal and try again."); }
+  if (r.status === 401 || r.status === 403) throw new Error("The course search key was refused. Check it on the Courses page, or clear it to use the free search.");
+  if (r.status === 429) throw new Error("The course search has hit its daily limit. Try again tomorrow, or enter the course by hand.");
+  if (!r.ok) throw new Error("The course database didn't answer (error " + r.status + "). Try again, or enter the course by hand.");
+  return r.json();
+}
+async function searchCourses(q){
+  const key = integrations().golfCourseApiKey;
+  if (key){
+    const j = await getJSON(`${GCA}/search?search_query=${encodeURIComponent(q)}`, {Authorization: "Key " + key});
+    return listOf(j, ["courses","results","data"]).map(c => ({src:"gca", id:c.id,
+      name: [c.club_name, c.course_name].filter((x,i,a) => x && a.indexOf(x) === i).join(" – ") || "Course",
+      place: [pick(c.location, ["city"]), pick(c.location, ["state"]), pick(c.location, ["country"])].filter(Boolean).join(", ")}));
+  }
+  const j = await getJSON(`${OGA}/courses/search?q=${encodeURIComponent(q)}&limit=25`);
+  return listOf(j, ["courses","results","data","items"]).map(c => ({src:"oga", id: pick(c, ["id","course_id","slug"]),
+    name: [pick(c, ["club_name","club"]), pick(c, ["name","course_name"])].filter((x,i,a) => x && a.indexOf(x) === i).join(" – ") || "Course",
+    place: [pick(c, ["city","town"]) || pick(c.location, ["city"]), pick(c, ["state","region"]) || pick(c.location, ["state"]), pick(c, ["country"]) || pick(c.location, ["country"])].filter(Boolean).join(", ")}));
+}
+async function loadCourse(hit){
+  if (hit.src === "gca"){
+    const j = await getJSON(`${GCA}/courses/${encodeURIComponent(hit.id)}`, {Authorization: "Key " + integrations().golfCourseApiKey});
+    return normaliseCourse(j.course || j, null, null, hit);
+  }
+  const base = `${OGA}/courses/${encodeURIComponent(hit.id)}`;
+  const [c, tees, holes] = await Promise.all([getJSON(base), getJSON(base + "/tees").catch(() => null), getJSON(base + "/holes").catch(() => null)]);
+  return normaliseCourse(c.course || c, tees, holes, hit);
+}
+// Turn either database's answer into the app's course shape: tees with rating/slope/par, 18 holes with par and SI.
+function normaliseCourse(c, teesExtra, holesExtra, hit){
+  const groups = [];
+  const addGroup = (src, label) => {
+    if (!src) return;
+    if (Array.isArray(src)) groups.push([src, label]);
+    else { if (Array.isArray(src.male) || Array.isArray(src.men)) groups.push([src.male || src.men, ""]);
+      if (Array.isArray(src.female) || Array.isArray(src.women)) groups.push([src.female || src.women, " (ladies)"]);
+      if (Array.isArray(src.tees)) addGroup(src.tees, label); }
+  };
+  addGroup(c.tees, ""); if (!groups.length) addGroup(teesExtra, "");
+  const tees = [], teeHoles = [];
+  groups.forEach(([list, label]) => list.forEach(t => {
+    const holes = listOf(t.holes || t.scorecard, ["holes"]);
+    const par = num(pick(t, ["par_total","total_par","par"])) || (holes.length ? sum(holes.map(h => +pick(h, ["par"]) || 0)) : "");
+    const g = (pick(t, ["gender","sex"]) || "").toString().toLowerCase();
+    const lab = label || (g.startsWith("f") || g.startsWith("w") || g === "ladies" ? " (ladies)" : "");
+    tees.push({name: String(pick(t, ["tee_name","name","tee","color","colour"]) || "Tees") + lab,
+      rating: num(pick(t, ["course_rating","courseRating","rating"])), slope: num(pick(t, ["slope_rating","slopeRating","slope"])), par: par || 72});
+    teeHoles.push(holes);
+  }));
+  let holes = teeHoles.find(h => h.length >= 18 && h.every(x => pick(x, ["par"]) != null)) || [];
+  if (holes.length < 18){ const hx = listOf(holesExtra || c.holes, ["holes","data"]); if (hx.length >= 18) holes = hx; }
+  const notes = [];
+  let out = range(1,18).map(n => ({par:4, si:n}));
+  if (holes.length >= 18){
+    out = holes.slice(0,18).map((h,k) => ({par: +pick(h, ["par"]) || 4, si: +pick(h, ["handicap","stroke_index","strokeIndex","si","hcp","handicap_index"]) || 0}));
+    if (!sisOk(out)){ notes.push("Stroke indexes were missing or incomplete, so check them against the scorecard."); out.forEach((h,k) => { if (!h.si) h.si = k+1; }); }
+  } else notes.push("Hole pars and stroke indexes weren't available, so enter them from the scorecard.");
+  if (!tees.length){ notes.push("No tee ratings were found, so add rating and slope from the scorecard."); tees.push({name:"Yellow", rating:"", slope:"", par:sum(out.map(h => h.par))}); }
+  else if (tees.some(t => t.rating === "" || t.slope === "")) notes.push("Some tees have no rating or slope. Leave them blank to use handicaps as they are, or fill them in.");
+  const country = pick(c.location, ["country"]) || pick(c, ["country"]) || (hit.place || "").split(", ").pop() || "";
+  return {data:{name: hit.name, country, tees, holes: out}, notes};
+}
+function finderView(){
+  const f = finder;
+  const results = f.loading ? `<p class="note">Searching…</p>`
+    : f.error ? `<p class="note warn">${esc(f.error)}</p>`
+    : f.results ? (f.results.length ? `<div class="rlist" style="margin-top:4px">${f.results.map((r,i) => `<button class="rcard" data-act="course-pick" data-i="${i}"><div><div class="rt" style="font-size:18px">${esc(r.name)}</div><div class="rs">${esc(r.place)}</div></div><span class="go">›</span></button>`).join("")}</div>`
+      : `<p class="note">No courses found. Try the club's name or the town, or enter the course below.</p>`) : "";
+  return `<h2>Find your course</h2>
+  <section class="card stack">
+    <div class="grid2" style="grid-template-columns:minmax(0,1fr) auto">
+      <div class="field"><label for="csq">Club or course name</label><input type="text" id="csq" value="${esc(f.q)}" placeholder="e.g. Royal Lytham" enterkeyhint="search"></div>
+      <button class="btn primary" data-act="course-search">Search</button>
+    </div>
+    ${results}
+    ${f.note ? `<p class="note" style="margin:0">${f.note}</p>` : ""}
+  </section>`;
+}
+
 function blankCourse(){
   return {name:"", country:"", tees:[{name:"Yellow", rating:"", slope:"", par:72},{name:"White", rating:"", slope:"", par:72}],
     holes: range(1,18).map(h => ({par:4, si:h}))};
@@ -615,7 +711,7 @@ function courseEditView(){
   const half = (a,b) => `<div class="scroll"><table class="hcfg"><tr><th class="l">Hole</th>${range(a,b).map(h => `<th>${h}</th>`).join("")}</tr>
     <tr><td class="l">Par</td>${range(a,b).map(h => `<td><input type="number" inputmode="numeric" style="width:44px" id="cp${h}" aria-label="Hole ${h} par" data-f="holes.${h-1}.par" value="${d.holes[h-1].par}"></td>`).join("")}</tr>
     <tr><td class="l">SI</td>${range(a,b).map(h => `<td><input type="number" inputmode="numeric" style="width:44px" id="cs${h}" aria-label="Hole ${h} stroke index" data-f="holes.${h-1}.si" value="${d.holes[h-1].si}"></td>`).join("")}</tr></table></div>`;
-  return `<h2>Course</h2>
+  return `${!ui.courseId && canSearch() ? finderView() : ""}<h2>Course</h2>
   <section class="card stack">
     <div class="field"><label for="cn">Club and course</label><input type="text" id="cn" data-f="name" value="${esc(d.name)}" placeholder="e.g. La Manga – South"></div>
     <div class="field"><label for="cc">Country</label><input type="text" id="cc" data-f="country" value="${esc(d.country)}" placeholder="e.g. Spain"></div>
@@ -970,8 +1066,23 @@ function action(a, t){
   if (a === "cancel"){ confirm = null; renderMain(); return; }
   if (readOnly) return;
   if (a === "save-players"){ const d = clone(form.data); d.example = false; form.dirty = false; replace("config/roster", d); return; }
-  if (a === "new-course"){ go({view:"course", courseId:null, back:null}); return; }
-  if (a === "new-course-from-round"){ go({view:"course", courseId:null, back:{view:"round", sub:"setup"}}); return; }
+  if (a === "new-course"){ finder = {q:"", loading:false, results:null, error:"", note:""}; go({view:"course", courseId:null, back:null}); return; }
+  if (a === "save-key"){ const v = ($("gcakey").value || "").trim(); replace("config/integrations", Object.assign({}, integrations(), {golfCourseApiKey: v})); return; }
+  if (a === "course-search"){
+    const q = ($("csq").value || "").trim(); if (q.length < 3){ $("csq").focus(); return; }
+    finder = {q, loading:true, results:null, error:"", note:""}; renderMain();
+    searchCourses(q).then(r => { finder.results = r; }).catch(e => { finder.error = e.message; }).finally(() => { finder.loading = false; if (ui.view === "course") renderMain(); });
+    return;
+  }
+  if (a === "course-pick"){
+    const hit = finder.results[+t.dataset.i]; finder.loading = true; renderMain();
+    loadCourse(hit).then(({data, notes}) => {
+      form = {id: "course:new", data, dirty: true};
+      finder = {q: finder.q, loading:false, results:null, error:"", note: `Imported <b>${esc(data.name)}</b> with ${data.tees.length} set${data.tees.length===1?"":"s"} of tees. ${notes.map(esc).join(" ")} Check the details, then tap Save course.`};
+    }).catch(e => { finder.loading = false; finder.error = e.message; }).finally(() => { if (ui.view === "course") renderMain(); });
+    return;
+  }
+  if (a === "new-course-from-round"){ finder = {q:"", loading:false, results:null, error:"", note:""}; go({view:"course", courseId:null, back:{view:"round", sub:"setup"}}); return; }
   if (a === "add-tee"){ form.data.tees.push({name:"", rating:"", slope:"", par: form.data.tees[0] ? form.data.tees[0].par : 72}); form.dirty = true; renderMain(); return; }
   if (a === "del-tee"){ form.data.tees.splice(+t.dataset.k, 1); form.dirty = true; renderMain(); return; }
   if (a === "save-course"){
@@ -1020,6 +1131,7 @@ function action(a, t){
   if (a === "clear-skins"){ confirm = null; replace(skinsPaths().scores, {cleared: Date.now()}); return; }
 }
 const NUMERIC = ["hi","tee","rating","slope","par","si","value","allowance","roundsCount","ldHole"];
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "csq"){ e.preventDefault(); action("course-search", e.target); } });
 document.addEventListener("input", e => {
   const el = e.target;
   if (el.dataset && el.dataset.actChange === "copy-course" && form){
