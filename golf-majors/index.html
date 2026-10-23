@@ -539,9 +539,9 @@ function renderMain(){
   else if (v === "courses") m.innerHTML = coursesView();
   else if (v === "course") m.innerHTML = courseEditView();
   else if (v === "major") m.innerHTML = majorView();
-  else if (v === "round") m.innerHTML = ui.sub === "card" ? roundCardView() : ui.sub === "prizes" ? roundPointsView() : ui.sub === "setup" ? roundSetupView() : roundHoleView();
+  else if (v === "round") m.innerHTML = ui.sub === "summary" ? roundSummaryView() : ui.sub === "card" ? roundCardView() : ui.sub === "prizes" ? roundPointsView() : ui.sub === "setup" ? roundSetupView() : roundHoleView();
   else if (v === "skins"){ const S = skinsState(), C = skinsCalc(S);
-    m.innerHTML = ui.sub === "card" ? skinsCardView(S,C) : ui.sub === "money" ? skinsMoneyView(S,C) : ui.sub === "setup" ? skinsSetupView(S) : skinsHoleView(S,C); }
+    m.innerHTML = ui.sub === "summary" ? skinsSummaryView(S,C) : ui.sub === "card" ? skinsCardView(S,C) : ui.sub === "money" ? skinsMoneyView(S,C) : ui.sub === "setup" ? skinsSetupView(S) : skinsHoleView(S,C); }
 }
 
 /* ---------- Home ---------- */
@@ -828,7 +828,7 @@ function roundHoleView(){
     ${isP3 ? prizeBox("ctp", cur, (rc.round.ctp || {})["h"+cur]) : ""}
     ${isLD ? prizeBox("ld", cur, rc.round.ld) : ""}
     <div class="navrow"><button class="btn" data-go="${cur-1}" ${cur===1?"disabled":""}>‹ Hole ${Math.max(1,cur-1)}</button>
-      <button class="btn primary" data-go="${cur+1}" ${cur===H?"disabled":""}>Hole ${Math.min(H,cur+1)} ›</button></div>
+      ${nextOrComplete(cur)}</div>${cur === H && completeMsg ? completeMsg : ""}
   </section>
   <div class="holes">${strip}</div>
   <div class="legend"><span style="--sw:var(--v10)">Prize hole</span><span>P/U = picked up, 0 points</span></div>`;
@@ -854,7 +854,7 @@ function roundPointsView(){
   const R = roster().players;
   const winNote = rc.complete ? rc.tiers.map((t,k) => `${names(t)} ${t.length > 1 ? "tie" : ""} ${["1st","2nd","3rd"][rc.tiers.slice(0,k).flat().length]}`.replace("  "," ")).join(", ") + " on stableford."
     : rc.started ? `${names(rc.leaders)} ${rc.leaders.length > 1 ? "are level" : "leads"} on stableford. Place points (5, 3, 1) are awarded when all 18 holes are in.` : "No scores yet.";
-  return `<h2>Major points this round</h2>
+  return `${rc.complete ? `<div class="actions" style="margin-top:4px"><button class="btn primary" data-sub="summary">See the round summary</button></div>` : ""}<h2>Major points this round</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
     <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th><th>Pts</th></tr>
     ${R.map((p,i) => `<tr><td class="l"><b>${esc(p.name)}</b></td><td>${rc.players[i].total}</td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td><td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
@@ -902,6 +902,116 @@ function roundSetupView(){
   <p class="note">The course is copied into the round when you save, so later edits to the library don't change it. Choose the course again to pull in edits.</p>`;
 }
 
+/* ---------- Completing a round ---------- */
+let completeMsg = "";
+function nextOrComplete(cur){
+  return cur < H ? `<button class="btn primary" data-go="${cur+1}">Hole ${cur+1} ›</button>`
+    : `<button class="btn primary" data-act="complete-round">Complete round ›</button>`;
+}
+function missingHoles(){
+  if (ui.view === "skins"){ const C = skinsCalc(skinsState());
+    return C.res.filter(r => r.value == null || r.g.some(x => x == null)).map(r => r.h); }
+  const rc = roundCalc(getMajor(ui.major), ui.round); if (!rc) return range(1,H);
+  return range(1,H).filter(h => rc.players.some(p => p.holes[h-1].gross == null));
+}
+function completeRound(){
+  const miss = missingHoles();
+  if (!miss.length){ completeMsg = ""; go({sub:"summary"}); return; }
+  const what = ui.view === "skins" ? "scores or a hole value" : "scores";
+  completeMsg = `<div class="confirm" style="margin-top:12px"><p style="margin:0 0 10px">Still missing ${what} on hole${miss.length > 1 ? "s" : ""} ${miss.join(", ")}.</p>
+    <div class="actions" style="margin:0">${miss.slice(0,6).map(h => `<button class="btn small" data-go="${h}">Hole ${h}</button>`).join("")}</div></div>`;
+  renderMain();
+}
+function hl(label, value, sub){ return `<div class="row"><div><div class="pname" style="font-size:16px;white-space:normal">${label}</div>${sub ? `<div class="pinfo">${sub}</div>` : ""}</div><div class="amt num" style="font-size:22px;text-align:right">${value}</div></div>`; }
+function banner(title, sub){ return `<section class="card" style="background:var(--green);color:var(--on-green);border-color:transparent;text-align:center;padding:22px 14px">
+  <div class="lbl" style="color:var(--on-green);opacity:.85">Round complete</div>
+  <div style="font-family:var(--display);font-weight:700;font-size:34px;line-height:1.05;text-transform:uppercase;margin-top:6px;text-wrap:balance">${title}</div>
+  <div style="margin-top:6px;opacity:.9">${sub}</div></section>`; }
+function grossStats(names, grossOf, parOf){
+  // birdies or better, pars, and total against par for each player
+  return names.map((n,i) => { let b = 0, e = 0, pars = 0, tot = 0, par = 0, pu = false;
+    for (let h = 1; h <= H; h++){ const g = grossOf(i,h), p = parOf(h); if (!g){ pu = true; continue; }
+      tot += g; par += p; if (g <= p - 2) e++; else if (g === p - 1) b++; else if (g === p) pars++; }
+    return {n, b, e, pars, tot, par, pu}; });
+}
+function vsPar(d){ return d === 0 ? "level" : d > 0 ? "+" + d : String(d); }
+function skinsSummaryView(S, C){
+  const setup = S.setup, pn = i => esc(setup.players[i].name), names = setup.players.map(p => p.name);
+  const top = Math.max(...C.won), who = range(0,N-1).filter(i => C.won[i] === top);
+  const title = top <= 0 ? "No skins won" : `${who.map(pn).join(" & ")} ${who.length > 1 ? "share top spot" : "wins"}`;
+  const won = C.res.filter(r => r.status === "won");
+  const biggest = won.slice().sort((a,b) => b.pot - a.pot)[0];
+  let run = 0, best = {len:0}; C.res.forEach(r => { if (r.status === "carry") run++; else { if (run > best.len) best = {len:run, end:r}; run = 0; } });
+  let streak = {len:0}; let cur = {p:-1, len:0, from:0};
+  won.forEach(r => { if (r.winner === cur.p && r.h === cur.last + 1) cur.len++; else cur = {p:r.winner, len:1, from:r.h}; cur.last = r.h; if (cur.len > streak.len) streak = Object.assign({}, cur); });
+  const gs = grossStats(names, (i,h) => C.get(i,h), h => +setup.holes[h-1].par);
+  const birdieKing = gs.slice().sort((a,b) => (b.b + 2*b.e) - (a.b + 2*a.e))[0];
+  const lowGross = gs.filter(g => !g.pu).sort((a,b) => a.tot - b.tot)[0];
+  const order = range(0,N-1).sort((a,b) => C.won[b] - C.won[a] || C.skins[b] - C.skins[a]);
+  const rows = [];
+  if (biggest) rows.push(hl(`Biggest skin: ${pn(biggest.winner)} on hole ${biggest.h}`, `£${biggest.pot}`, biggest.carryIn ? `£${biggest.value} hole plus £${biggest.carryIn} carried over` : `A £${biggest.value} hole`));
+  if (best.len >= 2) rows.push(hl(`Longest carry-over: ${best.len} holes`, `£${best.end.pot}`, best.end.status === "won" ? `Ended on hole ${best.end.h}, won by ${pn(best.end.winner)}` : ""));
+  if (streak.len >= 2) rows.push(hl(`Hot streak: ${pn(streak.p)}`, `${streak.len} in a row`, `Holes ${streak.from}–${streak.last}`));
+  if (birdieKing && (birdieKing.b + birdieKing.e) > 0) rows.push(hl(`Most birdies: ${esc(birdieKing.n)}`, `${birdieKing.b + birdieKing.e}`, birdieKing.e ? `Including ${birdieKing.e} eagle${birdieKing.e > 1 ? "s" : ""}` : "Gross birdies"));
+  if (lowGross) rows.push(hl(`Best gross score: ${esc(lowGross.n)}`, `${lowGross.tot}`, `${vsPar(lowGross.tot - lowGross.par)} against par`));
+  const carried = C.res.filter(r => r.status === "carry").length;
+  rows.push(hl("Holes halved", `${carried}`, carried ? "The money carried over each time" : "Every hole was won outright"));
+  return `${banner(title, top > 0 ? `${money(top)} from the £${C.pot} pot` : `£${C.pot} pot`)}
+  <h2>Money</h2>
+  <section class="card ledger">${order.map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">${C.skins[i]} skin${C.skins[i]===1?"":"s"} · ${gs[i].pu ? "" : `gross ${gs[i].tot} (${vsPar(gs[i].tot - gs[i].par)})`}</div></div><div class="amt num ${C.won[i] > 0 ? "pos" : ""}">${money(C.won[i])}</div></div>`).join("")}</section>
+  ${C.endNote ? `<p class="note">${C.endNote}</p>` : ""}
+  <h2>Highlights</h2>
+  <section class="card ledger">${rows.join("")}</section>
+  <h2>Hole by hole</h2>
+  <section class="card ledger">${C.res.map(r => `<div class="row"><div>Hole ${r.h} <span class="pinfo">· £${r.value}${r.carryIn ? ` + £${r.carryIn}` : ""}</span></div><div class="${r.status === "won" ? "pos" : "pinfo"}" style="font-weight:600">${r.status === "won" ? `${pn(r.winner)} £${r.pot}` : r.h === H ? "Tied" : "Carried"}</div></div>`).join("")}</section>
+  <div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="home">Home</button></div>`;
+}
+function roundSummaryView(){
+  const M = getMajor(ui.major), rc = roundCalc(M, ui.round), def = majorDef(ui.major);
+  if (!rc) return needSetup();
+  const R = roster().players, pn = i => esc(R[i].name), c = rc.course;
+  const roundName = M.roundsCount > 1 ? `round ${ui.round}` : "the round";
+  const title = rc.complete ? `${names(rc.leaders)} ${rc.leaders.length > 1 ? "tie" : "wins"} ${roundName}` : "Round in progress";
+  const gs = grossStats(R.map(p => p.name), (i,h) => rc.players[i].holes[h-1].gross, h => +c.holes[h-1].par);
+  const rows = [];
+  // best single hole on points
+  let bestHole = {pts:-1}; rc.players.forEach((p,i) => p.holes.forEach((h,k) => { if ((h.pts ?? -1) > bestHole.pts) bestHole = {pts:h.pts, i, h:k+1}; }));
+  if (bestHole.pts >= 3) rows.push(hl(`Best hole: ${pn(bestHole.i)} on the ${ordinal(bestHole.h)}`, `${bestHole.pts} pts`, bestHole.pts >= 4 ? "Net eagle or better" : "Net birdie"));
+  const halves = rc.players.map(p => [sum(p.holes.slice(0,9).map(h => h.pts || 0)), sum(p.holes.slice(9).map(h => h.pts || 0))]);
+  const bestNine = halves.flatMap((x,i) => [{i, n:"front nine", v:x[0]}, {i, n:"back nine", v:x[1]}]).sort((a,b) => b.v - a.v)[0];
+  rows.push(hl(`Best nine: ${pn(bestNine.i)}, ${bestNine.n}`, `${bestNine.v} pts`));
+  const birdieKing = gs.slice().sort((a,b) => (b.b + 2*b.e) - (a.b + 2*a.e))[0];
+  if (birdieKing.b + birdieKing.e > 0) rows.push(hl(`Most birdies: ${esc(birdieKing.n)}`, `${birdieKing.b + birdieKing.e}`, birdieKing.e ? `Including ${birdieKing.e} eagle${birdieKing.e > 1 ? "s" : ""}` : "Gross birdies"));
+  const blobs = rc.players.map(p => p.holes.filter(h => h.pts === 0).length);
+  const mostBlobs = Math.max(...blobs);
+  if (mostBlobs > 0) rows.push(hl(`Most blobs: ${range(0,N-1).filter(i => blobs[i] === mostBlobs).map(pn).join(" & ")}`, `${mostBlobs}`, "Holes with no points"));
+  const lowGross = gs.filter(g => !g.pu).sort((a,b) => a.tot - b.tot)[0];
+  if (lowGross) rows.push(hl(`Best gross score: ${esc(lowGross.n)}`, `${lowGross.tot}`, `${vsPar(lowGross.tot - lowGross.par)} against par`));
+  const ctpRows = rc.par3s.map(h => { const o = (rc.round.ctp || {})["h"+h] || [];
+    return hl(`Closest to the pin, hole ${h}`, o.length ? pn(o[0]) : "–", o.length ? o.map((p,k) => `${ord(k)} ${esc(R[p].name)}`).join(" · ") : "Nobody on the green"); });
+  const ld = rc.round.ld || [];
+  const ldRow = rc.round.ldHole ? hl(`Longest drive, hole ${rc.round.ldHole}`, ld.length ? pn(ld[0]) : "–", ld.length ? ld.map((p,k) => `${ord(k)} ${esc(R[p].name)}`).join(" · ") : "Nobody on the fairway") : "";
+  const order = range(0,N-1).sort((a,b) => rc.total[b] - rc.total[a] || rc.players[b].total - rc.players[a].total);
+  const MC = majorCalc(ui.major), standing = range(0,N-1).sort((a,b) => MC.tot.total[b] - MC.tot.total[a]);
+  return `${banner(title, `${esc(c.name)}${rc.round.date ? " · " + fmtDate(rc.round.date) : ""}`)}
+  <h2>Stableford</h2>
+  <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">Out ${halves[i][0]} · In ${halves[i][1]}${gs[i].pu ? "" : ` · gross ${gs[i].tot}`}</div></div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
+  <h2>Major points</h2>
+  <div class="scroll card" style="padding:6px 10px"><table>
+    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th><th>Round</th></tr>
+    ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td><td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
+  </table></div>
+  <h2>Highlights</h2>
+  <section class="card ledger">${rows.join("")}</section>
+  <h2>Prizes</h2>
+  <section class="card ledger">${ctpRows.join("")}${ldRow}</section>
+  ${M.roundsCount > 1 ? `<h2>${esc(def.name)} standings</h2>
+  <section class="card ledger">${standing.map((i,k) => `<div class="row"><div><div class="pname">${k+1}. ${pn(i)}</div></div><div class="amt num">${pts(MC.tot.total[i])}</div></div>`).join("")}</section>
+  <p class="note">${MC.done} of ${MC.m.roundsCount} rounds complete.</p>` : ""}
+  <div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="major">${esc(def.name)}</button></div>`;
+}
+function ordinal(n){ const s = ["th","st","nd","rd"], v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); }
+
 /* ---------- Skins views ---------- */
 function skinsHoleView(S, C){
   const setup = S.setup, cur = curHole(), hole = setup.holes[cur-1], r = C.res[cur-1];
@@ -933,7 +1043,7 @@ function skinsHoleView(S, C){
       <div class="meta"><span class="chip">Par ${hole.par}</span><span class="chip">SI ${hole.si}</span>${r.value != null ? `<span class="chip val${r.value}">£${r.value}</span>` : ""}</div></div>
     <p class="pot">${pot}</p>${picker}${rows}${res}
     <div class="navrow"><button class="btn" data-go="${cur-1}" ${cur===1?"disabled":""}>‹ Hole ${Math.max(1,cur-1)}</button>
-      <button class="btn primary" data-go="${cur+1}" ${cur===H?"disabled":""}>Hole ${Math.min(H,cur+1)} ›</button></div>
+      ${nextOrComplete(cur)}</div>${cur === H && completeMsg ? completeMsg : ""}
   </section>
   <div class="holes">${strip}</div>
   <div class="legend"><span style="--sw:var(--v5)">£5 hole</span><span style="--sw:var(--v10)">£10 hole</span><span style="--sw:var(--v20)">£20 hole</span></div>
@@ -961,7 +1071,7 @@ function skinsMoneyView(S, C){
     <div class="actions">${setup.players.map((p,i) => `<button class="btn primary" data-playoff="${i}" ${readOnly?"disabled":""}>${esc(p.name)} won</button>`).join("")}</div></section>` : "";
   const undo = setup.playoffWinner != null ? `<div class="actions"><button class="btn" data-playoff="none" ${readOnly?"disabled":""}>Undo playoff result</button></div>` : "";
   const played = C.res.filter(r => r.status === "won" || r.status === "carry").length;
-  return `<h2>Money</h2>${playoff}
+  return `${C.allDone ? `<div class="actions" style="margin-top:4px"><button class="btn primary" data-sub="summary">See the round summary</button></div>` : ""}<h2>Money</h2>${playoff}
   <section class="card ledger">${order.map(i => `<div class="row"><div><div class="pname">${pn(i)}</div>
     <div class="pinfo num">${C.skins[i]} skin${C.skins[i]===1?"":"s"}</div></div>
     <div class="amt num ${C.won[i]>0.004?"pos":""}">${money(C.won[i])}</div></div>`).join("")}</section>
@@ -1040,7 +1150,8 @@ document.addEventListener("click", e => {
   if (ds.course){ go({view:"course", courseId:ds.course, back:null}); return; }
   if (ds.round){ const has = getMajor(ui.major).rounds["r"+ds.round]; go({view:"round", round:+ds.round, sub: has ? "hole" : "setup"}); return; }
   if (ds.sub){ go({sub:ds.sub}); return; }
-  if (ds.go){ const h = +ds.go; if (h >= 1 && h <= H) setHole(h); return; }
+  if (ds.go){ const h = +ds.go; completeMsg = ""; if (h >= 1 && h <= H){ if (ui.sub !== "hole") { ui.sub = "hole"; } setHole(h); } return; }
+  if (ds.act === "complete-round"){ completeRound(); return; }
   if (ds.step && !readOnly){ stepScore(+ds.p, +ds.step); return; }
   if (ds.pu && !readOnly){ const p = +ds.pu, cur = curHole(), g = currentGross(p, cur); writeGross(p, cur, g === 0 ? null : 0); return; }
   if (ds.value && !readOnly){ const h = curHole(), cur = skinsState().scores.values || {};
@@ -1229,7 +1340,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '13';
+const APP_VERSION = '14';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
