@@ -1,0 +1,88 @@
+{
+  "source": "QuizQuizQuiz",
+  "url": "https://quizquizquiz.com/friday/",
+  "fetchedAt": "2026-10-23T07:35:16.924Z",
+  "fetchedVia": "jina",
+  "title": "The QuizQuizQuiz Friday Quiz, 23rd October 2026",
+  "quizId": "1305",
+  "submitUrl": "https://quizquizquiz.com/friday/submit",
+  "hidden": {
+    "quiz_id": "1305",
+    "email": "",
+    "key": "",
+    "time-taken": "0"
+  },
+  "questions": [
+    {
+      "number": 1,
+      "q": "What is, on average, the smallest breed of pony?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-1-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "q": "In the USA, which coin is worth one tenth of a dollar?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-2-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "q": "What surname links two Labour Chancellors of the Exchequer?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-3-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "q": "In mockery of Donald Trump, what did the makers of South Park rename their new series in September 2026?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-4-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "q": "Name the five cricketers who have played for England since 1980 that have been knighted.",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-5-0",
+          "label": "Knighted cricketer 1"
+        },
+        {
+          "name": "answer-5-1",
+          "label": "Knighted cricketer 2"
+        },
+        {
+          "name": "answer-5-2",
+          "label": "Knighted cricketer 3"
+        },
+        {
+          "name": "answer-5-3",
+          "label": "Knighted cricketer 4"
+        },
+        {
+          "name": "answer-5-4",
+          "label": "Knighted cricketer 5"
+        }
+      ]
+    }
+  ]
+}

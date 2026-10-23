@@ -1,515 +1,515 @@
 {
   "source": "JOE",
-  "week": 525,
-  "title": "The JOE Friday Pub Quiz: week 525",
-  "description": "Welcome back, everyone, to JOE Friday Pub Quiz number 525!",
-  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-525-886057",
-  "image": "https://assets.joe.ie/uploads/2026/10/My-Quiz-FT-1-1024x512.png",
-  "publishedAt": "2026-10-15T16:00:00.000Z",
-  "fetchedAt": "2026-10-21T20:46:59.910Z",
+  "week": 526,
+  "title": "JOE.ie - The JOE Friday Pub Quiz: week 526",
+  "description": "Welcome to week 526 of the JOE Friday Pub Quiz!",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-526-887100",
+  "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-22T143256-1024x573.webp",
+  "publishedAt": "2026-10-22T15:57:39.000Z",
+  "fetchedAt": "2026-10-23T07:34:36.713Z",
   "status": "ok",
   "parser": "embed/wpvq",
-  "fetchedVia": "allorigins",
+  "fetchedVia": "jina",
   "questions": [
     {
-      "q": "Which of these iconic products hit shelves first?",
-      "image": "https://assets.joe.ie/uploads/2026/10/1-1.webp",
+      "q": "Which US city's skyline features this giant sphere?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2159867943-1-scaled.jpg",
       "options": [
         {
-          "text": "Hellmann's Mayonaise",
+          "text": "Las Vegas",
           "image": null
         },
-        {
-          "text": "Colman's Mustard",
-          "image": null
-        },
-        {
-          "text": "Heinz Ketchup",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "What is the capital of Bulgaria?",
-      "image": "https://assets.joe.ie/uploads/2026/10/2-2.webp",
-      "options": [
-        {
-          "text": "Sofia",
-          "image": null
-        },
-        {
-          "text": "Budapest",
-          "image": null
-        },
-        {
-          "text": "Bucharest",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "Brazil's election sees incumbent Lula face off against what relative of old rival Jair Bolsonaro?",
-      "image": "https://assets.joe.ie/uploads/2026/10/3.webp",
-      "options": [
-        {
-          "text": "His brother",
-          "image": null
-        },
-        {
-          "text": "His son",
-          "image": null
-        },
-        {
-          "text": "His uncle",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "What is the largest of these USA national parks?",
-      "image": "https://assets.joe.ie/uploads/2026/10/4-2.webp",
-      "options": [
-        {
-          "text": "Death Valley National Park",
-          "image": null
-        },
-        {
-          "text": "Yellowstone National Park",
-          "image": null
-        },
-        {
-          "text": "Grand Canyon National Park",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "The Sendlinger Tor is a historical landmark in which German city?",
-      "image": "https://assets.joe.ie/uploads/2026/10/5.jpg",
-      "options": [
-        {
-          "text": "Cologne",
-          "image": null
-        },
-        {
-          "text": "Munich",
-          "image": null
-        },
-        {
-          "text": "Berlin",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "When Liverpool signed Andy Carroll in 2011, how much did he cost?",
-      "image": "https://assets.joe.ie/uploads/2026/10/6-1.webp",
-      "options": [
-        {
-          "text": "£20 million",
-          "image": null
-        },
-        {
-          "text": "£35 million",
-          "image": null
-        },
-        {
-          "text": "£25 million",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "What was the last club outside of Europe's traditional \"top 5\" leagues to win the Champions League?",
-      "image": "https://assets.joe.ie/uploads/2026/10/7-1.webp",
-      "options": [
-        {
-          "text": "Ajax",
-          "image": null
-        },
-        {
-          "text": "Benfica",
-          "image": null
-        },
-        {
-          "text": "Porto",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Who is the most capped player in Irish Rugby history?",
-      "image": "https://assets.joe.ie/uploads/2026/10/8.png",
-      "options": [
-        {
-          "text": "Ronan O'Gara",
-          "image": null
-        },
-        {
-          "text": "Brian O'Driscoll",
-          "image": null
-        },
-        {
-          "text": "Cian Healy",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "What is the name of this gymnastics event?",
-      "image": "https://assets.joe.ie/uploads/2026/10/9.png",
-      "options": [
-        {
-          "text": "Horizontal Bar",
-          "image": null
-        },
-        {
-          "text": "Parallel Bars",
-          "image": null
-        },
-        {
-          "text": "Uneven Bars",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Before 2012, when was the last time Manchester City won the Premier league title?",
-      "image": "https://assets.joe.ie/uploads/2026/10/10-1.webp",
-      "options": [
-        {
-          "text": "1977/78",
-          "image": null
-        },
-        {
-          "text": "1967/68",
-          "image": null
-        },
-        {
-          "text": "1937/38",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Which TV show holds the record for winning the most IFTA awards in the same night?",
-      "image": "https://assets.joe.ie/uploads/2026/10/11-1.png",
-      "options": [
-        {
-          "text": "The Tudors",
-          "image": null
-        },
-        {
-          "text": "Normal People",
-          "image": null
-        },
-        {
-          "text": "Love/Hate",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "What streaming subscription would you need to be able to watch The Gentlemen?",
-      "image": "https://assets.joe.ie/uploads/2026/10/12-2.webp",
-      "options": [
-        {
-          "text": "Netflix",
-          "image": null
-        },
-        {
-          "text": "HBO Max",
-          "image": null
-        },
-        {
-          "text": "Disney+",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "Which legendary American actor made a surprise appearance to open Kendrick Lamar’s 2025 Super Bowl halftime show?",
-      "image": "https://assets.joe.ie/uploads/2026/10/13-2.webp",
-      "options": [
-        {
-          "text": "Samuel L. Jackson",
-          "image": null
-        },
-        {
-          "text": "Morgan Freeman",
-          "image": null
-        },
-        {
-          "text": "Laurence Fishburne",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "In how many movies has Ralph Macchio played the \"Karate Kid\" Daniel LaRusso?",
-      "image": "https://assets.joe.ie/uploads/2026/10/14-2.webp",
-      "options": [
-        {
-          "text": "5",
-          "image": null
-        },
-        {
-          "text": "4",
-          "image": null
-        },
-        {
-          "text": "2",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "Who directed 2015 movie The Martian?",
-      "image": "https://assets.joe.ie/uploads/2026/10/15-2.webp",
-      "options": [
-        {
-          "text": "Ridley Scott",
-          "image": null
-        },
-        {
-          "text": "Steven Spielberg",
-          "image": null
-        },
-        {
-          "text": "James Cameron",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "After Madrid, what is the second most populous city in Spain?",
-      "image": "https://assets.joe.ie/uploads/2026/10/16-1.webp",
-      "options": [
-        {
-          "text": "Seville",
-          "image": null
-        },
-        {
-          "text": "Valencia",
-          "image": null
-        },
-        {
-          "text": "Barcelona",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 4: Second Cities"
-    },
-    {
-      "q": "After Paris, what is the second most populous city in France?",
-      "image": "https://assets.joe.ie/uploads/2026/10/17-2.webp",
-      "options": [
-        {
-          "text": "Marseille",
-          "image": null
-        },
-        {
-          "text": "Lille",
-          "image": null
-        },
-        {
-          "text": "Lyon",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 4: Second Cities"
-    },
-    {
-      "q": "After New York, what is the second most populous city in the USA?",
-      "image": "https://assets.joe.ie/uploads/2026/10/18-1.webp",
-      "options": [
         {
           "text": "Los Angeles",
           "image": null
         },
         {
-          "text": "Dallas",
-          "image": null
-        },
-        {
-          "text": "Houston",
+          "text": "Phoenix",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 4: Second Cities"
+      "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "After Sydney, what is the second most populous city in Australia?",
-      "image": "https://assets.joe.ie/uploads/2026/10/19-1.webp",
+      "q": "How many segments make up a Terry's Chocolate Orange?",
+      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_399092140_Editorial_Use_Only-1-scaled.jpeg",
       "options": [
         {
-          "text": "Melbourne",
+          "text": "18",
           "image": null
         },
         {
-          "text": "Adelaide",
+          "text": "20",
           "image": null
         },
         {
-          "text": "Canberra",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 4: Second Cities"
-    },
-    {
-      "q": "After Seoul, what is the most populous city in South Korea?",
-      "image": "https://assets.joe.ie/uploads/2026/10/20-1.webp",
-      "options": [
-        {
-          "text": "Busan",
-          "image": null
-        },
-        {
-          "text": "Incheon",
-          "image": null
-        },
-        {
-          "text": "Daejeon",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 4: Second Cities"
-    },
-    {
-      "q": "What is this film called?",
-      "image": "https://assets.joe.ie/uploads/2026/10/21-2.webp",
-      "options": [
-        {
-          "text": "La La Land",
-          "image": null
-        },
-        {
-          "text": "Bugonia",
-          "image": null
-        },
-        {
-          "text": "Birdman",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: 21st Century Best Picture Winners"
-    },
-    {
-      "q": "What film is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/22-2.webp",
-      "options": [
-        {
-          "text": "Good Will Hunting",
-          "image": null
-        },
-        {
-          "text": "A Beautiful Mind",
-          "image": null
-        },
-        {
-          "text": "American Gangster",
+          "text": "16",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 5: 21st Century Best Picture Winners"
+      "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "What film is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/23-2.webp",
+      "q": "Abdul El-Sayed is running as the Democratic candidate for senator in which US state?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2273878735-1-scaled.jpg",
       "options": [
         {
-          "text": "Nomadland",
+          "text": "Texas",
           "image": null
         },
         {
-          "text": "Fargo",
+          "text": "California",
           "image": null
         },
         {
-          "text": "Three Billboards Outside Ebbing, Missouri",
+          "text": "Michigan",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "On average, what is the most visited tourist attraction in Europe?",
+      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_33341551-1-scaled.jpeg",
+      "options": [
+        {
+          "text": "Palace of Versailles, France",
+          "image": null
+        },
+        {
+          "text": "St Peter's Basilica, The Vatican City, Rome",
+          "image": null
+        },
+        {
+          "text": "Sagrada Familia, Barcelona",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "In the Greek alphabet, what does this symbol represent?",
+      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_1678643676-1-scaled.jpeg",
+      "options": [
+        {
+          "text": "Sigma",
+          "image": null
+        },
+        {
+          "text": "Epsilon",
+          "image": null
+        },
+        {
+          "text": "Delta",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 5: 21st Century Best Picture Winners"
+      "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "What film is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/24-2.webp",
+      "q": "Which Premier League stadium has the greatest capacity?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-3-Images-45.webp",
       "options": [
         {
-          "text": "Everything Everywhere All At Once",
+          "text": "Tottenham Hotspur Stadium",
           "image": null
         },
         {
-          "text": "The Shape of Water",
+          "text": "Old Trafford, Man United",
           "image": null
         },
         {
-          "text": "CODA",
+          "text": "Hill Dickinson Stadium, Everton",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "What is the only sport that has been played on the surface of the moon?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2269650026-1-scaled.jpg",
+      "options": [
+        {
+          "text": "Baseball",
+          "image": null
+        },
+        {
+          "text": "Hurling",
+          "image": null
+        },
+        {
+          "text": "Golf",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which country has won the Women's Rugby World Cup the most times?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-3-Images-44.webp",
+      "options": [
+        {
+          "text": "New Zealand",
+          "image": null
+        },
+        {
+          "text": "USA",
+          "image": null
+        },
+        {
+          "text": "England",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 5: 21st Century Best Picture Winners"
+      "category": "ROUND 2: Sport"
     },
     {
-      "q": "What is this 2003 Best Picture winning-film called?",
-      "image": "https://assets.joe.ie/uploads/2026/10/25-1.webp",
+      "q": "This Barcelona rising star scored a brilliant goal in his side’s midweek defeat to PSG, but which club legend does he share his first name with?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2292983696-1-scaled.jpg",
       "options": [
         {
-          "text": "Chicago",
+          "text": "Lionel Messi",
           "image": null
         },
         {
-          "text": "Boston",
+          "text": "Andres Iniesta",
           "image": null
         },
         {
-          "text": "New York",
+          "text": "Xavi Hernandez",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "At which Olympic Games did Katie Taylor win a gold medal?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2224728387-scaled.jpg",
+      "options": [
+        {
+          "text": "Beijing 2008",
+          "image": null
+        },
+        {
+          "text": "Rio 2016",
+          "image": null
+        },
+        {
+          "text": "London 2012",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which Coldplay album cover makes use of this iconic French revolution painting?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-463896375-1-scaled.jpg",
+      "options": [
+        {
+          "text": "Music of the Spheres",
+          "image": null
+        },
+        {
+          "text": "Viva la Vida or Death and All His Friends",
+          "image": null
+        },
+        {
+          "text": "A Rush of Blood to the Head",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Who wrote the classic 1952 novel East of Eden, which was recently adapted into a Netflix series?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-21-at-15.46.01.png",
+      "options": [
+        {
+          "text": "Ernest Hemingway",
+          "image": null
+        },
+        {
+          "text": "Tennessee Williams",
+          "image": null
+        },
+        {
+          "text": "John Steinbeck",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which of these Sam Fender songs has been streamed the most times on Spotify?",
+      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2229148687-1-scaled.jpg",
+      "options": [
+        {
+          "text": "Spit of You",
+          "image": null
+        },
+        {
+          "text": "Hypersonic Missiles",
+          "image": null
+        },
+        {
+          "text": "People Watching",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "In 2011, US channel MTV launched an American version of cult E4 show Skins. For how long did it air?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-21T162738.138.webp",
+      "options": [
+        {
+          "text": "1 season",
+          "image": null
+        },
+        {
+          "text": "2 seasons",
+          "image": null
+        },
+        {
+          "text": "It was axed after the pilot episode",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 5: 21st Century Best Picture Winners"
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "In The Fresh Prince of Bel-Air, before moving to LA, where was Will Smith's character \"born and raised?\"",
+      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-22-at-12.04.05.png",
+      "options": [
+        {
+          "text": "West Philadelphia",
+          "image": null
+        },
+        {
+          "text": "The Bronx, New York",
+          "image": null
+        },
+        {
+          "text": "West Chicago",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "What type of creature is Mr. Tumnus?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-19-at-17.07.29.png",
+      "options": [
+        {
+          "text": "A Faun",
+          "image": null
+        },
+        {
+          "text": "A Minotaur",
+          "image": null
+        },
+        {
+          "text": "A Centaur",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Narnia"
+    },
+    {
+      "q": "In The Lion, The Witch, and The Wardrobe, what last name do the four siblings, Lucy, Edmund, Susan, and Peter, all share?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-20-at-13.39.33.webp",
+      "options": [
+        {
+          "text": "Lewis",
+          "image": null
+        },
+        {
+          "text": "Pevensie",
+          "image": null
+        },
+        {
+          "text": "Darling",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Narnia"
+    },
+    {
+      "q": "For what reason do Lucy, Edmund, Susan, and Peter go to live at the Old Professor’s house in The Lion, the Witch and the Wardrobe?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-20T134502.758.webp",
+      "options": [
+        {
+          "text": "They are evacuated from London during the Second World War",
+          "image": null
+        },
+        {
+          "text": "They are invited to stay while their parents travel abroad",
+          "image": null
+        },
+        {
+          "text": "Their parents send them away to attend a boarding school in the countryside",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Narnia"
+    },
+    {
+      "q": "What sweet treat does the White Witch use to tempt Edmund into betraying his family and Aslan?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-19T172639.145.webp",
+      "options": [
+        {
+          "text": "Sherbet Lemons",
+          "image": null
+        },
+        {
+          "text": "Liquorice Allsorts",
+          "image": null
+        },
+        {
+          "text": "Turkish Delight",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Narnia"
+    },
+    {
+      "q": "Set for release next year, what is Greta Gerwig's upcoming Narnia movie called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-20T133137.322.webp",
+      "options": [
+        {
+          "text": "Narnia: The Sorcerer's Cousin",
+          "image": null
+        },
+        {
+          "text": "Narnia: The Wizard's Niece",
+          "image": null
+        },
+        {
+          "text": "Narnia: The Magician's Nephew",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Narnia"
+    },
+    {
+      "q": "Which country does this parliament building belong to?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-22T125702.256.png",
+      "options": [
+        {
+          "text": "The Netherlands",
+          "image": null
+        },
+        {
+          "text": "France",
+          "image": null
+        },
+        {
+          "text": "Germany",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Global Governments"
+    },
+    {
+      "q": "This building hosts the seat of government for which country?",
+      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_129192732-1-scaled.jpeg",
+      "options": [
+        {
+          "text": "Poland",
+          "image": null
+        },
+        {
+          "text": "Türkiye",
+          "image": null
+        },
+        {
+          "text": "Russia",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Global Governments"
+    },
+    {
+      "q": "This parliament building belongs to which country?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-22T130635.760.webp",
+      "options": [
+        {
+          "text": "Scotland",
+          "image": null
+        },
+        {
+          "text": "Ireland",
+          "image": null
+        },
+        {
+          "text": "Wales",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Global Governments"
+    },
+    {
+      "q": "This parliament building belongs to which country?",
+      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-22T132222.688.webp",
+      "options": [
+        {
+          "text": "Japan",
+          "image": null
+        },
+        {
+          "text": "China",
+          "image": null
+        },
+        {
+          "text": "South Korea",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Global Governments"
+    },
+    {
+      "q": "This parliament building belongs to which country?",
+      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_1998087217-1-scaled.jpeg",
+      "options": [
+        {
+          "text": "Serbia",
+          "image": null
+        },
+        {
+          "text": "Hungary",
+          "image": null
+        },
+        {
+          "text": "Czech Republic",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Global Governments"
     }
   ]
 }

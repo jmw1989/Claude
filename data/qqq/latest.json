@@ -1,13 +1,13 @@
 {
   "source": "QuizQuizQuiz",
   "url": "https://quizquizquiz.com/friday/",
-  "fetchedAt": "2026-10-21T21:14:44.252Z",
+  "fetchedAt": "2026-10-23T07:35:16.924Z",
   "fetchedVia": "jina",
-  "title": "The QuizQuizQuiz Friday Quiz, 16th October 2026",
-  "quizId": "1303",
+  "title": "The QuizQuizQuiz Friday Quiz, 23rd October 2026",
+  "quizId": "1305",
   "submitUrl": "https://quizquizquiz.com/friday/submit",
   "hidden": {
-    "quiz_id": "1303",
+    "quiz_id": "1305",
     "email": "",
     "key": "",
     "time-taken": "0"
@@ -15,7 +15,7 @@
   "questions": [
     {
       "number": 1,
-      "q": "Moyer, damson and greengage are types of which fruit?",
+      "q": "What is, on average, the smallest breed of pony?",
       "image": null,
       "fields": [
         {
@@ -26,7 +26,7 @@
     },
     {
       "number": 2,
-      "q": "What profession (besides anything to do with politics) links 2026 British by-election candidates Hannah Spencer and Rob Kenyon?",
+      "q": "In the USA, which coin is worth one tenth of a dollar?",
       "image": null,
       "fields": [
         {
@@ -37,7 +37,7 @@
     },
     {
       "number": 3,
-      "q": "Which publisher of illustrated books took its name from two rivers, demonstrating that it intended to publish for both the British and American markets?",
+      "q": "What surname links two Labour Chancellors of the Exchequer?",
       "image": null,
       "fields": [
         {
@@ -48,7 +48,7 @@
     },
     {
       "number": 4,
-      "q": "The name of which character from books, film and TV comes from a joke the author's wife made to him about him being the kind of man people would ask to help them at supermarkets?",
+      "q": "In mockery of Donald Trump, what did the makers of South Park rename their new series in September 2026?",
       "image": null,
       "fields": [
         {
@@ -59,28 +59,28 @@
     },
     {
       "number": 5,
-      "q": "Name five of the ten cities with the world's oldest metro systems (electrified rapid transit train systems).",
+      "q": "Name the five cricketers who have played for England since 1980 that have been knighted.",
       "image": null,
       "fields": [
         {
           "name": "answer-5-0",
-          "label": "Metro system 1"
+          "label": "Knighted cricketer 1"
         },
         {
           "name": "answer-5-1",
-          "label": "Metro system 2"
+          "label": "Knighted cricketer 2"
         },
         {
           "name": "answer-5-2",
-          "label": "Metro system 3"
+          "label": "Knighted cricketer 3"
         },
         {
           "name": "answer-5-3",
-          "label": "Metro system 4"
+          "label": "Knighted cricketer 4"
         },
         {
           "name": "answer-5-4",
-          "label": "Metro system 5"
+          "label": "Knighted cricketer 5"
         }
       ]
     }
