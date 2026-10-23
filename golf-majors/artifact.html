@@ -216,7 +216,7 @@ const MAJORS = [
   {key:"newyear", name:"New Year Major", kind:"stable", rounds:1, when:"31 December", blurb:"One round, stableford and prizes"}
 ];
 const DEFAULT_ROSTER = {players:[{name:"Jonty", hi:12.4},{name:"Brandy", hi:18.0},{name:"Pete", hi:8.6}], example:true};
-const SKINS_HOLES = [[4,7,5],[3,15,5],[5,1,5],[4,11,5],[4,3,5],[4,9,10],[3,17,10],[5,5,10],[4,13,20],
+const SKINS_HOLES = [[4,7,5],[3,15,5],[5,1,5],[4,11,5],[4,3,5],[4,9,5],[3,17,10],[5,5,10],[4,13,20],
   [4,8,10],[4,2,10],[3,16,10],[5,6,10],[4,10,10],[4,12,10],[3,18,10],[5,4,20],[4,14,20]];
 
 /* ---------- Utilities ---------- */
@@ -459,8 +459,8 @@ function skinsCalc(S){
   const total = sum(won);
   // "each": both opponents pay the winner. "pot": everyone staked an equal share of the money awarded.
   const net = setup.moneyMode === "each" ? won.map(w => w*N - total) : won.map(w => w - total/N);
-  // What's left of the 5 × £5, 10 × £10, 3 × £20 allowance when values are picked on the tee
-  const left = {5:5, 10:10, 20:3};
+  // What's left of the 6 × £5, 9 × £10, 3 × £20 allowance when values are picked on the tee
+  const left = {5:6, 10:9, 20:3};
   if (onTee) Object.values(picked).forEach(v => { if (left[v] != null) left[v]--; });
   return {hc, res, won, skins, carry, allDone, leftover, endNote, net, total, get, onTee, left, valueOf,
     started: res.some(r => r.g && r.g.some(x => x != null)) || (onTee && Object.values(picked).some(Boolean))};
@@ -957,7 +957,7 @@ function skinsMoneyView(S, C){
 function skinsSetupView(S){
   const d = formFor("skins:" + ui.year, () => clone(S.setup)), hc = skinsHcps(d);
   const counts = {5:0,10:0,20:0}; d.holes.forEach(h => counts[h.value] = (counts[h.value]||0)+1);
-  const ok = counts[5]===5 && counts[10]===10 && counts[20]===3, cs = courses();
+  const ok = counts[5]===6 && counts[10]===9 && counts[20]===3, cs = courses();
   return `<h2>Players${S.saved ? "" : `<span class="example">Example</span>`}</h2>
   <section class="card players">${d.players.map((p,i) => `<div class="pl">
     <div class="grid3">
@@ -983,8 +983,8 @@ function skinsSetupView(S){
     <div class="lbl">Hole values</div>
     <div class="seg" style="margin-bottom:8px"><label><input type="radio" name="vm" data-f="valueMode" value="tee" ${d.valueMode==="tee"?"checked":""}> Pick on each tee as we play</label>
       <label><input type="radio" name="vm" data-f="valueMode" value="fixed" ${d.valueMode!=="tee"?"checked":""}> Set them all now</label></div>
-    ${d.valueMode === "tee" ? `<p class="note" style="margin:0 0 8px">On each hole you'll choose £5, £10 or £20, up to 5, 10 and 3 of each.</p>` : `<div class="counts"><span class="chip val5">${counts[5]} × £5</span><span class="chip val10">${counts[10]} × £10</span><span class="chip val20">${counts[20]} × £20</span><span class="chip">£${sum(d.holes.map(h=>+h.value))} total</span></div>
-    ${ok ? "" : `<p class="note warn">Your format is 5 × £5, 10 × £10 and 3 × £20.</p>`}`}
+    ${d.valueMode === "tee" ? `<p class="note" style="margin:0 0 8px">On each hole you'll choose £5, £10 or £20, up to 6, 9 and 3 of each.</p>` : `<div class="counts"><span class="chip val5">${counts[5]} × £5</span><span class="chip val10">${counts[10]} × £10</span><span class="chip val20">${counts[20]} × £20</span><span class="chip">£${sum(d.holes.map(h=>+h.value))} total</span></div>
+    ${ok ? "" : `<p class="note warn">Your format is 6 × £5, 9 × £10 and 3 × £20.</p>`}`}
     ${sisOk(d.holes) ? "" : `<p class="note warn">Stroke indexes should use each number from 1 to 18 once.</p>`}
     <div class="scroll" style="margin-top:10px"><table class="hcfg"><tr><th>Hole</th><th>Par</th><th>SI</th>${d.valueMode === "tee" ? "" : "<th>Value</th>"}</tr>
     ${d.holes.map((h,k) => `<tr><td><b>${k+1}</b></td>

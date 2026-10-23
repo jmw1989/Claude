@@ -6,7 +6,7 @@ A scoring app for the four golf majors played each year by Jonty, Brandy and Pet
 |---|---|
 | The Masters | Four rounds abroad. Stableford place points plus prizes. |
 | Summer Series | The same format in the UK (number of rounds can be set). |
-| Skins Major | One 18-hole skins round: 5 holes at £5, 10 at £10 and 3 at £20. Ties carry over. |
+| Skins Major | One 18-hole skins round: 6 holes at £5, 9 at £10 and 3 at £20 (values picked on each tee). Ties carry over. |
 | New Year Major | One round on New Year's Eve, same format as the Masters. |
 
 ## Scoring
