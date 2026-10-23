@@ -664,6 +664,8 @@ function normaliseCourse(c, teesExtra, holesExtra, hit){
   let out = range(1,18).map(n => ({par:4, si:""}));
   if (holes.length >= 18){
     out = holes.slice(0,18).map((h,k) => ({par: +pick(h, ["par"]) || 4, si: +pick(h, ["handicap","stroke_index","strokeIndex","si","hcp","handicap_index"]) || 0}));
+    // Some databases fill unknown stroke indexes with the hole number; no real course runs 1–18 in hole order
+    if (out.every((h,k) => h.si === k+1)) out.forEach(h => { h.si = ""; });
     if (!sisOk(out)){ notes.push("The database doesn't have this course's stroke indexes, so enter them from the scorecard (the boxes are left blank)."); out.forEach(h => { if (!h.si) h.si = ""; }); }
   } else notes.push("Hole pars and stroke indexes weren't available, so enter them from the scorecard.");
   if (!tees.length){ notes.push("No tee ratings were found, so add rating and slope from the scorecard."); tees.push({name:"Yellow", rating:"", slope:"", par:sum(out.map(h => h.par))}); }
