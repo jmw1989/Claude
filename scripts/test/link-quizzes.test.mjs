@@ -30,11 +30,6 @@ test('finds The Week and The National quiz links', () => {
   assert.equal(q.id, 'sport-quiz-of-the-week-october-19-2026');
 });
 
-test("builds The National's PuzzleMe embed address", () => {
-  const html = `<script>Fusion.globalContent={"embed":"<iframe src=\\"https://cdn2.amuselabs.com/puzzleme/quiz?id=52a874a3&set=thenationalnews-sport&embed=1\\">"}</script>`;
-  assert.equal(LINK_SOURCES.national.embed(html), 'https://cdn2.amuselabs.com/puzzleme/quiz?id=52a874a3&set=thenationalnews-sport&embed=1');
-  assert.equal(LINK_SOURCES.national.embed('<p>no quiz</p>'), null);
-});
 
 test('reads article details from meta tags and JSON-LD', () => {
   const html = `<html><head>

@@ -217,8 +217,6 @@ main { max-width: 640px; margin: 0 auto; padding: 16px; }
 .weekly-hero p, .weekly-hero .eyebrow { opacity: 0.85; }
 .weekly-hero .primary-btn { background: var(--card-fg); color: var(--card-bg); margin: 16px 0 10px; }
 .weekly-hero .secondary-btn { background: transparent; color: var(--card-fg); border-color: currentColor; }
-.weekly-embed { margin-top: 16px; scroll-margin-top: 80px; }
-.weekly-embed iframe { width: 100%; height: 85vh; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
 
 /* Reveal-the-answer questions */
 .answer-box { background: var(--good-bg); border: 2px solid var(--good); border-radius: 14px; padding: 14px; font-size: 1.1rem; font-weight: 600; }

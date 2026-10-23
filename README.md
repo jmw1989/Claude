@@ -7,8 +7,7 @@ A mobile quiz app you can host for free on GitHub Pages and add to your phone's 
 - **The JOE Friday Pub Quiz**: a GitHub Action fetches the latest quiz from JOE every Friday and saves it into the app, so you can play it there. Past weeks stay available too.
 - **The QuizQuizQuiz Friday Quiz**: the same job saves the week's questions from [quizquizquiz.com/friday](https://quizquizquiz.com/friday/). You type your answers in the app and submit them to QuizQuizQuiz, which marks them and shows the correct answers (they aren't published anywhere else).
 - **The Guardian Saturday Quiz** (Thomas Eaton): questions and answers are imported, so you play it in the app: think of your answer, reveal it and mark yourself.
-- **The National's Sport Quiz of the Week**: its quiz player is made to be embedded, so it runs inside the app.
-- **BBC News Quiz of the Week, BBC Sport Weekly Quiz and The Week's Quiz of the Week**: these quizzes only run on their own websites, so the app shows each new one and links straight to it (in the installed app it opens in the built-in browser).
+- **BBC News Quiz of the Week, BBC Sport Weekly Quiz, The Week's Quiz of the Week and The National's Sport Quiz of the Week**: these quizzes only run on their own websites, so the app shows each new one and links straight to it (in the installed app it opens in the built-in browser).
 - Tracks your scores, works offline (with a built-in question bank), and has light and dark themes.
 
 Questions come from [The Trivia API](https://the-trivia-api.com) and [Open Trivia DB](https://opentdb.com), both free and keyless.
@@ -68,6 +67,6 @@ node fetch-joe-quiz.mjs --url <quiz-url>   # a specific week
 | `data/joe/` | Saved JOE quizzes (written by the weekly job) |
 | `data/qqq/` | Saved QuizQuizQuiz Friday Quiz questions |
 | `data/guardian/` | Saved Guardian Saturday quizzes |
-| `data/bbc/`, `data/bbcsport/`, `data/theweek/`, `data/national/` | Links to (and The National's embed of) weekly quizzes |
+| `data/bbc/`, `data/bbcsport/`, `data/theweek/`, `data/national/` | Links to weekly quizzes |
 | `scripts/` | The quiz fetchers, parsers and tests |
 | `.github/workflows/joe-quiz.yml` | The weekly fetch job (all quizzes) |

@@ -499,9 +499,8 @@ function postToQqq(url, fields, target) {
 }
 
 // ---------- Other weekly quizzes ----------
-// mode 'play':  questions and answers are imported, so the quiz is played in the app.
-// mode 'embed': the publisher's quiz player is made to be embedded, so it runs in a frame here.
-// mode 'link':  the quiz only runs on the publisher's own site, so the app links to it.
+// mode 'play': questions and answers are imported, so the quiz is played in the app.
+// mode 'link': the quiz only runs on the publisher's own site, so the app links to it.
 const WEEKLY = {
   guardian: {
     name: 'Guardian Saturday Quiz', icon: '📘', bg: '#052962', fg: '#ffffff', mode: 'play',
@@ -521,7 +520,7 @@ const WEEKLY = {
     prefix: /^(bbc sport )?weekly sports? quiz:\s*/i,
   },
   national: {
-    name: 'The National: Sport Quiz of the Week', icon: '🏅', bg: '#004e79', fg: '#ffffff', mode: 'embed', site: 'The National',
+    name: 'The National: Sport Quiz of the Week', icon: '🏅', bg: '#004e79', fg: '#ffffff', mode: 'link', site: 'The National',
     prefix: /^sport quiz of the week:\s*/i,
   },
 };
@@ -573,7 +572,7 @@ function renderWeeklyCards() {
     const latest = data.quizzes[0];
     const score = latest && w.mode === 'play' && guardianResults()[latest.id];
     const done = latest && (score || weeklyDone(key)[latest.id]);
-    const action = w.mode === 'link' ? `tap to play on ${w.site}` : w.mode === 'embed' ? 'tap to play' : `${latest?.questions?.length || ''} questions · tap to play`;
+    const action = w.mode === 'link' ? `tap to play on ${w.site}` : `${latest?.questions?.length || ''} questions · tap to play`;
     card.querySelector('.card-sub').textContent = !latest
       ? 'A new quiz lands here every week.'
       : `${weeklyHeadline(key, latest.title)} · ${score ? `you scored ${score.score}/${score.total}` : done ? 'played' : action}`;
@@ -614,9 +613,6 @@ function renderWeekly(key, shownId = null) {
       action = `${score ? `<p class="done">You scored <b>${score.score}/${score.total}</b></p>` : ''}
         <button class="primary-btn" data-weekly-play="${escapeHtml(quiz.id)}">${score ? 'Play again' : `Play ${quiz.questions.length} questions`}</button>
         <a class="secondary-btn full" href="${escapeAttr(quiz.url)}" target="_blank" rel="noopener">Read it on the Guardian ↗</a>`;
-    } else if (w.mode === 'embed' && quiz.embedUrl) {
-      action = `<button class="primary-btn" data-weekly-embed="${escapeHtml(quiz.id)}">Play here</button>
-        <a class="secondary-btn full" href="${escapeAttr(quiz.url)}"${externalLinkAttrs()} data-weekly-open="${escapeHtml(quiz.id)}">Open on ${escapeHtml(w.site)} ↗</a>`;
     } else {
       action = `<a class="primary-btn" href="${escapeAttr(quiz.url)}"${externalLinkAttrs()} data-weekly-open="${escapeHtml(quiz.id)}">Play the quiz</a>
         <p class="hint">${
@@ -631,8 +627,7 @@ function renderWeekly(key, shownId = null) {
         <h2>${escapeHtml(quiz.title)}</h2>
         ${w.about ? `<p>${escapeHtml(w.about)}</p>` : quiz.description ? `<p>${escapeHtml(quiz.description)}</p>` : ''}
         ${action}
-      </div>
-      <div class="weekly-embed" hidden></div>`;
+      </div>`;
   }
   const others = quizzes.filter((q) => q !== quiz);
   const results = guardianResults();
@@ -653,7 +648,7 @@ function renderWeekly(key, shownId = null) {
 
 $('#screen-weekly').addEventListener('click', (e) => {
   const { key } = state.weekly;
-  const el = e.target.closest('[data-weekly-open], [data-weekly-show], [data-weekly-embed], [data-weekly-play]');
+  const el = e.target.closest('[data-weekly-open], [data-weekly-show], [data-weekly-play]');
   if (!el) return;
   if (el.dataset.weeklyOpen) {
     markWeeklyPlayed(key, el.dataset.weeklyOpen);
@@ -661,13 +656,6 @@ $('#screen-weekly').addEventListener('click', (e) => {
   } else if (el.dataset.weeklyShow) {
     renderWeekly(key, el.dataset.weeklyShow);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else if (el.dataset.weeklyEmbed) {
-    const quiz = state.weekly[key].quizzes.find((q) => q.id === el.dataset.weeklyEmbed);
-    const box = $('#weekly-body .weekly-embed');
-    box.innerHTML = `<iframe src="${escapeAttr(quiz.embedUrl)}" title="${escapeHtml(quiz.title)}" allow="fullscreen"></iframe>`;
-    box.hidden = false;
-    box.scrollIntoView({ behavior: 'smooth' });
-    markWeeklyPlayed(key, quiz.id);
   } else if (el.dataset.weeklyPlay) {
     playGuardian(state.weekly[key].quizzes.find((q) => q.id === el.dataset.weeklyPlay));
   }

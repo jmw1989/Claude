@@ -1,6 +1,6 @@
-// Weekly quizzes the app links to (or embeds) rather than importing: their quiz tools
-// either only run on the publisher's own site (BBC, The Week) or are made to be embedded
-// (The National's PuzzleMe quiz). We save each quiz's title, intro, picture and date.
+// Weekly quizzes the app links to rather than importing: their quiz tools only run on the
+// publisher's own site (BBC Riddle, The Week's Kwizly and The National's PuzzleMe players all
+// restrict where they can be embedded). We save each quiz's title, intro, picture and date.
 import * as cheerio from 'cheerio';
 
 export const LINK_SOURCES = {
@@ -21,11 +21,6 @@ export const LINK_SOURCES = {
   national: {
     listUrl: 'https://www.thenationalnews.com/sport/',
     linkRe: /\/sport\/\d{4}\/\d{2}\/\d{2}\/sport-quiz-of-the-week[a-z0-9-]*\/?/,
-    // The National's quiz is an Amuse Labs PuzzleMe player, which is made to be embedded.
-    embed: (html) => {
-      const m = /cdn2\.amuselabs\.com\/puzzleme\/quiz\?id=([a-z0-9]+)(?:&|&amp;)set=([a-z0-9-]+)/i.exec(html);
-      return m ? `https://cdn2.amuselabs.com/puzzleme/quiz?id=${m[1]}&set=${m[2]}&embed=1` : null;
-    },
   },
 };
 

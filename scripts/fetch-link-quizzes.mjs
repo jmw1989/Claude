@@ -29,9 +29,7 @@ async function update(key, source) {
     }
     let details = {};
     try {
-      const page = (await get(item.url)).html;
-      details = parseArticleMeta(page);
-      if (source.embed) details.embedUrl = source.embed(page);
+      details = parseArticleMeta((await get(item.url)).html);
     } catch (err) {
       console.warn(`Couldn't read ${item.url}: ${err.message}`);
     }
