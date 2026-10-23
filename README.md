@@ -6,7 +6,9 @@ A mobile quiz app you can host for free on GitHub Pages and add to your phone's 
 - **Sports quizzes**: pick sports (Football, Rugby, GAA, Cricket, Tennis, Golf, F1, Boxing, Olympics, and more).
 - **The JOE Friday Pub Quiz**: a GitHub Action fetches the latest quiz from JOE every Friday and saves it into the app, so you can play it there. Past weeks stay available too.
 - **The QuizQuizQuiz Friday Quiz**: the same job saves the week's questions from [quizquizquiz.com/friday](https://quizquizquiz.com/friday/). You type your answers in the app and submit them to QuizQuizQuiz, which marks them and shows the correct answers (they aren't published anywhere else).
-- **The BBC News Quiz of the Week**: the same job spots each new weekly quiz on the BBC and the app links straight to it. (The BBC's quiz only runs on the BBC's own website, so it can't be played inside the app.)
+- **The Guardian Saturday Quiz** (Thomas Eaton): questions and answers are imported, so you play it in the app: think of your answer, reveal it and mark yourself.
+- **The National's Sport Quiz of the Week**: its quiz player is made to be embedded, so it runs inside the app.
+- **BBC News Quiz of the Week, BBC Sport Weekly Quiz and The Week's Quiz of the Week**: these quizzes only run on their own websites, so the app shows each new one and links straight to it (in the installed app it opens in the built-in browser).
 - Tracks your scores, works offline (with a built-in question bank), and has light and dark themes.
 
 Questions come from [The Trivia API](https://the-trivia-api.com) and [Open Trivia DB](https://opentdb.com), both free and keyless.
@@ -24,7 +26,7 @@ To get this week's quizzes right away instead of waiting for Friday, go to **Act
 
 ## How the JOE quiz import works
 
-`.github/workflows/joe-quiz.yml` runs on Thursday evening, three times on Friday, and on Saturday morning (UTC), because publishing times vary. Each run:
+`.github/workflows/joe-quiz.yml` runs on Thursday evening, three times on Friday, on Saturday morning and on Monday (UTC), because publishing times vary. Each run:
 
 1. Finds the newest "The JOE Friday Pub Quiz: week N" link on joe.co.uk / joe.ie.
 2. Downloads the page and pulls out the questions, answer options, correct answers and any pictures (`scripts/joe-parser.mjs`).
@@ -65,6 +67,7 @@ node fetch-joe-quiz.mjs --url <quiz-url>   # a specific week
 | `sw.js`, `manifest.webmanifest`, `icons/` | Home-screen install and offline support |
 | `data/joe/` | Saved JOE quizzes (written by the weekly job) |
 | `data/qqq/` | Saved QuizQuizQuiz Friday Quiz questions |
-| `data/bbc/` | Links to the BBC's weekly quizzes |
+| `data/guardian/` | Saved Guardian Saturday quizzes |
+| `data/bbc/`, `data/bbcsport/`, `data/theweek/`, `data/national/` | Links to (and The National's embed of) weekly quizzes |
 | `scripts/` | The quiz fetchers, parsers and tests |
-| `.github/workflows/joe-quiz.yml` | The weekly fetch job (all three quizzes) |
+| `.github/workflows/joe-quiz.yml` | The weekly fetch job (all quizzes) |

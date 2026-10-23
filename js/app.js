@@ -28,7 +28,6 @@ const state = {
   quiz: null,
   joe: { index: null, latest: null },
   qqq: { index: null, latest: null, shown: null },
-  bbc: null,
 };
 
 // ---------- Navigation ----------
@@ -37,7 +36,7 @@ const TITLES = {
   setup: 'New quiz',
   joe: 'JOE Friday Pub Quiz',
   qqq: 'QuizQuizQuiz Friday Quiz',
-  bbc: 'BBC News Quiz of the Week',
+  weekly: 'Weekly quiz',
   loading: 'Loading',
   play: 'Quiz',
   results: 'Results',
@@ -91,7 +90,7 @@ function renderHome() {
   renderTopScores();
   renderJoeCard();
   renderQqqCard();
-  renderBbcCard();
+  renderWeeklyCards();
 }
 
 // Best five scores, highest percentage first; ties go to the higher score, then the earlier date.
@@ -499,81 +498,202 @@ function postToQqq(url, fields, target) {
   form.remove();
 }
 
-// ---------- BBC News weekly quiz ----------
-// The BBC's quiz is a Riddle embed that only runs on the BBC's own site, so the app
-// shows what's new and links straight to it.
-async function loadBbc() {
-  try {
-    const res = await fetch(`data/bbc/index.json?t=${Math.floor(Date.now() / 60000)}`, { cache: 'no-store' });
-    state.bbc = res.ok ? await res.json() : { quizzes: [] };
-  } catch {
-    state.bbc = state.bbc || { quizzes: [] };
+// ---------- Other weekly quizzes ----------
+// mode 'play':  questions and answers are imported, so the quiz is played in the app.
+// mode 'embed': the publisher's quiz player is made to be embedded, so it runs in a frame here.
+// mode 'link':  the quiz only runs on the publisher's own site, so the app links to it.
+const WEEKLY = {
+  guardian: {
+    name: 'Guardian Saturday Quiz', icon: '📘', bg: '#052962', fg: '#ffffff', mode: 'play',
+    about: 'Fifteen questions from Thomas Eaton, ending with a “What links” round. Think of your answer, reveal it, then mark yourself.',
+    prefix: /\s*[-–|:]?\s*the saturday quiz\s*$/i,
+  },
+  theweek: {
+    name: 'The Week: Quiz of the Week', icon: '🗞️', bg: '#1d1d1b', fg: '#ffffff', mode: 'link', site: 'The Week',
+    prefix: /^quiz of the week:\s*/i,
+  },
+  bbc: {
+    name: 'BBC News Quiz of the Week', icon: '📰', bg: '#b80000', fg: '#ffffff', mode: 'link', site: 'the BBC',
+    prefix: /^(bbc news )?(weekly quiz|quiz of the week):\s*/i,
+  },
+  bbcsport: {
+    name: 'BBC Sport Weekly Quiz', icon: '🏆', bg: '#ffd230', fg: '#1a1a1a', mode: 'link', site: 'BBC Sport',
+    prefix: /^(bbc sport )?weekly sports? quiz:\s*/i,
+  },
+  national: {
+    name: 'The National: Sport Quiz of the Week', icon: '🏅', bg: '#004e79', fg: '#ffffff', mode: 'embed', site: 'The National',
+    prefix: /^sport quiz of the week:\s*/i,
+  },
+};
+state.weekly = {};
+
+const weeklyHeadline = (key, title) => (title || '').replace(WEEKLY[key].prefix, '').trim() || title;
+const weeklyDate = (q) => (q.publishedAt ? new Date(q.publishedAt).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }) : '');
+const weeklyDone = (key) => store.get(`${key}.opened`, {});
+const guardianResults = () => store.get('guardian', {});
+
+// In the installed app, a same-window link opens in the app's built-in browser (iPhone: a
+// sheet with Done; Android: a bar with ✕), so you come straight back here. In an ordinary
+// browser tab it opens a new tab instead, leaving the app where it was.
+const externalLinkAttrs = () => (isStandalone() ? '' : ' target="_blank" rel="noopener"');
+
+$('#weekly-cards').innerHTML = Object.entries(WEEKLY)
+  .map(
+    ([key, w]) => `<button class="card card-weekly" data-weekly="${key}" style="--card-bg:${w.bg};--card-fg:${w.fg}">
+        <span class="card-icon">${w.icon}</span>
+        <span class="card-body">
+          <span class="card-title">${escapeHtml(w.name)}</span>
+          <span class="card-sub">Checking for this week's quiz…</span>
+        </span>
+        <span class="badge" hidden>NEW</span>
+      </button>`,
+  )
+  .join('');
+
+async function loadWeekly() {
+  await Promise.all(
+    Object.keys(WEEKLY).map(async (key) => {
+      try {
+        const res = await fetch(`data/${key}/index.json?t=${Math.floor(Date.now() / 60000)}`, { cache: 'no-store' });
+        state.weekly[key] = res.ok ? await res.json() : { quizzes: [] };
+      } catch {
+        state.weekly[key] ||= { quizzes: [] };
+      }
+    }),
+  );
+  renderWeeklyCards();
+  if (current === 'weekly') renderWeekly(state.weekly.key, state.weekly.shownId);
+}
+
+function renderWeeklyCards() {
+  for (const [key, w] of Object.entries(WEEKLY)) {
+    const card = $(`.card-weekly[data-weekly="${key}"]`);
+    const data = state.weekly[key];
+    if (!card || !data) continue;
+    const latest = data.quizzes[0];
+    const score = latest && w.mode === 'play' && guardianResults()[latest.id];
+    const done = latest && (score || weeklyDone(key)[latest.id]);
+    const action = w.mode === 'link' ? `tap to play on ${w.site}` : w.mode === 'embed' ? 'tap to play' : `${latest?.questions?.length || ''} questions · tap to play`;
+    card.querySelector('.card-sub').textContent = !latest
+      ? 'A new quiz lands here every week.'
+      : `${weeklyHeadline(key, latest.title)} · ${score ? `you scored ${score.score}/${score.total}` : done ? 'played' : action}`;
+    card.querySelector('.badge').hidden = !latest || Boolean(done);
   }
-  renderBbcCard();
-  if (current === 'bbc') renderBbc();
 }
 
-// In the installed app, a same-window link to the BBC opens in the app's built-in browser
-// (iPhone: a sheet with Done; Android: a bar with ✕), so you come straight back here.
-// In an ordinary browser tab it opens a new tab instead, leaving the app where it was.
-const bbcLinkAttrs = () => (isStandalone() ? '' : ' target="_blank" rel="noopener"');
-
-const bbcHeadline = (title) => title.replace(/^(BBC News )?(weekly quiz|quiz of the week):\s*/i, '');
-
-function renderBbcCard() {
-  if (!state.bbc) return;
-  const latest = state.bbc.quizzes[0];
-  const opened = latest && store.get('bbc.opened', {})[latest.id];
-  $('#bbc-card-sub').textContent = latest ? `${bbcHeadline(latest.title)} · ${opened ? 'opened' : 'tap to play on the BBC'}` : 'A new quiz lands here every week.';
-  $('#bbc-badge').hidden = !latest || Boolean(opened);
-}
-
-$('#bbc-card').addEventListener('click', () => {
-  renderBbc();
-  show('bbc');
+$('#weekly-cards').addEventListener('click', (e) => {
+  const card = e.target.closest('[data-weekly]');
+  if (!card) return;
+  renderWeekly(card.dataset.weekly);
+  TITLES.weekly = WEEKLY[card.dataset.weekly].name;
+  show('weekly');
 });
 
-function renderBbc() {
-  const [latest, ...older] = state.bbc?.quizzes || [];
-  const opened = store.get('bbc.opened', {});
-  const date = (q) => (q.publishedAt ? new Date(q.publishedAt).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }) : '');
-  $('#bbc-body').innerHTML = latest
-    ? `<div class="joe-hero bbc-hero">
-        ${latest.image ? `<img src="${escapeAttr(latest.image)}" alt="" class="joe-img" referrerpolicy="no-referrer">` : ''}
-        <p class="eyebrow">This week${date(latest) ? ` · ${date(latest)}` : ''}</p>
-        <h2>${escapeHtml(latest.title)}</h2>
-        ${latest.description ? `<p>${escapeHtml(latest.description)}</p>` : ''}
-        <a class="primary-btn" href="${escapeAttr(latest.url)}"${bbcLinkAttrs()} data-bbc="${escapeHtml(latest.id)}">Play the quiz</a>
+function markWeeklyPlayed(key, id) {
+  const done = weeklyDone(key);
+  done[id] = new Date().toISOString();
+  store.set(`${key}.opened`, done);
+  renderWeeklyCards();
+}
+
+function renderWeekly(key, shownId = null) {
+  const w = WEEKLY[key];
+  const quizzes = state.weekly[key]?.quizzes || [];
+  const quiz = quizzes.find((q) => q.id === shownId) || quizzes[0];
+  Object.assign(state.weekly, { key, shownId: quiz?.id || null });
+  const body = $('#weekly-body');
+  body.style.setProperty('--card-bg', w.bg);
+  body.style.setProperty('--card-fg', w.fg);
+  if (!quiz) {
+    body.innerHTML = `<div class="joe-hero weekly-hero"><h2>No quiz yet</h2><p>This week's quiz will appear here as soon as it's published.</p></div>`;
+  } else {
+    const isLatest = quiz === quizzes[0];
+    const score = guardianResults()[quiz.id];
+    let action = '';
+    if (w.mode === 'play') {
+      action = `${score ? `<p class="done">You scored <b>${score.score}/${score.total}</b></p>` : ''}
+        <button class="primary-btn" data-weekly-play="${escapeHtml(quiz.id)}">${score ? 'Play again' : `Play ${quiz.questions.length} questions`}</button>
+        <a class="secondary-btn full" href="${escapeAttr(quiz.url)}" target="_blank" rel="noopener">Read it on the Guardian ↗</a>`;
+    } else if (w.mode === 'embed' && quiz.embedUrl) {
+      action = `<button class="primary-btn" data-weekly-embed="${escapeHtml(quiz.id)}">Play here</button>
+        <a class="secondary-btn full" href="${escapeAttr(quiz.url)}"${externalLinkAttrs()} data-weekly-open="${escapeHtml(quiz.id)}">Open on ${escapeHtml(w.site)} ↗</a>`;
+    } else {
+      action = `<a class="primary-btn" href="${escapeAttr(quiz.url)}"${externalLinkAttrs()} data-weekly-open="${escapeHtml(quiz.id)}">Play the quiz</a>
         <p class="hint">${
           isStandalone()
-            ? 'Opens the BBC quiz in the app’s built-in browser. Tap Done (or ✕) to come back.'
-            : 'The BBC only lets this quiz run on its own website, so it opens in a new tab. Add Quiz Night to your home screen to play it inside the app.'
-        }</p>
-      </div>`
-    : `<div class="joe-hero bbc-hero"><h2>No quiz yet</h2><p>The BBC's weekly news quiz will appear here when it's published.</p></div>`;
-  $('#bbc-list').innerHTML = older.length
-    ? older
-        .map(
-          (q) => `<li><span><b>${escapeHtml(bbcHeadline(q.title))}</b><small>${escapeHtml(date(q))}</small></span>
-            <a class="small-btn" href="${escapeAttr(q.url)}"${bbcLinkAttrs()} data-bbc="${escapeHtml(q.id)}">${opened[q.id] ? 'Again' : 'Play'}</a></li>`,
-        )
+            ? 'Opens in the app’s built-in browser. Tap Done (or ✕) to come back.'
+            : `${escapeHtml(w.site)} only lets this quiz run on its own website, so it opens in a new tab. Add Quiz Night to your home screen to play it inside the app.`
+        }</p>`;
+    }
+    body.innerHTML = `<div class="joe-hero weekly-hero">
+        ${quiz.image ? `<img src="${escapeAttr(quiz.image)}" alt="" class="joe-img" referrerpolicy="no-referrer">` : ''}
+        <p class="eyebrow">${isLatest ? 'This week' : 'Previous week'}${weeklyDate(quiz) ? ` · ${weeklyDate(quiz)}` : ''}</p>
+        <h2>${escapeHtml(quiz.title)}</h2>
+        ${w.about ? `<p>${escapeHtml(w.about)}</p>` : quiz.description ? `<p>${escapeHtml(quiz.description)}</p>` : ''}
+        ${action}
+      </div>
+      <div class="weekly-embed" hidden></div>`;
+  }
+  const others = quizzes.filter((q) => q !== quiz);
+  const results = guardianResults();
+  const played = weeklyDone(key);
+  $('#weekly-list').innerHTML = others.length
+    ? others
+        .map((q) => {
+          const label = results[q.id] ? `${results[q.id].score}/${results[q.id].total}` : played[q.id] ? 'Again' : 'Play';
+          const button =
+            w.mode === 'link'
+              ? `<a class="small-btn" href="${escapeAttr(q.url)}"${externalLinkAttrs()} data-weekly-open="${escapeHtml(q.id)}">${label}</a>`
+              : `<button class="small-btn" data-weekly-show="${escapeHtml(q.id)}">${label}</button>`;
+          return `<li><span><b>${escapeHtml(weeklyHeadline(key, q.title))}</b><small>${escapeHtml(weeklyDate(q))}</small></span>${button}</li>`;
+        })
         .join('')
     : '<li class="empty">Past quizzes will build up here each week.</li>';
 }
 
-$('#screen-bbc').addEventListener('click', (e) => {
-  const link = e.target.closest('[data-bbc]');
-  if (!link) return;
-  const opened = store.get('bbc.opened', {});
-  opened[link.dataset.bbc] = new Date().toISOString();
-  store.set('bbc.opened', opened);
-  renderBbcCard();
-  setTimeout(renderBbc, 300);
+$('#screen-weekly').addEventListener('click', (e) => {
+  const { key } = state.weekly;
+  const el = e.target.closest('[data-weekly-open], [data-weekly-show], [data-weekly-embed], [data-weekly-play]');
+  if (!el) return;
+  if (el.dataset.weeklyOpen) {
+    markWeeklyPlayed(key, el.dataset.weeklyOpen);
+    setTimeout(() => renderWeekly(key, state.weekly.shownId), 300);
+  } else if (el.dataset.weeklyShow) {
+    renderWeekly(key, el.dataset.weeklyShow);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (el.dataset.weeklyEmbed) {
+    const quiz = state.weekly[key].quizzes.find((q) => q.id === el.dataset.weeklyEmbed);
+    const box = $('#weekly-body .weekly-embed');
+    box.innerHTML = `<iframe src="${escapeAttr(quiz.embedUrl)}" title="${escapeHtml(quiz.title)}" allow="fullscreen"></iframe>`;
+    box.hidden = false;
+    box.scrollIntoView({ behavior: 'smooth' });
+    markWeeklyPlayed(key, quiz.id);
+  } else if (el.dataset.weeklyPlay) {
+    playGuardian(state.weekly[key].quizzes.find((q) => q.id === el.dataset.weeklyPlay));
+  }
 });
 
+function playGuardian(quiz) {
+  const play = () =>
+    startQuiz({
+      title: `Guardian Saturday Quiz · ${weeklyDate(quiz)}`,
+      questions: quiz.questions.map((q) => ({ q: q.q, answerText: q.answer, category: q.category || `Question ${q.number}` })),
+      replay: play,
+      onFinish: (score, total) => {
+        const results = guardianResults();
+        if (!results[quiz.id] || score > results[quiz.id].score) results[quiz.id] = { score, total, date: new Date().toISOString(), title: quiz.title };
+        store.set('guardian', results);
+        renderWeeklyCards();
+      },
+    });
+  play();
+}
+
 // ---------- Playing ----------
-function startQuiz({ title, questions, note = '', joeWeek = null, replay = null }) {
-  state.quiz = { title, questions, note, joeWeek, replay, idx: 0, score: 0, picks: [] };
+// Questions are multiple choice ({options, answer}) or, for quizzes with written answers,
+// reveal-and-mark-yourself ({answerText}).
+function startQuiz({ title, questions, note = '', joeWeek = null, replay = null, onFinish = null }) {
+  state.quiz = { title, questions, note, joeWeek, replay, onFinish, idx: 0, score: 0, picks: [] };
   const n = $('#quiz-note');
   n.textContent = note;
   n.hidden = !note;
@@ -593,6 +713,20 @@ function renderQuestion() {
   img.hidden = !q.image;
   if (q.image) img.src = q.image;
   else img.removeAttribute('src');
+  $('#next-btn').hidden = true;
+  if (qz.idx > 0) $('#quiz-note').hidden = true;
+  if (q.answerText != null) {
+    $('#options').className = 'options reveal-options';
+    $('#options').innerHTML = `<div class="answer-box"><span>Answer</span>${escapeHtml(q.answerText)}</div>
+      <div class="mark-row">
+        <button class="option mark" data-mark="1">✓ Got it</button>
+        <button class="option mark" data-mark="0">✗ Missed it</button>
+      </div>`;
+    $('#options').hidden = true;
+    $('#reveal-btn').textContent = 'Show the answer';
+    $('#reveal-btn').hidden = false;
+    return;
+  }
   const hasImageOptions = q.options.some((o) => o.image);
   $('#options').className = `options${hasImageOptions ? ' image-options' : ''}`;
   $('#options').innerHTML = q.options
@@ -607,9 +741,8 @@ function renderQuestion() {
   // JOE quizzes play like a pub quiz: think of your answer, then reveal the options.
   const hideOptions = qz.joeWeek != null;
   $('#options').hidden = hideOptions;
+  $('#reveal-btn').textContent = 'Reveal the options';
   $('#reveal-btn').hidden = !hideOptions;
-  $('#next-btn').hidden = true;
-  if (qz.idx > 0) $('#quiz-note').hidden = true;
 }
 
 $('#reveal-btn').addEventListener('click', () => {
@@ -622,16 +755,24 @@ $('#options').addEventListener('click', (e) => {
   const qz = state.quiz;
   if (!btn || !qz || qz.picks.length > qz.idx) return;
   const q = qz.questions[qz.idx];
-  const pick = Number(btn.dataset.i);
-  qz.picks.push(pick);
-  const right = pick === q.answer;
+  let right;
+  if (btn.dataset.mark != null) {
+    right = btn.dataset.mark === '1';
+    qz.picks.push(right);
+    $$('#options .option').forEach((b) => (b.disabled = true));
+    btn.classList.add(right ? 'correct' : 'wrong');
+  } else {
+    const pick = Number(btn.dataset.i);
+    qz.picks.push(pick);
+    right = pick === q.answer;
+    $$('#options .option').forEach((b, i) => {
+      b.disabled = true;
+      if (i === q.answer) b.classList.add('correct');
+      else if (i === pick) b.classList.add('wrong');
+    });
+  }
   if (right) qz.score++;
   else navigator.vibrate?.(120);
-  $$('#options .option').forEach((b, i) => {
-    b.disabled = true;
-    if (i === q.answer) b.classList.add('correct');
-    else if (i === pick) b.classList.add('wrong');
-  });
   $('#q-score').textContent = `Score ${qz.score}`;
   $('#progress-bar').style.width = `${((qz.idx + 1) / qz.questions.length) * 100}%`;
   const next = $('#next-btn');
@@ -658,6 +799,13 @@ function finishQuiz() {
     pct === 1 ? 'Perfect score! Drinks are on you. 🏆' : pct >= 0.8 ? 'Superb — quiz team captain material.' : pct >= 0.5 ? 'Solid effort! 🍻' : pct >= 0.25 ? 'Not bad — there\'s always next week.' : 'Ouch. Maybe stick to the crisps. 🥔';
   $('#review').innerHTML = qz.questions
     .map((q, i) => {
+      if (q.answerText != null) {
+        const ok = qz.picks[i] === true;
+        return `<li class="${ok ? 'ok' : 'bad'}">
+          <p>${escapeHtml(q.q)}</p>
+          <small>${ok ? '✓ Got it' : '✗ Missed it'} · Answer: <b>${escapeHtml(q.answerText)}</b></small>
+        </li>`;
+      }
       const ok = qz.picks[i] === q.answer;
       return `<li class="${ok ? 'ok' : 'bad'}">
         <p>${escapeHtml(q.q)}</p>
@@ -675,6 +823,7 @@ function finishQuiz() {
     if (!prev || qz.score > prev.score) joe[qz.joeWeek] = { score: qz.score, total, date: new Date().toISOString() };
     store.set('joe', joe);
   }
+  qz.onFinish?.(qz.score, total);
   $('#again-btn').hidden = !qz.replay;
   show('results');
 }
@@ -737,4 +886,4 @@ show('home', { push: false });
 showInstallHint();
 loadJoe();
 loadQqq();
-loadBbc();
+loadWeekly();

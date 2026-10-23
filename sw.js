@@ -1,5 +1,5 @@
 // Offline support: the app shell is cached; quiz data and APIs always try the network first.
-const CACHE = 'quiznight-v8';
+const CACHE = 'quiznight-v9';
 const SHELL = [
   './',
   'index.html',

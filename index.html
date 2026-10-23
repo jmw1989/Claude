@@ -25,6 +25,7 @@
   <main id="app">
     <!-- Home -->
     <section class="screen" id="screen-home">
+      <h2 class="section-label home-label first">This week's quizzes</h2>
       <button class="card card-joe" id="joe-card">
         <span class="card-icon">🍺</span>
         <span class="card-body">
@@ -43,15 +44,10 @@
         <span class="badge" id="qqq-badge" hidden>NEW</span>
       </button>
 
-      <button class="card card-bbc" id="bbc-card">
-        <span class="card-icon">📰</span>
-        <span class="card-body">
-          <span class="card-title">BBC News Quiz of the Week</span>
-          <span class="card-sub" id="bbc-card-sub">Checking for this week's quiz…</span>
-        </span>
-        <span class="badge" id="bbc-badge" hidden>NEW</span>
-      </button>
+      <!-- Guardian, The Week, BBC News, BBC Sport and The National: built by js/app.js -->
+      <div id="weekly-cards"></div>
 
+      <h2 class="section-label home-label">Make your own quiz</h2>
       <button class="card" data-kind="general">
         <span class="card-icon">🧠</span>
         <span class="card-body">
@@ -124,11 +120,11 @@
       <ol class="joe-list" id="qqq-list"></ol>
     </section>
 
-    <!-- BBC News weekly quiz: links only, as the BBC's quiz only runs on its own site -->
-    <section class="screen" id="screen-bbc" hidden>
-      <div id="bbc-body"></div>
+    <!-- Other weekly quizzes: played here, embedded, or linked, depending on the source -->
+    <section class="screen" id="screen-weekly" hidden>
+      <div id="weekly-body"></div>
       <h2 class="section-label">Previous weeks</h2>
-      <ol class="joe-list" id="bbc-list"></ol>
+      <ol class="joe-list" id="weekly-list"></ol>
     </section>
 
     <!-- Loading -->

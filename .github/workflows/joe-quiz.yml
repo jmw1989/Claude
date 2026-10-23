@@ -2,14 +2,16 @@ name: Fetch Friday quizzes
 
 on:
   schedule:
-    # JOE and the BBC usually publish on Thursday afternoon or evening (UK time) and
-    # QuizQuizQuiz on Friday. Check a few times; runs after a quiz is saved finish
+    # JOE and the BBC usually publish on Thursday afternoon or evening (UK time),
+    # QuizQuizQuiz and The Week on Friday, the Guardian on Saturday morning and The
+    # National on Monday. Check a few times; runs after a quiz is saved finish
     # straight away.
     - cron: '30 19 * * 4'  # Thursday 19:30 UTC
     - cron: '0 7 * * 5'    # Friday 07:00 UTC
     - cron: '0 11 * * 5'   # Friday 11:00 UTC
     - cron: '0 16 * * 5'   # Friday 16:00 UTC
     - cron: '0 10 * * 6'   # Saturday 10:00 UTC
+    - cron: '0 12 * * 1'   # Monday 12:00 UTC
   workflow_dispatch:
     inputs:
       url:
@@ -64,11 +66,17 @@ jobs:
         working-directory: scripts
         run: node fetch-qqq-quiz.mjs
 
-      - name: Fetch the latest BBC News weekly quiz
-        id: bbc
+      - name: Fetch this week's Guardian Saturday quiz
+        id: guardian
         continue-on-error: true
         working-directory: scripts
-        run: node fetch-bbc-quiz.mjs
+        run: node fetch-guardian-quiz.mjs
+
+      - name: Fetch the latest BBC News, BBC Sport, The Week and The National quizzes
+        id: links
+        continue-on-error: true
+        working-directory: scripts
+        run: node fetch-link-quizzes.mjs
 
       - name: Keep the page for debugging if it couldn't be read
         if: always()
@@ -91,7 +99,7 @@ jobs:
           fi
 
       - name: Report a failed fetch
-        if: steps.joe.outcome == 'failure' || steps.qqq.outcome == 'failure' || steps.bbc.outcome == 'failure'
+        if: steps.joe.outcome == 'failure' || steps.qqq.outcome == 'failure' || steps.guardian.outcome == 'failure' || steps.links.outcome == 'failure'
         run: |
-          echo "::error::JOE: ${{ steps.joe.outcome }}, QuizQuizQuiz: ${{ steps.qqq.outcome }}, BBC: ${{ steps.bbc.outcome }}. See the steps above."
+          echo "::error::JOE: ${{ steps.joe.outcome }}, QuizQuizQuiz: ${{ steps.qqq.outcome }}, Guardian: ${{ steps.guardian.outcome }}, linked quizzes: ${{ steps.links.outcome }}. See the steps above."
           exit 1
