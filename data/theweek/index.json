@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-10-23T09:55:21.521Z",
+  "updatedAt": "2026-10-23T11:27:37.649Z",
   "quizzes": [
+    {
+      "id": "quiz-of-the-week-17-23-october",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-17-23-october",
+      "title": "Quiz of The Week: 17 - 23 October",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/w5oD4qihEGdhzad9DPBsb8-2000-80.jpg",
+      "publishedAt": "2026-10-23T10:08:25Z"
+    },
     {
       "id": "quiz-of-the-week-10-16-october",
       "url": "https://theweek.com/puzzles/quiz-of-the-week-10-16-october",
