@@ -661,10 +661,10 @@ function normaliseCourse(c, teesExtra, holesExtra, hit){
     const options = [listOf(holesExtra, ["holes","data"]), listOf(c.scorecard, ["holes"]), listOf(c.holes, ["holes"])];
     const hx = options.find(o => o.length >= 18); if (hx) holes = hx.slice().sort((a,b) => (+a.hole_number || 0) - (+b.hole_number || 0)); }
   const notes = [];
-  let out = range(1,18).map(n => ({par:4, si:n}));
+  let out = range(1,18).map(n => ({par:4, si:""}));
   if (holes.length >= 18){
     out = holes.slice(0,18).map((h,k) => ({par: +pick(h, ["par"]) || 4, si: +pick(h, ["handicap","stroke_index","strokeIndex","si","hcp","handicap_index"]) || 0}));
-    if (!sisOk(out)){ notes.push("Stroke indexes were missing or incomplete, so check them against the scorecard."); out.forEach((h,k) => { if (!h.si) h.si = k+1; }); }
+    if (!sisOk(out)){ notes.push("The database doesn't have this course's stroke indexes, so enter them from the scorecard (the boxes are left blank)."); out.forEach(h => { if (!h.si) h.si = ""; }); }
   } else notes.push("Hole pars and stroke indexes weren't available, so enter them from the scorecard.");
   if (!tees.length){ notes.push("No tee ratings were found, so add rating and slope from the scorecard."); tees.push({name:"Yellow", rating:"", slope:"", par:sum(out.map(h => h.par))}); }
   else if (tees.some(t => t.rating === "" || t.slope === "")) notes.push("Some tees have no rating or slope. Leave them blank to use handicaps as they are, or fill them in.");
@@ -691,7 +691,7 @@ function finderView(){
 
 function blankCourse(){
   return {name:"", country:"", tees:[{name:"Yellow", rating:"", slope:"", par:72},{name:"White", rating:"", slope:"", par:72}],
-    holes: range(1,18).map(h => ({par:4, si:h}))};
+    holes: range(1,18).map(h => ({par:4, si:""}))};
 }
 function courseEditView(){
   const d = formFor("course:" + (ui.courseId || "new"), () => ui.courseId && docs["courses/"+ui.courseId] ? clone(docs["courses/"+ui.courseId]) : blankCourse());
@@ -718,7 +718,7 @@ function courseEditView(){
   <h2>Holes</h2>
   <section class="card stack">
     <div class="counts"><span class="chip">Par ${par}</span><span class="chip prize">Par 3s: ${p3.join(", ") || "none"}</span></div>
-    ${sisOk(d.holes) ? "" : `<p class="note warn" style="margin:0">Stroke indexes should use each number from 1 to 18 once.</p>`}
+    ${sisOk(d.holes) ? "" : `<p class="note warn" style="margin:0" id="siwarn">${d.holes.some(h => h.si === "" || h.si == null) ? "Fill in every stroke index from the scorecard" : "Stroke indexes should use each number from 1 to 18 once"}. Shots are given by stroke index, so the course can't be saved without them.</p>`}
     ${half(1,9)}${half(10,18)}
   </section>
   <div class="actions"><button class="btn primary" data-act="save-course" ${readOnly?"disabled":""}>${form.dirty ? "Save course" : (ui.courseId ? "Saved" : "Save course")}</button>
@@ -1086,6 +1086,7 @@ function action(a, t){
   if (a === "save-course"){
     const d = clone(form.data);
     if (!String(d.name).trim()){ const n = $("cn"); if (n){ n.focus(); n.placeholder = "Give the course a name"; } return; }
+    if (!sisOk(d.holes)){ renderMain(); const w = $("siwarn"); if (w) w.scrollIntoView({block:"center"}); const empty = d.holes.findIndex(h => !h.si); const el = $("cs" + (empty + 1)); if (el && empty >= 0) el.focus(); return; }
     const id = ui.courseId || slug(d.name);
     form.dirty = false; replace("courses/" + id, d);
     if (ui.back) go(Object.assign({}, ui.back, {back:null})); else go({view:"courses"});
