@@ -34,6 +34,10 @@ body{font-family:var(--body);font-size:16px;line-height:1.45;-webkit-text-size-a
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--green)}
 .wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
 button,input,select{font:inherit;color:inherit}
+/* No double-tap zoom when tapping + and − quickly; pinch-to-zoom still works */
+html,body,button,input,select,label{touch-action:manipulation}
+/* iPhones zoom into any box with text under 16px when it's tapped */
+input,select{font-size:16px!important}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--v20);outline-offset:2px}
 .num{font-variant-numeric:tabular-nums}
