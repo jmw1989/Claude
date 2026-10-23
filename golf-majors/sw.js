@@ -1,5 +1,5 @@
 // Offline support: the app is cached so it opens on the course with no signal; the network is tried first for updates.
-const CACHE = 'majors-tour-v10';
+const CACHE = 'majors-tour-v11';
 const SHELL = ['./', 'index.html', 'firebase-config.js', 'sync.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
@@ -23,7 +23,10 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   if (url.origin !== location.origin) return;
-  const request = e.request.mode === 'navigate' ? e.request : new Request(e.request, { cache: 'no-cache' });
+  // Always ask the server first (skipping the browser's 10-minute cache) so updates show on the next open
+  const request = e.request.mode === 'navigate'
+    ? new Request(e.request.url, { cache: 'no-store', credentials: 'same-origin' })
+    : new Request(e.request, { cache: 'no-cache' });
   e.respondWith(
     fetch(request)
       .then((res) => {
