@@ -321,7 +321,7 @@ function skinsDefault(){
     tees:[{name:"White", rating:71.4, slope:129, par:72},{name:"Yellow", rating:69.9, slope:125, par:72},{name:"Red", rating:73.1, slope:128, par:74}],
     holes: SKINS_HOLES.map(([par,si,value]) => ({par,si,value})),
     players: r.players.map(p => ({name:p.name, hi:p.hi, tee:1})),
-    allowance:100, strokeMode:"low", moneyMode:"each", endTie:"split", playoffWinner:null, example:true};
+    allowance:100, strokeMode:"low", moneyMode:"each", endTie:"split", playoffWinner:null, valueMode:"tee", example:true};
 }
 function skinsState(){
   const p = skinsPaths(), s = docs[p.setup];
@@ -453,13 +453,15 @@ function skinsCalc(S){
   const get = (p,h) => { const v = scores["p"+p] && scores["p"+p]["h"+h]; return typeof v === "number" && v > 0 ? v : null; };
   const res = [], won = Array(N).fill(0), skins = Array(N).fill(0);
   let carry = 0, blocked = false, allDone = true;
+  const onTee = setup.valueMode === "tee", picked = scores.values || {};
+  const valueOf = h => onTee ? (+picked["h"+h] || null) : Number(setup.holes[h-1].value);
   for (let h = 1; h <= H; h++){
-    const hole = setup.holes[h-1], value = Number(hole.value);
+    const hole = setup.holes[h-1], value = valueOf(h);
     const st = hc.map(r => strokesOn(r.strokes, Number(hole.si)));
     const g = range(0,N-1).map(p => get(p,h));
     const nets = g.map((x,i) => x == null ? null : x - st[i]);
-    if (blocked || g.some(x => x == null)){
-      res.push({h, status: blocked ? "blocked" : "pending", pot: blocked ? null : carry + value, carryIn: blocked ? null : carry, value, st, nets, g});
+    if (blocked || value == null || g.some(x => x == null)){
+      res.push({h, status: blocked ? "blocked" : "pending", pot: blocked || value == null ? null : carry + value, carryIn: blocked ? null : carry, value, st, nets, g});
       blocked = true; allDone = false; continue;
     }
     const pot = carry + value, min = Math.min(...nets);
@@ -478,7 +480,11 @@ function skinsCalc(S){
   const total = sum(won);
   // "each": both opponents pay the winner. "pot": everyone staked an equal share of the money awarded.
   const net = setup.moneyMode === "each" ? won.map(w => w*N - total) : won.map(w => w - total/N);
-  return {hc, res, won, skins, carry, allDone, leftover, endNote, net, total, get, started: res.some(r => r.g && r.g.some(x => x != null))};
+  // What's left of the 5 × £5, 10 × £10, 3 × £20 allowance when values are picked on the tee
+  const left = {5:5, 10:10, 20:3};
+  if (onTee) Object.values(picked).forEach(v => { if (left[v] != null) left[v]--; });
+  return {hc, res, won, skins, carry, allDone, leftover, endNote, net, total, get, onTee, left, valueOf,
+    started: res.some(r => r.g && r.g.some(x => x != null)) || (onTee && Object.values(picked).some(Boolean))};
 }
 function settle(net){
   const cr = [], dr = [];
@@ -902,7 +908,12 @@ function roundSetupView(){
 /* ---------- Skins views ---------- */
 function skinsHoleView(S, C){
   const setup = S.setup, cur = curHole(), hole = setup.holes[cur-1], r = C.res[cur-1];
-  const pot = r.status === "blocked" ? `Finish earlier holes to see what this hole is worth.` : `Playing for <b class="num">£${r.pot}</b>${r.carryIn ? ` (£${r.value} + £${r.carryIn} carried)` : ""}`;
+  const pot = r.status === "blocked" ? `Finish earlier holes to see what this hole is worth.`
+    : r.value == null ? `Pick what this hole is worth${r.carryIn ? `. £${r.carryIn} is carrying over` : ""}.`
+    : `Playing for <b class="num">£${r.pot}</b>${r.carryIn ? ` (£${r.value} + £${r.carryIn} carried)` : ""}`;
+  const picker = C.onTee ? `<div class="prizebox"><div class="pt"><div class="ptt">Hole value</div><div class="pinfo num">Left: ${C.left[5]} × £5 · ${C.left[10]} × £10 · ${C.left[20]} × £20</div></div>
+    <div class="rank">${[5,10,20].map(v => { const on = r.value === v, out = !on && C.left[v] <= 0;
+      return `<button class="${on ? "on" : ""}" data-value="${v}" ${readOnly || out ? "disabled" : ""} aria-pressed="${on}"><span class="rn">£${v}</span><span class="rp">${on ? "Chosen" : out ? "None left" : C.left[v] + " left"}</span></button>`; }).join("")}</div></div>` : "";
   const known = r.nets.filter(x => x != null), min = known.length === N ? Math.min(...known) : null;
   const rows = setup.players.map((p,i) => {
     const g = C.get(i, cur), s = r.st[i];
@@ -913,17 +924,17 @@ function skinsHoleView(S, C){
   if (r.status === "won") res = `<div class="result won">${esc(setup.players[r.winner].name)} wins the skin · £${r.pot}</div>`;
   else if (r.status === "carry") res = cur === H ? `<div class="result carry">Tied on 18 · £${r.pot} ${setup.endTie === "split" ? "split between the tied players" : "goes to a playoff"}</div>`
     : `<div class="result carry">Tied · £${r.pot} carries to hole ${cur+1}</div>`;
-  else res = `<div class="result pending">Enter all three scores to settle this hole</div>`;
+  else res = `<div class="result pending">${r.value == null && r.status === "pending" ? "Pick the hole's value, then enter the scores" : "Enter all three scores to settle this hole"}</div>`;
   const strip = C.res.map(x => {
-    let s = `£${x.value}`, c = "";
+    let s = x.value == null ? "£?" : `£${x.value}`, c = "";
     if (x.status === "won"){ s = esc(setup.players[x.winner].name.slice(0,3)); c = "w"; }
     else if (x.status === "carry"){ s = "carry"; c = "c"; }
     return `<button class="hb v${x.value} ${x.h === cur ? "cur" : ""}" data-go="${x.h}" aria-label="Hole ${x.h}"><div class="hn">${x.h}</div><div class="hs ${c}">${s}</div></button>`;
   }).join("");
   return `<section class="card">
     <div class="holehead"><div class="big num"><small>Hole</small>${cur}</div>
-      <div class="meta"><span class="chip">Par ${hole.par}</span><span class="chip">SI ${hole.si}</span><span class="chip val${hole.value}">£${hole.value}</span></div></div>
-    <p class="pot">${pot}</p>${rows}${res}
+      <div class="meta"><span class="chip">Par ${hole.par}</span><span class="chip">SI ${hole.si}</span>${r.value != null ? `<span class="chip val${r.value}">£${r.value}</span>` : ""}</div></div>
+    <p class="pot">${pot}</p>${picker}${rows}${res}
     <div class="navrow"><button class="btn" data-go="${cur-1}" ${cur===1?"disabled":""}>‹ Hole ${Math.max(1,cur-1)}</button>
       <button class="btn primary" data-go="${cur+1}" ${cur===H?"disabled":""}>Hole ${Math.min(H,cur+1)} ›</button></div>
   </section>
@@ -936,7 +947,7 @@ function skinsCardView(S, C){
   const half = (a,b,label) => {
     let t = `<tr><th class="l">Hole</th>${range(a,b).map(h => `<th>${h}</th>`).join("")}<th>${label}</th></tr>`;
     t += `<tr><td class="l">Par</td>${range(a,b).map(h => `<td>${setup.holes[h-1].par}</td>`).join("")}<td>${sum(range(a,b).map(h => +setup.holes[h-1].par))}</td></tr>`;
-    t += `<tr><td class="l">£</td>${range(a,b).map(h => `<td>${setup.holes[h-1].value}</td>`).join("")}<td>${sum(range(a,b).map(h => +setup.holes[h-1].value))}</td></tr>`;
+    t += `<tr><td class="l">£</td>${range(a,b).map(h => `<td>${C.valueOf(h) ?? ""}</td>`).join("")}<td>${sum(range(a,b).map(h => C.valueOf(h) || 0)) || ""}</td></tr>`;
     t += setup.players.map((p,i) => { const gs = range(a,b).map(h => C.get(i,h));
       return `<tr><td class="l">${esc(p.name)}</td>${range(a,b).map((h,k) => { const r = C.res[h-1], g = gs[k];
         return `<td class="${r.status==="won"&&r.winner===i?"win":""}">${g ?? ""}${r.st[i]>0&&g!=null?`<span class="sup">${"•".repeat(r.st[i])}</span>`:""}</td>`; }).join("")}<td>${gs.some(x=>x!=null) ? sum(gs.filter(x=>x!=null)) : ""}</td></tr>`; }).join("");
@@ -990,14 +1001,17 @@ function skinsSetupView(S){
   </section>
   <h2>Holes</h2>
   <section class="card">
-    <div class="counts"><span class="chip val5">${counts[5]} × £5</span><span class="chip val10">${counts[10]} × £10</span><span class="chip val20">${counts[20]} × £20</span><span class="chip">£${sum(d.holes.map(h=>+h.value))} total</span></div>
-    ${ok ? "" : `<p class="note warn">Your format is 5 × £5, 10 × £10 and 3 × £20.</p>`}
+    <div class="lbl">Hole values</div>
+    <div class="seg" style="margin-bottom:8px"><label><input type="radio" name="vm" data-f="valueMode" value="tee" ${d.valueMode==="tee"?"checked":""}> Pick on each tee as we play</label>
+      <label><input type="radio" name="vm" data-f="valueMode" value="fixed" ${d.valueMode!=="tee"?"checked":""}> Set them all now</label></div>
+    ${d.valueMode === "tee" ? `<p class="note" style="margin:0 0 8px">On each hole you'll choose £5, £10 or £20, up to 5, 10 and 3 of each.</p>` : `<div class="counts"><span class="chip val5">${counts[5]} × £5</span><span class="chip val10">${counts[10]} × £10</span><span class="chip val20">${counts[20]} × £20</span><span class="chip">£${sum(d.holes.map(h=>+h.value))} total</span></div>
+    ${ok ? "" : `<p class="note warn">Your format is 5 × £5, 10 × £10 and 3 × £20.</p>`}`}
     ${sisOk(d.holes) ? "" : `<p class="note warn">Stroke indexes should use each number from 1 to 18 once.</p>`}
-    <div class="scroll" style="margin-top:10px"><table class="hcfg"><tr><th>Hole</th><th>Par</th><th>SI</th><th>Value</th></tr>
+    <div class="scroll" style="margin-top:10px"><table class="hcfg"><tr><th>Hole</th><th>Par</th><th>SI</th>${d.valueMode === "tee" ? "" : "<th>Value</th>"}</tr>
     ${d.holes.map((h,k) => `<tr><td><b>${k+1}</b></td>
       <td><input type="number" inputmode="numeric" id="hp${k}" aria-label="Hole ${k+1} par" data-f="holes.${k}.par" value="${h.par}"></td>
       <td><input type="number" inputmode="numeric" id="hs${k}" aria-label="Hole ${k+1} stroke index" data-f="holes.${k}.si" value="${h.si}"></td>
-      <td><select id="hv${k}" aria-label="Hole ${k+1} value" data-f="holes.${k}.value">${[5,10,20].map(v => `<option value="${v}" ${+h.value===v?"selected":""}>£${v}</option>`).join("")}</select></td></tr>`).join("")}
+      ${d.valueMode === "tee" ? "" : `<td><select id="hv${k}" aria-label="Hole ${k+1} value" data-f="holes.${k}.value">${[5,10,20].map(v => `<option value="${v}" ${+h.value===v?"selected":""}>£${v}</option>`).join("")}</select></td>`}</tr>`).join("")}
     </table></div>
   </section>
   <h2>Rules</h2>
@@ -1035,6 +1049,8 @@ document.addEventListener("click", e => {
   if (ds.go){ const h = +ds.go; if (h >= 1 && h <= H) setHole(h); return; }
   if (ds.step && !readOnly){ stepScore(+ds.p, +ds.step); return; }
   if (ds.pu && !readOnly){ const p = +ds.pu, cur = curHole(), g = currentGross(p, cur); writeGross(p, cur, g === 0 ? null : 0); return; }
+  if (ds.value && !readOnly){ const h = curHole(), cur = skinsState().scores.values || {};
+    write(skinsPaths().scores, {values: {["h"+h]: +cur["h"+h] === +ds.value ? null : +ds.value}}); return; }
   if (ds.prize && !readOnly){ togglePrize(ds.prize, +ds.hole, +ds.p); return; }
   if (ds.playoff && !readOnly){ const p = skinsPaths(), s = skinsState().setup; s.playoffWinner = ds.playoff === "none" ? null : +ds.playoff; replace(p.setup, s); return; }
   if (ds.act) action(ds.act, t);
