@@ -629,11 +629,11 @@ async function searchCourses(q){
 async function loadCourse(hit){
   if (hit.src === "gca"){
     const j = await getJSON(`${GCA}/courses/${encodeURIComponent(hit.id)}`, {Authorization: "Key " + integrations().golfCourseApiKey});
-    return normaliseCourse(j.course || j, null, null, hit);
+    return Object.assign(normaliseCourse(j.course || j, null, null, hit), {raw: j});
   }
   const base = `${OGA}/courses/${encodeURIComponent(hit.id)}`;
   const [c, tees, holes] = await Promise.all([getJSON(base), getJSON(base + "/tees").catch(() => null), getJSON(base + "/holes").catch(() => null)]);
-  return normaliseCourse(c.course || c, tees, holes, hit);
+  return Object.assign(normaliseCourse(c.course || c, tees, holes, hit), {raw: {course: c, tees, holes}});
 }
 // Turn either database's answer into the app's course shape: tees with rating/slope/par, 18 holes with par and SI.
 function normaliseCourse(c, teesExtra, holesExtra, hit){
@@ -657,7 +657,9 @@ function normaliseCourse(c, teesExtra, holesExtra, hit){
     teeHoles.push(holes);
   }));
   let holes = teeHoles.find(h => h.length >= 18 && h.every(x => pick(x, ["par"]) != null)) || [];
-  if (holes.length < 18){ const hx = listOf(holesExtra || c.holes, ["holes","data"]); if (hx.length >= 18) holes = hx; }
+  if (holes.length < 18){ // OpenGolfAPI: /holes gives {holes: [...]}, the course itself carries "scorecard"
+    const options = [listOf(holesExtra, ["holes","data"]), listOf(c.scorecard, ["holes"]), listOf(c.holes, ["holes"])];
+    const hx = options.find(o => o.length >= 18); if (hx) holes = hx.slice().sort((a,b) => (+a.hole_number || 0) - (+b.hole_number || 0)); }
   const notes = [];
   let out = range(1,18).map(n => ({par:4, si:n}));
   if (holes.length >= 18){
@@ -683,6 +685,7 @@ function finderView(){
     </div>
     ${results}
     ${f.note ? `<p class="note" style="margin:0">${f.note}</p>` : ""}
+    ${f.raw ? `<details><summary class="pinfo" style="cursor:pointer">Show what the database sent</summary><pre style="white-space:pre-wrap;word-break:break-all;font-size:11px;max-height:300px;overflow:auto;margin:8px 0 0">${esc(f.raw)}</pre></details>` : ""}
   </section>`;
 }
 
@@ -1071,9 +1074,9 @@ function action(a, t){
   }
   if (a === "course-pick"){
     const hit = finder.results[+t.dataset.i]; finder.loading = true; renderMain();
-    loadCourse(hit).then(({data, notes}) => {
+    loadCourse(hit).then(({data, notes, raw}) => {
       form = {id: "course:new", data, dirty: true};
-      finder = {q: finder.q, loading:false, results:null, error:"", note: `Imported <b>${esc(data.name)}</b> with ${data.tees.length} set${data.tees.length===1?"":"s"} of tees. ${notes.map(esc).join(" ")} Check the details, then tap Save course.`};
+      finder = {q: finder.q, loading:false, results:null, error:"", raw: JSON.stringify(raw, null, 1).slice(0, 4000), note: `Imported <b>${esc(data.name)}</b> with ${data.tees.length} set${data.tees.length===1?"":"s"} of tees. ${notes.map(esc).join(" ")} Check the details, then tap Save course.`};
     }).catch(e => { finder.loading = false; finder.error = e.message; }).finally(() => { if (ui.view === "course") renderMain(); });
     return;
   }
