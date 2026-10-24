@@ -1,6 +1,106 @@
 {
   "quizzes": [
     {
+      "id": "2026-oct-24",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/oct/24/what-links-buckeyes-crimson-tide-and-wolverines-the-saturday-quiz",
+      "title": "What links Buckeyes, Crimson Tide and Wolverines? The Saturday quiz",
+      "description": "From Alison, Harry Bailey and Madame Eglantine to the slipper limpet and trumpet tube worm, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/be421c87d8c08785b7a3d3ed5c960264a8d4c73c/714_0_5000_4000/master/5000.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=f9d077e1608cf32983793c0551e999cc",
+      "publishedAt": "2026-10-24T06:00:27.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "Which islands lie at the geographic centre of the western hemisphere?",
+          "answer": "Galápagos Islands (where the equator meets the 90th meridian west).",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "Esme Pepper is which writer’s 135th book?",
+          "answer": "Jacqueline Wilson.",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "What phenomenon did Einstein dismiss as “spooky action at a distance”?",
+          "answer": "Quantum entanglement.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "Which hormone is chiefly produced by the pineal gland?",
+          "answer": "Melatonin.",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "A Beatles museum is planned on which London street?",
+          "answer": "Savile Row.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "Which fashion brand made uniforms for the Wehrmacht and Nazi party?",
+          "answer": "Hugo Boss.",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "The Manchester solicitor Nick Freeman styles himself as what?",
+          "answer": "Mr Loophole.",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Dogana is the largest settlement in which European microstate?",
+          "answer": "San Marino.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Carpet sea squirt; Pacific oyster; slipper limpet; trumpet tube worm?",
+          "answer": "Invasive marine species in UK waters.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Convoy; Duel; Maximum Overdrive; Smokey and the Bandit; The Wages of Fear?",
+          "answer": "Films prominently featuring lorries.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Balti; Bermuda; Coral; Golden; Rhubarb?",
+          "answer": "Various “triangles” related to food and/or geography.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Alison; Harry Bailey; Madame Eglantine; Hubert; Oswald; Robin?",
+          "answer": "Named pilgrims in the Canterbury Tales (modernised spellings): Wife of Bath; Host; Prioress; Friar; Reeve; Miller.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Buckeyes; Crimson Tide; Fighting Irish; Longhorns; Wolverines?",
+          "answer": "Nicknames of leading US college sports teams: Ohio State; Alabama; Notre Dame; Texas; Michigan.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "River Tay, Scotland; Tay River, Ontario; Swan River, Western Australia?",
+          "answer": "All flow through Perth.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Carnival; MSC; Norwegian; Princess; Royal Caribbean?",
+          "answer": "World’s largest cruise lines.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
       "id": "2026-oct-17",
       "url": "https://www.theguardian.com/games/2026/oct/17/which-coffee-chain-was-founded-in-london-in-1971-the-saturday-quiz",
       "title": "Which coffee chain was founded in London in 1971? The Saturday quiz",
@@ -401,5 +501,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-10-23T16:26:27.601Z"
+  "updatedAt": "2026-10-24T10:21:51.685Z"
 }
