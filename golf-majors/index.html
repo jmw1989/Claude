@@ -235,7 +235,7 @@ input[type=text],input[type=number],input[type=date],select{width:100%;min-width
 const N = 3, H = 18, LS = "majors-tour-v1", OLD_LS = "skins-major-v1", LEGACY_YEAR = 2026;
 const PRIZE = {1:[2], 2:[2,1], 3:[3,2,1]};
 const MAJORS = [
-  {key:"masters", name:"The Masters", kind:"stable", rounds:4, snake:true, when:"Abroad", blurb:"Four rounds, stableford and prizes"},
+  {key:"masters", name:"The Masters", kind:"stable", rounds:4, snake:true, faceBall:true, when:"Abroad", blurb:"Four rounds, stableford and prizes"},
   {key:"summer", name:"Summer Series", kind:"stable", rounds:4, snake:true, when:"UK summer", blurb:"Same format, played in the UK"},
   {key:"skins", name:"Skins Major", kind:"skins", when:"One round", blurb:"18-hole skins for £5, £10 and £20"},
   {key:"newyear", name:"New Year Major", kind:"stable", rounds:1, when:"31 December", blurb:"One round, stableford and prizes"}
@@ -317,7 +317,7 @@ function majorDef(key){ return MAJORS.find(m => m.key === key); }
 function majorPath(key, year){ return `majors/${year || ui.year}-${key}`; }
 function getMajor(key, year){
   const def = majorDef(key), d = docs[majorPath(key, year)] || {};
-  return Object.assign({roundsCount:def.rounds || 1, allowance:95, tieRule:"split", snake: !!def.snake}, d, {rounds: d.rounds || {}});
+  return Object.assign({roundsCount:def.rounds || 1, allowance:95, tieRule:"split", snake: !!def.snake, faceBall: !!def.faceBall}, d, {rounds: d.rounds || {}});
 }
 function skinsPaths(){ return ui.year === LEGACY_YEAR ? {setup:"round/setup", scores:"round/scores"} : {setup:`skins-${ui.year}/setup`, scores:`skins-${ui.year}/scores`}; }
 function skinsDefault(){
@@ -370,6 +370,32 @@ function manualCalc(major, round){
     complete:true, started:true, leaders:tiers[0], tiers, win, ctp, ld, snake, snakeHolder, snakeHole:null, threePutts:Array(N).fill(0),
     snakeOn: !!(major.snake || mr.snake), total, par3s:(mr.ctp || []).map(c => c.hole)};
 }
+function faceBallCalc(major, round, complete){
+  const lost = Array(N).fill(null), out = {on: !!major.faceBall, pts: Array(N).fill(0), lost, keepers: [], longest: [], longestHole: null};
+  if (!out.on) return out;
+  for (let i = 0; i < N; i++){ const v = (round.faceBall || {})["p"+i]; lost[i] = typeof v === "number" && v >= 1 ? v : null; }
+  out.keepers = range(0,N-1).filter(i => lost[i] == null);
+  if (!out.keepers.length){ out.longestHole = Math.max(...lost); out.longest = range(0,N-1).filter(i => lost[i] === out.longestHole); }
+  if (complete){
+    if (out.keepers.length === 1) out.pts[out.keepers[0]] = 2;
+    else if (out.keepers.length > 1) out.keepers.forEach(i => out.pts[i] = 1);
+    else out.longest.forEach(i => out.pts[i] = 1);
+  }
+  return out;
+}
+function faceBallText(rc){
+  const R = roster().players, fb = rc.faceBall, nm = a => a.map(i => esc(R[i].name)).join(" & ");
+  if (fb.keepers.length === N) return "Everyone still has their face ball.";
+  if (fb.keepers.length) return `${nm(fb.keepers)} ${fb.keepers.length > 1 ? "still have" : "still has"} their face ball${rc.complete ? (fb.keepers.length > 1 ? ": 1 point each" : ": 2 points") : ""}.`;
+  return `All face balls lost. ${nm(fb.longest)} kept ${fb.longest.length > 1 ? "theirs" : "it"} longest (to hole ${fb.longestHole})${rc.complete ? ": 1 point" + (fb.longest.length > 1 ? " each" : "") : ""}.`;
+}
+function faceBallBox(rc, cur){
+  const R = roster().players, lost = rc.faceBall.lost;
+  return `<div class="prizebox"><div class="pt"><div class="ptt">Face Ball</div><div class="pinfo">Hole ${cur}</div></div>
+    <div class="pinfo">${faceBallText(rc)} Tap anyone who lost the ball they teed off the 1st with on this hole.</div>
+    <div class="rank">${R.map((pl,i) => { const l = lost[i], here = l === cur, before = l != null && l < cur, after = l != null && l > cur;
+      return `<button class="${here ? "on" : ""}" data-faceball="${i}" ${readOnly || before ? "disabled" : ""} aria-pressed="${here}"><span class="rn">${esc(pl.name)}</span><span class="rp">${here ? "Lost here" : before ? "Lost on " + l : after ? "Lost on " + l : "Still in play"}</span></button>`; }).join("")}</div></div>`;
+}
 function roundCalc(major, rn){
   const round = major.rounds["r"+rn];
   if (round && round.manual) return manualCalc(major, round);
@@ -409,8 +435,11 @@ function roundCalc(major, rn){
     for (let h = 1; h <= H; h++) ((round.threePutts || {})["h"+h] || []).forEach(p => { if (p >= 0 && p < N){ threePutts[p]++; snakeHolder = p; snakeHole = h; } });
     if (complete && snakeHolder != null) snake[snakeHolder] = -1;
   }
-  const total = players.map((p,i) => win[i] + ctp[i] + ld[i] + snake[i]);
-  return {round, course:c, players, complete, leaders, tiers, win, ctp, ld, snake, snakeHolder, snakeHole, threePutts, snakeOn: !!major.snake, bonus: Array(N).fill(0), total, par3s, started: players.some(p => p.thru > 0)};
+  // Face Ball: keep the ball you teed off the 1st with. Alone all round = 2; several all round = 1 each; otherwise 1 for keeping it longest
+  const fb = faceBallCalc(major, round, complete);
+  const total = players.map((p,i) => win[i] + ctp[i] + ld[i] + snake[i] + fb.pts[i]);
+  return {round, course:c, players, complete, leaders, tiers, win, ctp, ld, snake, snakeHolder, snakeHole, threePutts, snakeOn: !!major.snake,
+    faceBallOn: fb.on, faceBall: fb, bonus: fb.pts, total, par3s, started: players.some(p => p.thru > 0)};
 }
 /* Stableford places: 5, 3, 1. A tie for first gets 5 each and third gets 2; a tie for second gets 2 each. */
 const PLACE_PTS = {"1,1,1":[5,3,1], "2,1":[5,2], "1,2":[5,2], "3":[5]};
@@ -811,7 +840,7 @@ function majorView(){
     }
     return `<button class="rcard" data-round="${r}"><div><div class="rt">${M.m.roundsCount > 1 ? "Round " + r : "The round"}</div><div class="rs">${line}</div></div>${state}</button>`;
   }).join("");
-  const d = formFor("major:" + ui.major, () => ({roundsCount:M.m.roundsCount, allowance:M.m.allowance, tieRule:M.m.tieRule, snake: M.m.snake ? "on" : "off"}));
+  const d = formFor("major:" + ui.major, () => ({roundsCount:M.m.roundsCount, allowance:M.m.allowance, tieRule:M.m.tieRule, snake: M.m.snake ? "on" : "off", faceBall: M.m.faceBall ? "on" : "off"}));
   const imp = IMPORTS[ui.major + "/" + ui.year];
   const importCard = imp && !Object.values(M.m.rounds).some(r => r && r.manual) ? `<section class="card stack" style="margin-top:14px">
     <div><b>${esc(imp.title)}</b><div class="pinfo">${esc(imp.blurb)}</div></div>
@@ -832,6 +861,9 @@ function majorView(){
     <div><div class="lbl">The snake</div>
       <div class="seg"><label><input type="radio" name="msn" data-f="snake" value="on" ${d.snake==="on"?"checked":""}> On: three-putts pass the snake, −1 for holding it after 18</label>
       <label><input type="radio" name="msn" data-f="snake" value="off" ${d.snake!=="on"?"checked":""}> Off</label></div></div>
+    <div><div class="lbl">Face Ball</div>
+      <div class="seg"><label><input type="radio" name="mfb" data-f="faceBall" value="on" ${d.faceBall==="on"?"checked":""}> On: keep your 1st-tee ball (2 alone all round, 1 each if shared, else 1 for longest)</label>
+      <label><input type="radio" name="mfb" data-f="faceBall" value="off" ${d.faceBall!=="on"?"checked":""}> Off</label></div></div>
     <div class="actions" style="margin:0"><button class="btn primary" data-act="save-major" ${readOnly?"disabled":""}>${form.dirty ? "Save format" : "Saved"}</button></div>
   </section>
   <p class="note">95% is the World Handicap System allowance for individual stableford.</p>`;
@@ -895,6 +927,7 @@ function roundHoleView(){
     ${isP3 ? prizeBox("ctp", cur, (rc.round.ctp || {})["h"+cur]) : ""}
     ${isLD ? prizeBox("ld", cur, rc.round.ld) : ""}
     ${rc.snakeOn ? snakeBox(rc, cur) : ""}
+    ${rc.faceBallOn ? faceBallBox(rc, cur) : ""}
     <div class="navrow"><button class="btn" data-go="${cur-1}" ${cur===1?"disabled":""}>‹ Hole ${Math.max(1,cur-1)}</button>
       ${nextOrComplete(cur)}</div>${cur === H && completeMsg ? completeMsg : ""}
   </section>
@@ -927,10 +960,10 @@ function roundPointsView(){
     : rc.started ? `${names(rc.leaders)} ${rc.leaders.length > 1 ? "are level" : "leads"} on stableford. Place points (5, 3, 1) are awarded when all 18 holes are in.` : "No scores yet.";
   return `${rc.complete ? `<div class="actions" style="margin-top:4px"><button class="btn primary" data-sub="summary">See the round summary</button></div>` : ""}<h2>Major points this round</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}<th>Pts</th></tr>
-    ${R.map((p,i) => `<tr><td class="l"><b>${esc(p.name)}</b></td><td>${rc.players[i].total}</td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
+    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.faceBallOn ? "<th>Face</th>" : ""}<th>Pts</th></tr>
+    ${R.map((p,i) => `<tr><td class="l"><b>${esc(p.name)}</b></td><td>${rc.players[i].total}</td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}${rc.faceBallOn ? `<td>${pts(rc.bonus[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
   </table></div>
-  <p class="note">${winNote}</p>${snakeNote ? `<p class="note">${snakeNote}</p>` : ""}
+  <p class="note">${winNote}</p>${snakeNote ? `<p class="note">${snakeNote}</p>` : ""}${rc.faceBallOn ? `<p class="note">Face Ball: ${faceBallText(rc)}</p>` : ""}
   <h2>Closest to the pin</h2>
   ${rc.par3s.length ? rc.par3s.map(h => prizeBox("ctp", h, (rc.round.ctp || {})["h"+h])).join("") : `<p class="note">This course has no par 3s.</p>`}
   <h2>Longest drive</h2>
@@ -1082,7 +1115,7 @@ function saveToHistory(){
   const MC = majorCalc(ui.major);
   replace(`history/${ui.year}-${ui.major}-r${ui.round}`, {kind:"stable", major:ui.major, year:ui.year, round:ui.round, date: rc.round.date || todayISO(), course: rc.course.name,
     title: `${rc.leaders.map(i => roster().players[i].name).join(" & ")} ${rc.leaders.length > 1 ? "tied" : "won"} with ${rc.players[rc.leaders[0]].total} pts`,
-    majorCfg: {allowance:M.allowance, tieRule:M.tieRule, roundsCount:M.roundsCount, snake: !!M.snake}, roundDoc: clone(rc.round),
+    majorCfg: {allowance:M.allowance, tieRule:M.tieRule, roundsCount:M.roundsCount, snake: !!M.snake, faceBall: !!M.faceBall}, roundDoc: clone(rc.round),
     players: clone(roster().players), standings: {total: MC.tot.total, done: MC.done, of: MC.m.roundsCount}, savedAt: Date.now()});
 }
 function historyList(){ return Object.keys(docs).filter(p => p.startsWith("history/")).map(p => Object.assign({id:p.slice(8)}, docs[p]))
@@ -1186,6 +1219,9 @@ function roundSummaryView(ctx){
   const ctpRows = rc.par3s.map(h => { const o = (rc.round.ctp || {})["h"+h] || [];
     return hl(`Closest to the pin, hole ${h}`, o.length ? pn(o[0]) : "–", o.length ? o.map((p,k) => `${ord(k)} ${esc(R[p].name)}`).join(" · ") : "Nobody on the green"); });
   const ld = rc.round.ld || [];
+  if (rc.faceBallOn){ const fb = rc.faceBall;
+    rows.push(fb.keepers.length ? hl(`Face Ball kept all round: ${fb.keepers.map(pn).join(" & ")}`, fb.keepers.length > 1 ? "+1 each" : "+2 pts")
+      : hl(`Face Ball kept longest: ${fb.longest.map(pn).join(" & ")}`, "+1 pt", `Lost on hole ${fb.longestHole}`)); }
   if (rc.snakeOn){
     rows.push(rc.snakeHolder != null ? hl(`Finished with the snake: ${pn(rc.snakeHolder)}`, "−1 pt", `Last three-putt on hole ${rc.snakeHole}`) : hl("The snake", "Nobody", "No three-putts all round"));
     const most = Math.max(...rc.threePutts);
@@ -1201,8 +1237,8 @@ function roundSummaryView(ctx){
   <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">Out ${halves[i][0]} · In ${halves[i][1]}${gs[i].pu ? "" : ` · gross ${gs[i].tot}`}</div></div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
   <h2>Major points</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}<th>Round</th></tr>
-    ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
+    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.faceBallOn ? "<th>Face</th>" : ""}<th>Round</th></tr>
+    ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}${rc.faceBallOn ? `<td>${pts(rc.bonus[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
   </table></div>
   <h2>Highlights</h2>
   <section class="card ledger">${rows.join("")}</section>
@@ -1364,6 +1400,9 @@ document.addEventListener("click", e => {
   if (ds.pu && !readOnly){ const p = +ds.pu, cur = curHole(), g = currentGross(p, cur); writeGross(p, cur, g === 0 ? null : 0); return; }
   if (ds.value && !readOnly){ const h = curHole(), cur = skinsState().scores.values || {};
     write(skinsPaths().scores, {values: {["h"+h]: +cur["h"+h] === +ds.value ? null : +ds.value}}); return; }
+  if (ds.faceball && !readOnly){ const p = +ds.faceball, h = curHole(), r = getMajor(ui.major).rounds["r"+ui.round] || {};
+    const curLost = (r.faceBall || {})["p"+p];
+    write(majorPath(ui.major), {rounds: {["r"+ui.round]: {faceBall: {["p"+p]: curLost === h ? null : h}}}}); return; }
   if (ds.snake && !readOnly){ const p = +ds.snake, h = curHole(), r = getMajor(ui.major).rounds["r"+ui.round] || {};
     const here = ((r.threePutts || {})["h"+h] || []); const next = here.includes(p) ? here.filter(x => x !== p) : here.concat(p);
     write(majorPath(ui.major), {rounds: {["r"+ui.round]: {threePutts: {["h"+h]: next}}}}); return; }
@@ -1440,7 +1479,7 @@ function action(a, t){
     replace("config/honours", all); return;
   }
   if (a === "import-results"){ importResults(ui.major, ui.year); return; }
-  if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule, snake: d.snake === "on"}); return; }
+  if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule, snake: d.snake === "on", faceBall: d.faceBall === "on"}); return; }
   if (a === "save-round"){
     const d = clone(form.data); if (!d.course) return;
     const saved = getMajor(ui.major).rounds["r"+ui.round] || {};
@@ -1554,7 +1593,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '19';
+const APP_VERSION = '20';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
