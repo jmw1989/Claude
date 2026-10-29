@@ -347,8 +347,29 @@ function strokesOn(hcp, si){
 function sisOk(holes){ return holes.map(h => +h.si).sort((a,b)=>a-b).join(",") === range(1,18).join(","); }
 
 /* ---------- Stableford majors ---------- */
+function rosterIndex(name){
+  const R = roster().players, n = String(name || "").trim().toLowerCase();
+  let i = R.findIndex(p => String(p.name).trim().toLowerCase() === n);
+  if (i < 0 && n) i = R.findIndex(p => String(p.name).trim().toLowerCase()[0] === n[0]);
+  return i;
+}
+function byName(obj){ const a = Array(N).fill(0); Object.entries(obj || {}).forEach(([n,v]) => { const i = rosterIndex(n); if (i >= 0) a[i] += +v || 0; }); return a; }
+function manualCalc(major, round){
+  const mr = round.manual, R = roster().players;
+  const stab = byName(mr.stab), win = byName(mr.place), ctp = Array(N).fill(0);
+  (mr.ctp || []).forEach(c => byName(c.pts).forEach((v,i) => ctp[i] += v));
+  const ld = byName(mr.ld && mr.ld.pts), snake = Array(N).fill(0);
+  let snakeHolder = mr.snake ? rosterIndex(mr.snake) : -1; if (snakeHolder >= 0) snake[snakeHolder] = -1; else snakeHolder = null;
+  const order = range(0,N-1).sort((a,b) => stab[b] - stab[a]), tiers = [];
+  order.forEach(i => { const last = tiers[tiers.length-1]; if (last && stab[last[0]] === stab[i]) last.push(i); else tiers.push([i]); });
+  const total = win.map((w,i) => w + ctp[i] + ld[i] + snake[i]);
+  return {manual:true, round, course: round.course || {name:"", tees:[], holes:[]}, players: R.map((p,i) => ({holes:[], total:stab[i], thru:H, tee:{name:""}})),
+    complete:true, started:true, leaders:tiers[0], tiers, win, ctp, ld, snake, snakeHolder, snakeHole:null, threePutts:Array(N).fill(0),
+    snakeOn: !!(major.snake || mr.snake), total, par3s:(mr.ctp || []).map(c => c.hole)};
+}
 function roundCalc(major, rn){
   const round = major.rounds["r"+rn];
+  if (round && round.manual) return manualCalc(major, round);
   if (!round || !round.course) return null;
   const c = round.course, R = roster().players;
   const players = R.map((p,i) => {
@@ -388,8 +409,8 @@ function roundCalc(major, rn){
   const total = players.map((p,i) => win[i] + ctp[i] + ld[i] + snake[i]);
   return {round, course:c, players, complete, leaders, tiers, win, ctp, ld, snake, snakeHolder, snakeHole, threePutts, snakeOn: !!major.snake, total, par3s, started: players.some(p => p.thru > 0)};
 }
-/* Stableford places: 5, 3, 1. Tied players get the higher place's points; a tie for first leaves third on 2. */
-const PLACE_PTS = {"1,1,1":[5,3,1], "2,1":[5,2], "1,2":[5,3], "3":[5]};
+/* Stableford places: 5, 3, 1. A tie for first gets 5 each and third gets 2; a tie for second gets 2 each. */
+const PLACE_PTS = {"1,1,1":[5,3,1], "2,1":[5,2], "1,2":[5,2], "3":[5]};
 function placeTiers(players, countback){
   // key per player: total, then (with countback) back 9, back 6, back 3, 18th
   const key = i => { const h = players[i].holes.map(x => x.pts || 0);
@@ -563,6 +584,7 @@ function renderMain(){
   else if (v === "courses") m.innerHTML = coursesView();
   else if (v === "course") m.innerHTML = courseEditView();
   else if (v === "major") m.innerHTML = majorView();
+  else if (v === "round" && (getMajor(ui.major).rounds["r"+ui.round] || {}).manual) m.innerHTML = manualRoundView();
   else if (v === "round") m.innerHTML = ui.sub === "summary" ? roundSummaryView() : ui.sub === "card" ? roundCardView() : ui.sub === "prizes" ? roundPointsView() : ui.sub === "setup" ? roundSetupView() : roundHoleView();
   else if (v === "skins"){ const S = skinsState(), C = skinsCalc(S);
     m.innerHTML = ui.sub === "summary" ? skinsSummaryView(S,C) : ui.sub === "card" ? skinsCardView(S,C) : ui.sub === "money" ? skinsMoneyView(S,C) : ui.sub === "setup" ? skinsSetupView(S) : skinsHoleView(S,C); }
@@ -787,7 +809,11 @@ function majorView(){
     return `<button class="rcard" data-round="${r}"><div><div class="rt">${M.m.roundsCount > 1 ? "Round " + r : "The round"}</div><div class="rs">${line}</div></div>${state}</button>`;
   }).join("");
   const d = formFor("major:" + ui.major, () => ({roundsCount:M.m.roundsCount, allowance:M.m.allowance, tieRule:M.m.tieRule, snake: M.m.snake ? "on" : "off"}));
-  return `<h2>Standings</h2>${table}
+  const importCard = ui.major === "summer" && ui.year === 2026 && !Object.values(M.m.rounds).some(r => r && r.manual) ? `<section class="card stack" style="margin-top:14px">
+    <div><b>Add your August 2026 results</b><div class="pinfo">Wakefield, Forest Park, Driffield and The KP: stableford, prizes and the snake for all 4 rounds.</div></div>
+    ${Object.keys(M.m.rounds).length ? `<p class="note warn" style="margin:0">This replaces the ${Object.keys(M.m.rounds).length} round${Object.keys(M.m.rounds).length > 1 ? "s" : ""} already set up here.</p>` : ""}
+    <div class="actions" style="margin:0"><button class="btn primary" data-act="import-summer26" ${readOnly?"disabled":""}>Add the results</button></div></section>` : "";
+  return `${importCard}<h2>Standings</h2>${table}
   <p class="note">Place = 5, 3 or 1 points for finishing 1st, 2nd or 3rd on stableford in a round. CTP = closest to the pin on the par 3s. LD = longest drive.${M.m.snake ? " Snake = −1 for finishing a round holding the snake." : ""}</p>
   <h2>Rounds</h2><div class="rlist">${rounds}</div>
   ${rollView(ui.major)}
@@ -872,6 +898,7 @@ function roundHoleView(){
   <div class="legend"><span style="--sw:var(--v10)">Prize hole</span><span>P/U = picked up, 0 points</span></div>`;
 }
 function roundCardView(ctx){
+  if (ctx && ctx.M.rounds["r"+ctx.rn] && ctx.M.rounds["r"+ctx.rn].manual) return `<div class="card empty"><b>No hole-by-hole scorecard</b>This round was added from your results sheet, so only the totals and prizes were recorded.</div>`;
   const M = ctx ? ctx.M : getMajor(ui.major), rc = roundCalc(M, ctx ? ctx.rn : ui.round);
   if (!rc) return needSetup();
   const R = roster().players, c = rc.course;
@@ -948,6 +975,58 @@ function nextOrComplete(cur){
   return cur < H ? `<button class="btn primary" data-go="${cur+1}">Hole ${cur+1} ›</button>`
     : `<button class="btn primary" data-act="complete-round">Complete round ›</button>`;
 }
+function manualRoundView(ctx){
+  const rn = ctx ? ctx.rn : ui.round, M = ctx ? ctx.M : getMajor(ui.major), rc = roundCalc(M, rn), mr = rc.round.manual;
+  const R = roster().players, pn = i => esc(R[i].name), nameOf = n => { const i = rosterIndex(n); return i >= 0 ? pn(i) : esc(n); };
+  const prizeText = c => { const e = Object.entries(c.pts || {}).filter(([,v]) => +v).sort((a,b) => b[1] - a[1]);
+    return e.length ? e.map(([n,v]) => `${nameOf(n)} ${v}`).join(" · ") : "Nobody qualified"; };
+  const order = range(0,N-1).sort((a,b) => rc.total[b] - rc.total[a]);
+  const roundName = M.roundsCount > 1 ? `round ${rn}` : "the round";
+  return `${banner(`${names(rc.leaders)} ${rc.leaders.length > 1 ? "tie" : "wins"} ${roundName}`, `${esc(rc.course.name)}${rc.round.date ? " · " + fmtDate(rc.round.date) : ""}`)}
+  <h2>Stableford</h2>
+  <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div class="pname">${pn(i)}</div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
+  <h2>Major points</h2>
+  <div class="scroll card" style="padding:6px 10px"><table>
+    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}<th>Round</th></tr>
+    ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
+  </table></div>
+  <h2>Prizes</h2>
+  <section class="card ledger">${(mr.ctp || []).map(c => hl(`Closest to the pin, hole ${c.hole}`, "", prizeText(c))).join("")}
+    ${mr.ld ? hl(`Longest drive, hole ${mr.ld.hole}`, "", prizeText(mr.ld)) : ""}
+    ${rc.snakeOn ? hl(rc.snakeHolder != null ? `Finished with the snake: ${pn(rc.snakeHolder)}` : "The snake", rc.snakeHolder != null ? "−1 pt" : "Nobody", "") : ""}</section>
+  ${ctx && ctx.standings && M.roundsCount > 1 ? `<h2>Standings after this round</h2>
+  <section class="card ledger">${range(0,N-1).sort((a,b) => ctx.standings.total[b] - ctx.standings.total[a]).map((i,k) => `<div class="row"><div class="pname">${k+1}. ${pn(i)}</div><div class="amt num">${pts(ctx.standings.total[i])}</div></div>`).join("")}</section>` : ""}
+  <p class="note">Added from your results sheet, so there's no hole-by-hole scorecard for this round.</p>`;
+}
+
+/* ---------- One-off import: Summer Series 2026 results ---------- */
+const SUMMER_2026 = [
+  {date:"2026-08-07", course:"Wakefield GC", stab:{Jonty:36, Pete:29, Brandy:29}, place:{Jonty:5, Pete:2, Brandy:2},
+    ctp:[{hole:2, pts:{Pete:2}}, {hole:7, pts:{}}, {hole:16, pts:{}}], ld:{hole:11, pts:{Pete:2}}, snake:"Brandy"},
+  {date:"2026-08-12", course:"Forest Park GC", stab:{Brandy:36, Jonty:35, Pete:34}, place:{Brandy:5, Jonty:3, Pete:1},
+    ctp:[{hole:4, pts:{}}, {hole:7, pts:{Brandy:2}}, {hole:14, pts:{Jonty:3, Brandy:2, Pete:1}}, {hole:16, pts:{}}], ld:{hole:18, pts:{}}, snake:"Pete"},
+  {date:"2026-08-13", course:"Driffield GC", stab:{Brandy:31, Jonty:26, Pete:25}, place:{Brandy:5, Jonty:3, Pete:1},
+    ctp:[{hole:6, pts:{}}, {hole:10, pts:{Brandy:2}}, {hole:14, pts:{}}, {hole:15, pts:{}}], ld:{hole:5, pts:{}}, snake:"Brandy"},
+  {date:"2026-08-14", course:"The KP GC", stab:{Brandy:32, Pete:30, Jonty:26}, place:{Brandy:5, Pete:3, Jonty:1},
+    ctp:[{hole:3, pts:{Pete:2}}, {hole:6, pts:{Pete:2, Jonty:1}}, {hole:9, pts:{Jonty:2}}, {hole:15, pts:{}}, {hole:17, pts:{}}], ld:{hole:4, pts:{Pete:2, Brandy:1}}, snake:"Pete"}
+];
+function importSummer2026(){
+  const path = "majors/2026-summer", cur = clone(docs[path] || {});
+  const rounds = {};
+  SUMMER_2026.forEach((r,k) => { rounds["r"+(k+1)] = {date:r.date, courseId:"", course:{name:r.course, tees:[], holes:[]}, ldHole:r.ld.hole,
+    manual:{stab:r.stab, place:r.place, ctp:r.ctp, ld:r.ld, snake:r.snake}}; });
+  replace(path, Object.assign({allowance:95, tieRule:"split"}, cur, {roundsCount:4, snake:true, rounds}));
+  // save each round to Past rounds with the standings as they stood after it
+  const M = getMajor("summer", 2026), run = Array(N).fill(0);
+  for (let r = 1; r <= 4; r++){
+    const rc = roundCalc(M, r); rc.total.forEach((v,i) => run[i] += v);
+    replace(`history/2026-summer-r${r}`, {kind:"stable", major:"summer", year:2026, round:r, date:rc.round.date, course:rc.course.name,
+      title:`${rc.leaders.map(i => roster().players[i].name).join(" & ")} ${rc.leaders.length > 1 ? "tied" : "won"} with ${rc.players[rc.leaders[0]].total} pts`,
+      majorCfg:{allowance:M.allowance, tieRule:M.tieRule, roundsCount:4, snake:true}, roundDoc:clone(rc.round),
+      players:clone(roster().players), standings:{total:run.slice(), done:r, of:4}, savedAt:Date.now() + r});
+  }
+}
+
 function missingHoles(){
   if (ui.view === "skins"){ const C = skinsCalc(skinsState());
     return C.res.filter(r => r.value == null || r.g.some(x => x == null)).map(r => r.h); }
@@ -1059,6 +1138,7 @@ function skinsSummaryView(S, C, archived){
   ${archived ? "" : `<div class="actions"><button class="btn" data-sub="card">Scorecard</button><button class="btn primary" data-view="home">Home</button></div>`}`;
 }
 function roundSummaryView(ctx){
+  if (ctx && ctx.M.rounds["r"+ctx.rn] && ctx.M.rounds["r"+ctx.rn].manual) return manualRoundView(ctx);
   const rn = ctx ? ctx.rn : ui.round, M = ctx ? ctx.M : getMajor(ui.major), rc = roundCalc(M, rn), def = majorDef(ctx ? ctx.major : ui.major);
   if (!rc) return needSetup();
   const R = roster().players, pn = i => esc(R[i].name), c = rc.course;
@@ -1335,6 +1415,7 @@ function action(a, t){
     const all = clone(honoursDoc()); if (all[ui.major]) delete all[ui.major][t.dataset.y];
     replace("config/honours", all); return;
   }
+  if (a === "import-summer26"){ importSummer2026(); return; }
   if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule, snake: d.snake === "on"}); return; }
   if (a === "save-round"){
     const d = clone(form.data); if (!d.course) return;
@@ -1449,7 +1530,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '17';
+const APP_VERSION = '18';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
