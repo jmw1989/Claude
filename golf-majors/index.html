@@ -572,6 +572,7 @@ function renderHeader(){
   const R = roster().players;
   if (ui.view === "home") setHeader("Majors Tour", `${R.map(p => p.name).join(", ")} · ${ui.year} season`, false);
   else if (ui.view === "players") setHeader("Players", "Names and current handicaps", true);
+  else if (ui.view === "fines") setHeader("Fines", "The pot for the next Skins Major", true);
   else if (ui.view === "history") setHeader("Past rounds", "Every completed round, all majors", true);
   else if (ui.view === "saved"){ const h = docs["history/" + ui.histId] || {}, def = majorDef(h.major) || {name:"Saved round"};
     $("h1").textContent = def.name; $("sub").textContent = `${h.course || ""}${h.date ? " · " + fmtDate(h.date) + " " + (h.year || "") : ""}`;
@@ -612,6 +613,7 @@ function renderMain(){
   if (v === "home") m.innerHTML = homeView();
   else if (v === "players") m.innerHTML = playersView();
   else if (v === "history") m.innerHTML = historyView();
+  else if (v === "fines") m.innerHTML = finesView();
   else if (v === "saved") m.innerHTML = savedRoundView();
   else if (v === "courses") m.innerHTML = coursesView();
   else if (v === "course") m.innerHTML = courseEditView();
@@ -654,6 +656,7 @@ function homeView(){
   <div class="links">
     <button data-view="players"><div class="lt">Players</div><div class="ls">${R.map(p => esc(p.name) + " " + p.hi).join(" · ")}${roster().example ? " (example)" : ""}</div></button>
     <button data-view="courses"><div class="lt">Courses</div><div class="ls">${nc ? `${nc} saved` : "None saved yet"}</div></button>
+    <button data-view="fines" style="grid-column:1 / -1"><div class="lt">Fines pot</div><div class="ls">${money(finesPot().total)} towards the next Skins Major</div></button>
     <button data-view="history" style="grid-column:1 / -1"><div class="lt">Past rounds</div><div class="ls">${historyList().length ? `${historyList().length} completed round${historyList().length === 1 ? "" : "s"} saved` : "Completed rounds are saved here"}</div></button>
   </div>
   <p class="note">Stableford majors: 5, 3 and 1 points for 1st, 2nd and 3rd on stableford each round (a tie for 1st gets 5 each and 3rd gets 2); 3, 2, 1 for closest to the pin on each par 3 and for the longest drive (2, 1 when two qualify; 2 when only one does).</p>`;
@@ -1106,7 +1109,10 @@ function saveToHistory(){
     const S = skinsState(), C = skinsCalc(S), raw = docs[skinsPaths().scores] || {};
     if (!C.allDone) return;
     const top = Math.max(...C.won), who = range(0,N-1).filter(i => C.won[i] === top);
-    replace(`history/${ui.year}-skins-${raw.cleared || 0}`, {kind:"skins", major:"skins", year:ui.year, date: todayISO(), course: S.setup.course,
+    const hid = `history/${ui.year}-skins-${raw.cleared || 0}`, prev = docs[hid] || {};
+    // the fines pot closes the first time this match is completed; later fines go towards the next match
+    const potCutoff = prev.potCutoff || Date.now(), potFromFines = prev.potCutoff ? prev.potFromFines : finesPot().total;
+    replace(hid, {kind:"skins", major:"skins", year:ui.year, date: todayISO(), course: S.setup.course, potCutoff, potFromFines,
       title: top > 0 ? `${who.map(i => S.setup.players[i].name).join(" & ")} ${who.length > 1 ? "shared top spot" : "won"} with ${money(top)}` : "No skins won",
       setup: clone(S.setup), scores: clone(raw), savedAt: Date.now()});
     return;
@@ -1118,6 +1124,74 @@ function saveToHistory(){
     majorCfg: {allowance:M.allowance, tieRule:M.tieRule, roundsCount:M.roundsCount, snake: !!M.snake, faceBall: !!M.faceBall}, roundDoc: clone(rc.round),
     players: clone(roster().players), standings: {total: MC.tot.total, done: MC.done, of: MC.m.roundsCount}, savedAt: Date.now()});
 }
+/* ---------- Fines: a running pot that funds the next skins match ---------- */
+const DEFAULT_FINE_RULES = [{id:"under30", name:"Under 30 points in a stableford round", amount:10}, {id:"noprov", name:"Lost ball without playing a provisional", amount:5}];
+let fineSel = {player:null, rule:null, note:"", msg:""}, fineConfirm = null;
+function finesCfg(){ const c = docs["config/fines"] || {}; return {startDate: c.startDate || null, rules: Array.isArray(c.rules) && c.rules.length ? c.rules : DEFAULT_FINE_RULES}; }
+function allFines(){ return Object.keys(docs).filter(p => p.startsWith("fines/")).map(p => Object.assign({id:p.slice(6)}, docs[p])).sort((a,b) => (b.createdAt||0) - (a.createdAt||0)); }
+function skinsPots(){ return historyList().filter(h => h.kind === "skins" && h.potCutoff).sort((a,b) => a.potCutoff - b.potCutoff); }
+function finesPot(){
+  // the current pot is every fine logged since the last completed skins match
+  const pots = skinsPots(), since = pots.length ? pots[pots.length-1].potCutoff : 0, list = allFines().filter(f => (f.createdAt || 0) > since);
+  return {since, sinceMatch: pots[pots.length-1] || null, list, total: sum(list.map(f => +f.amount || 0))};
+}
+function fineSuggestions(){
+  // completed stableford rounds since the fines started where someone scored under 30
+  const cfg = finesCfg(); if (!cfg.startDate) return [];
+  const rule = cfg.rules.find(r => r.id === "under30"); if (!rule) return [];
+  const have = new Set(allFines().map(f => f.source).filter(Boolean)), out = [];
+  Object.keys(docs).forEach(p => { const m = p.match(/^majors\/(\d+)-(\w+)$/); if (!m || !majorDef(m[2]) || majorDef(m[2]).kind !== "stable") return;
+    const M = getMajor(m[2], +m[1]);
+    for (let r = 1; r <= M.roundsCount; r++){ const rc = roundCalc(M, r); if (!rc || !rc.complete) continue;
+      const saved = docs[`history/${m[1]}-${m[2]}-r${r}`], date = rc.round.date || (saved && saved.date) || "";
+      if (!date || date < cfg.startDate) continue;
+      rc.players.forEach((pl,i) => { const name = roster().players[i].name, src = `${m[1]}-${m[2]}-r${r}-${name}`;
+        if (pl.total < 30 && !have.has(src)) out.push({src, player:name, pts:pl.total, where:`${majorDef(m[2]).name}${M.roundsCount > 1 ? " round " + r : ""}, ${rc.course.name}`, date, rule}); }); }
+  });
+  return out.sort((a,b) => b.date.localeCompare(a.date));
+}
+function addFine(player, rule, note, source, date){
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  replace("fines/" + id, {player, ruleId:rule.id, ruleName:rule.name, amount:+rule.amount, note: note || "", date: date || todayISO(), createdAt: Date.now(), source: source || ""});
+}
+function finesView(){
+  const cfg = finesCfg(), pot = finesPot(), R = roster().players, sug = fineSuggestions();
+  const byPlayer = R.map(p => ({n:p.name, t: sum(pot.list.filter(f => f.player === p.name).map(f => +f.amount || 0)), c: pot.list.filter(f => f.player === p.name).length}));
+  const since = pot.sinceMatch ? `Fines since the ${pot.sinceMatch.year} Skins Major (${fmtDate(pot.sinceMatch.date)})` : cfg.startDate ? `Fines since ${fmtDate(cfg.startDate)} ${cfg.startDate.slice(0,4)}` : "Fines logged so far";
+  const pots = skinsPots().slice().reverse();
+  return `<section class="card" style="background:var(--green);color:var(--on-green);border-color:transparent;text-align:center;padding:20px 14px;margin-top:14px">
+    <div class="lbl" style="color:var(--on-green);opacity:.85">Pot for the next Skins Major</div>
+    <div style="font-family:var(--display);font-weight:700;font-size:52px;line-height:1">${money(pot.total)}</div>
+    <div style="opacity:.9;margin-top:4px">${since} · ${pot.list.length} fine${pot.list.length === 1 ? "" : "s"}</div></section>
+  ${sug.length ? `<h2>Suggested fines</h2><section class="card ledger">${sug.map((x,k) => `<div class="row"><div><div class="pname" style="font-size:16px">${esc(x.player)}: ${x.pts} points</div><div class="pinfo">${esc(x.where)} · ${fmtDate(x.date)}</div></div>
+    <button class="btn small primary" data-act="fine-suggest" data-i="${k}" ${readOnly?"disabled":""}>Add ${money(+x.rule.amount)}</button></div>`).join("")}</section>` : ""}
+  <h2>Add a fine</h2>
+  <section class="card stack">
+    <div><div class="lbl">Who</div><div class="rank">${R.map(p => `<button class="${fineSel.player === p.name ? "on" : ""}" data-fineplayer="${esc(p.name)}"><span class="rn">${esc(p.name)}</span></button>`).join("")}</div></div>
+    <div><div class="lbl">Rule broken</div><div class="rlist" style="margin-top:6px">${cfg.rules.map(r => `<button class="rcard" data-finerule="${esc(r.id)}" style="${fineSel.rule === r.id ? "border-color:var(--green);box-shadow:inset 0 0 0 2px var(--green)" : ""}"><div class="rs" style="color:var(--ink);font-size:15px">${esc(r.name)}</div><span class="state ${fineSel.rule === r.id ? "done" : ""}">${money(+r.amount)}</span></button>`).join("")}</div></div>
+    <div class="field"><label for="finenote">Note (optional)</label><input type="text" id="finenote" value="${esc(fineSel.note)}" placeholder="e.g. 14th at Leeds"></div>
+    ${fineSel.msg ? `<p class="note ${fineSel.msg.startsWith("Pick") ? "warn" : ""}" style="margin:0">${fineSel.msg}</p>` : ""}
+    <div class="actions" style="margin:0"><button class="btn primary" data-act="fine-add" ${readOnly?"disabled":""}>Add fine</button></div>
+  </section>
+  <h2>Who's paid in</h2>
+  <section class="card ledger">${byPlayer.sort((a,b) => b.t - a.t).map(x => `<div class="row"><div><div class="pname">${esc(x.n)}</div><div class="pinfo">${x.c} fine${x.c === 1 ? "" : "s"}</div></div><div class="amt num">${money(x.t)}</div></div>`).join("")}</section>
+  <h2>Fines in this pot</h2>
+  <section class="card ledger">${pot.list.length ? pot.list.map(f => `<div class="row"><div><div class="pname" style="font-size:16px">${esc(f.player)} · ${money(+f.amount || 0)}</div><div class="pinfo">${esc(f.ruleName)}${f.note ? " · " + esc(f.note) : ""} · ${fmtDate(f.date)}</div>
+    ${fineConfirm === f.id ? `<div class="actions" style="margin-top:6px"><button class="btn small danger" data-act="fine-del" data-id="${esc(f.id)}">Delete fine</button><button class="btn small" data-act="fine-keep">Keep</button></div>` : ""}</div>
+    <button class="btn small" data-act="fine-ask" data-id="${esc(f.id)}" aria-label="Delete this fine" ${readOnly?"disabled":""}>✕</button></div>`).join("") : `<div class="row"><div class="pinfo">No fines yet. Clean golf so far.</div></div>`}</section>
+  ${pots.length ? `<h2>Previous pots</h2><section class="card ledger">${pots.map(h => `<div class="row"><div><div class="pname" style="font-size:16px">${h.year} Skins Major</div><div class="pinfo">Closed ${fmtDate(h.date)}</div></div><div class="amt num">${money(+h.potFromFines || 0)}</div></div>`).join("")}</section>` : ""}
+  <h2>Rules</h2>
+  <section class="card ledger">${cfg.rules.map(r => `<div class="row"><div class="pname" style="font-size:16px;white-space:normal">${esc(r.name)}</div><div style="display:flex;gap:8px;align-items:center"><span class="amt num" style="font-size:20px">${money(+r.amount)}</span><button class="btn small" data-act="rule-del" data-id="${esc(r.id)}" aria-label="Remove rule" ${readOnly || cfg.rules.length < 2 ? "disabled" : ""}>✕</button></div></div>`).join("")}</section>
+  <section class="card stack" style="margin-top:10px">
+    <div class="grid2" style="grid-template-columns:minmax(0,1fr) 90px">
+      <div class="field"><label for="rulename">New rule</label><input type="text" id="rulename" placeholder="e.g. Air shot"></div>
+      <div class="field"><label for="ruleamt">£</label><input type="number" inputmode="decimal" id="ruleamt" placeholder="5"></div>
+    </div>
+    <div class="actions" style="margin:0"><button class="btn" data-act="rule-add" ${readOnly?"disabled":""}>Add rule</button></div>
+    <p class="note" style="margin:0">Changing rules doesn't change fines already logged. Under-30 stableford rounds are suggested automatically from rounds played in the app.</p>
+  </section>`;
+}
+
 function historyList(){ return Object.keys(docs).filter(p => p.startsWith("history/")).map(p => Object.assign({id:p.slice(8)}, docs[p]))
   .sort((a,b) => String(b.date).localeCompare(String(a.date)) || (b.savedAt||0) - (a.savedAt||0)); }
 function historyView(){
@@ -1314,6 +1388,8 @@ function skinsMoneyView(S, C){
   <section class="card ledger">${order.map(i => `<div class="row"><div><div class="pname">${pn(i)}</div>
     <div class="pinfo num">${C.skins[i]} skin${C.skins[i]===1?"":"s"}</div></div>
     <div class="amt num ${C.won[i]>0.004?"pos":""}">${money(C.won[i])}</div></div>`).join("")}</section>
+  ${(() => { const hrec = historyList().find(h => h.kind === "skins" && h.year === ui.year && h.potCutoff), f = hrec ? +hrec.potFromFines || 0 : finesPot().total;
+    return `<p class="note num"><b>Fines pot for this match: ${money(f)}</b>${f ? (f >= C.pot ? ` (${money(f - C.pot)} more than the £${C.pot} of hole values)` : ` (${money(C.pot - f)} short of the £${C.pot} of hole values)`) : ""}.</p>`; })()}
   <p class="note num">Paid out of the £${C.pot} pot: ${money(C.total)} won so far, ${money(toPlay)} still to play for${C.carry && !C.allDone ? ` (£${C.carry} of it carrying over)` : ""}. ${played} of 18 holes settled.</p>
   ${C.endNote ? `<p class="note">${C.endNote}</p>` : ""}${undo}
   ${rollView("skins")}
@@ -1386,7 +1462,11 @@ document.addEventListener("click", e => {
   }
   if (ds.year){ go({year: ui.year + (+ds.year)}); return; }
   if (ds.major){ const def = majorDef(ds.major); go(def.kind === "skins" ? {view:"skins", major:"skins", sub: skinsState().saved ? "hole" : "setup"} : {view:"major", major:ds.major}); return; }
-  if (ds.view){ go({view:ds.view}); return; }
+  if (ds.view){ if (ds.view === "fines"){ fineSel = {player:null, rule:null, note:"", msg:""}; fineConfirm = null;
+      if (!(docs["config/fines"] || {}).startDate && !readOnly) write("config/fines", {startDate: todayISO(), rules: finesCfg().rules}); }
+    go({view:ds.view}); return; }
+  if (ds.fineplayer){ fineSel.player = ds.fineplayer; fineSel.msg = ""; keepNote(); renderMain(); return; }
+  if (ds.finerule){ fineSel.rule = ds.finerule; fineSel.msg = ""; keepNote(); renderMain(); return; }
   if (ds.course){ go({view:"course", courseId:ds.course, back:null}); return; }
   if (ds.round){ const has = getMajor(ui.major).rounds["r"+ds.round]; go({view:"round", round:+ds.round, sub: has ? "hole" : "setup"}); return; }
   if (ds.sub === "summary"){ completeRound(); return; }
@@ -1432,9 +1512,12 @@ function togglePrize(kind, hole, p){
   const patch = kind === "ctp" ? {ctp: {["h"+hole]: next}} : {ld: next};
   write(majorPath(ui.major), {rounds: {["r"+ui.round]: patch}});
 }
+function keepNote(){ const n = $("finenote"); if (n) fineSel.note = n.value; }
 function slug(s){ return (String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "course") + "-" + Math.random().toString(36).slice(2, 7); }
 function action(a, t){
   if (a === "cancel"){ confirm = null; renderMain(); return; }
+  if (a === "fine-keep"){ fineConfirm = null; renderMain(); return; }
+  if (a === "fine-ask"){ fineConfirm = t.dataset.id; renderMain(); return; }
   if (a === "ask-del-hist"){ confirm = "del-hist"; renderMain(); return; }
   if (a === "del-hist"){ const id = ui.histId; go({view:"history"}); removeDoc("history/" + id); return; }
   if (readOnly) return;
@@ -1478,6 +1561,17 @@ function action(a, t){
     const all = clone(honoursDoc()); if (all[ui.major]) delete all[ui.major][t.dataset.y];
     replace("config/honours", all); return;
   }
+  if (a === "fine-add"){ keepNote();
+    const rule = finesCfg().rules.find(r => r.id === fineSel.rule);
+    if (!fineSel.player || !rule){ fineSel.msg = `Pick ${!fineSel.player ? "who" : "the rule they broke"} first.`; renderMain(); return; }
+    addFine(fineSel.player, rule, fineSel.note);
+    fineSel = {player:null, rule:null, note:"", msg:`Added ${money(+rule.amount)} for ${esc(rule.name.toLowerCase())}.`}; renderMain(); return; }
+  if (a === "fine-suggest"){ const x = fineSuggestions()[+t.dataset.i]; if (x) addFine(x.player, x.rule, `${x.pts} points, ${x.where}`, x.src, x.date); return; }
+  if (a === "fine-del"){ fineConfirm = null; removeDoc("fines/" + t.dataset.id); return; }
+  if (a === "rule-add"){ const n = ($("rulename").value || "").trim(), amt = parseFloat($("ruleamt").value);
+    if (!n){ $("rulename").focus(); return; } if (!(amt > 0)){ $("ruleamt").focus(); return; }
+    write("config/fines", {startDate: finesCfg().startDate || todayISO(), rules: finesCfg().rules.concat({id: slug(n), name: n, amount: amt})}); return; }
+  if (a === "rule-del"){ write("config/fines", {startDate: finesCfg().startDate || todayISO(), rules: finesCfg().rules.filter(r => r.id !== t.dataset.id)}); return; }
   if (a === "import-results"){ importResults(ui.major, ui.year); return; }
   if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule, snake: d.snake === "on", faceBall: d.faceBall === "on"}); return; }
   if (a === "save-round"){
@@ -1571,7 +1665,7 @@ function watchSkins(){
   mode = "shared";
   // Data shown before connecting came from this device; the shared store is the source of truth now
   docs = {}; persist();
-  watchCollection("majors"); watchCollection("courses"); watchCollection("history"); watchDoc("config/roster"); watchSkins();
+  watchCollection("majors"); watchCollection("courses"); watchCollection("history"); watchCollection("fines"); watchDoc("config/fines"); watchDoc("config/roster"); watchSkins();
   render();
   if (window.claude) try { const u = await window.claude.use("user"); if (u && u.can){ const c = await u.can("data.write"); if (c === false){ readOnly = true; render(); } } } catch(e){}
 })();
@@ -1593,7 +1687,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '21';
+const APP_VERSION = '22';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
