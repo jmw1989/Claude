@@ -400,6 +400,12 @@ function honours(key){
   const manual = honoursDoc()[key] || {}, out = {};
   Object.keys(manual).forEach(y => { if (manual[y]) out[y] = {year:+y, name:manual[y], auto:false}; });
   if (majorDef(key).kind === "skins"){
+    // past years come from saved rounds (the latest completed round each year wins), this year from the live round
+    historyList().filter(h => h.kind === "skins").sort((a,b) => (a.savedAt || 0) - (b.savedAt || 0)).forEach(h => {
+      const w = withSavedRound(h, ({S, C}) => { const top = Math.max(...C.won);
+        return C.allDone && top > 0.004 ? C.won.map((v,i) => v === top ? S.setup.players[i].name : null).filter(Boolean).join(" & ") : null; });
+      if (w) out[h.year] = {year:+h.year, name:w, auto:true};
+    });
     const S = skinsState(), C = skinsCalc(S), top = Math.max(...C.won);
     if (C.allDone && !C.leftover && top > 0.004) out[ui.year] = {year:ui.year, name:C.won.map((v,i) => v === top ? S.setup.players[i].name : null).filter(Boolean).join(" & "), auto:true};
   } else {
@@ -411,8 +417,9 @@ function honours(key){
   return Object.values(out).sort((a,b) => b.year - a.year);
 }
 function holderLine(key){
-  const h = honours(key)[0];
-  return h ? `Holder: <b>${esc(h.name)}</b> (${h.year})` : "Inaugural year · no holder yet";
+  // the holder for the season on screen is the most recent winner up to and including that season
+  const all = honours(key), h = all.find(x => x.year <= ui.year);
+  return h ? `Holder: <b>${esc(h.name)}</b> (${h.year})` : all.length ? "No holder yet" : "Inaugural year · no holder yet";
 }
 function rollView(key){
   const list = honours(key);
