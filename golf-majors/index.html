@@ -826,7 +826,7 @@ function majorView(){
   const M = majorCalc(ui.major), R = roster().players;
   const order = range(0,N-1).sort((a,b) => M.tot.total[b] - M.tot.total[a]);
   const table = `<div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${M.m.snake ? "<th>Snake</th>" : ""}${M.tot.bonus.some(Boolean) ? "<th>Bonus</th>" : ""}<th>Pts</th></tr>
+    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${M.m.snake ? "<th>Snake</th>" : ""}${M.tot.bonus.some(Boolean) ? "<th>FB</th>" : ""}<th>Pts</th></tr>
     ${order.map(i => `<tr><td class="l"><b>${esc(R[i].name)}</b></td><td>${M.tot.stab[i]}</td><td>${pts(M.tot.win[i])}</td><td>${pts(M.tot.ctp[i])}</td><td>${pts(M.tot.ld[i])}</td>${M.m.snake ? `<td>${snakeCell(M.tot.snake[i])}</td>` : ""}${M.tot.bonus.some(Boolean) ? `<td>${pts(M.tot.bonus[i])}</td>` : ""}<td class="big">${pts(M.tot.total[i])}</td></tr>`).join("")}
   </table></div>`;
   const rounds = range(1, M.m.roundsCount).map(r => {
@@ -847,7 +847,7 @@ function majorView(){
     ${Object.keys(M.m.rounds).length ? `<p class="note warn" style="margin:0">This replaces the ${Object.keys(M.m.rounds).length} round${Object.keys(M.m.rounds).length > 1 ? "s" : ""} already set up here.</p>` : ""}
     <div class="actions" style="margin:0"><button class="btn primary" data-act="import-results" ${readOnly?"disabled":""}>Add the results</button></div></section>` : "";
   return `${importCard}<h2>Standings</h2>${table}
-  <p class="note">Place = 5, 3 or 1 points for finishing 1st, 2nd or 3rd on stableford in a round. CTP = closest to the pin on the par 3s. LD = longest drive.${M.m.snake ? " Snake = −1 for finishing a round holding the snake." : ""}${M.tot.bonus.some(Boolean) ? " Bonus = extra points such as Face Ball." : ""}</p>
+  <p class="note">Place = 5, 3 or 1 points for finishing 1st, 2nd or 3rd on stableford in a round. CTP = closest to the pin on the par 3s. LD = longest drive.${M.m.snake ? " Snake = −1 for finishing a round holding the snake." : ""}${M.tot.bonus.some(Boolean) ? " FB = Face Ball." : ""}</p>
   <h2>Rounds</h2><div class="rlist">${rounds}</div>
   ${rollView(ui.major)}
   <h2>Format</h2>
@@ -960,7 +960,7 @@ function roundPointsView(){
     : rc.started ? `${names(rc.leaders)} ${rc.leaders.length > 1 ? "are level" : "leads"} on stableford. Place points (5, 3, 1) are awarded when all 18 holes are in.` : "No scores yet.";
   return `${rc.complete ? `<div class="actions" style="margin-top:4px"><button class="btn primary" data-sub="summary">See the round summary</button></div>` : ""}<h2>Major points this round</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.faceBallOn ? "<th>Face</th>" : ""}<th>Pts</th></tr>
+    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.faceBallOn ? "<th>FB</th>" : ""}<th>Pts</th></tr>
     ${R.map((p,i) => `<tr><td class="l"><b>${esc(p.name)}</b></td><td>${rc.players[i].total}</td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}${rc.faceBallOn ? `<td>${pts(rc.bonus[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
   </table></div>
   <p class="note">${winNote}</p>${snakeNote ? `<p class="note">${snakeNote}</p>` : ""}${rc.faceBallOn ? `<p class="note">Face Ball: ${faceBallText(rc)}</p>` : ""}
@@ -1024,7 +1024,7 @@ function manualRoundView(ctx){
   <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div class="pname">${pn(i)}</div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
   <h2>Major points</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.bonus.some(Boolean) ? "<th>Bonus</th>" : ""}<th>Round</th></tr>
+    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.bonus.some(Boolean) ? "<th>FB</th>" : ""}<th>Round</th></tr>
     ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}${rc.bonus.some(Boolean) ? `<td>${pts(rc.bonus[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
   </table></div>
   <h2>Prizes</h2>
@@ -1237,7 +1237,7 @@ function roundSummaryView(ctx){
   <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div><div class="pname">${pn(i)}</div><div class="pinfo">Out ${halves[i][0]} · In ${halves[i][1]}${gs[i].pu ? "" : ` · gross ${gs[i].tot}`}</div></div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
   <h2>Major points</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.faceBallOn ? "<th>Face</th>" : ""}<th>Round</th></tr>
+    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.faceBallOn ? "<th>FB</th>" : ""}<th>Round</th></tr>
     ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}${rc.faceBallOn ? `<td>${pts(rc.bonus[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
   </table></div>
   <h2>Highlights</h2>
@@ -1593,7 +1593,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '20';
+const APP_VERSION = '21';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
