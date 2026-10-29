@@ -1129,7 +1129,7 @@ function saveToHistory(){
 }
 /* ---------- Fines: a running pot that funds the next skins match ---------- */
 const DEFAULT_FINE_RULES = [{id:"under30", name:"Under 30 points in a stableford round", amount:10}, {id:"noprov", name:"Lost ball without playing a provisional", amount:5}];
-let fineSel = {player:null, rule:null, note:"", msg:""}, fineConfirm = null;
+let fineSel = {player:null, rule:null, note:"", msg:""}, fineConfirm = null, topSel = {who:null, amount:"", note:"", msg:""};
 function finesCfg(){ const c = docs["config/fines"] || {}; return {startDate: c.startDate || null, rules: Array.isArray(c.rules) && c.rules.length ? c.rules : DEFAULT_FINE_RULES}; }
 function allFines(){ return Object.keys(docs).filter(p => p.startsWith("fines/")).map(p => Object.assign({id:p.slice(6)}, docs[p])).sort((a,b) => (b.createdAt||0) - (a.createdAt||0)); }
 function skinsPots(){ return historyList().filter(h => h.kind === "skins" && h.potCutoff).sort((a,b) => a.potCutoff - b.potCutoff); }
@@ -1159,13 +1159,15 @@ function addFine(player, rule, note, source, date){
 }
 function finesView(){
   const cfg = finesCfg(), pot = finesPot(), R = roster().players, sug = fineSuggestions();
-  const byPlayer = R.map(p => ({n:p.name, t: sum(pot.list.filter(f => f.player === p.name).map(f => +f.amount || 0)), c: pot.list.filter(f => f.player === p.name).length}));
+  const byPlayer = R.map(p => { const mine = pot.list.filter(f => f.player === p.name);
+    return {n:p.name, t: sum(mine.map(f => +f.amount || 0)), c: mine.filter(f => f.kind !== "topup").length, u: mine.filter(f => f.kind === "topup").length}; });
   const since = pot.sinceMatch ? `Fines since the ${pot.sinceMatch.year} Skins Major (${fmtDate(pot.sinceMatch.date)})` : cfg.startDate ? `Fines since ${fmtDate(cfg.startDate)} ${cfg.startDate.slice(0,4)}` : "Fines logged so far";
   const pots = skinsPots().slice().reverse();
   return `<section class="card" style="background:var(--green);color:var(--on-green);border-color:transparent;text-align:center;padding:20px 14px;margin-top:14px">
     <div class="lbl" style="color:var(--on-green);opacity:.85">Pot for the next Skins Major</div>
     <div style="font-family:var(--display);font-weight:700;font-size:52px;line-height:1">${money(pot.total)}</div>
-    <div style="opacity:.9;margin-top:4px">${since} · ${pot.list.length} fine${pot.list.length === 1 ? "" : "s"}</div></section>
+    <div style="opacity:.9;margin-top:4px">${since} · ${(() => { const f = pot.list.filter(x => x.kind !== "topup").length, u = pot.list.length - f;
+      return `${f} fine${f === 1 ? "" : "s"}${u ? ` · ${u} top-up${u === 1 ? "" : "s"}` : ""}`; })()}</div></section>
   ${sug.length ? `<h2>Suggested fines</h2><section class="card ledger">${sug.map((x,k) => `<div class="row"><div><div class="pname" style="font-size:16px">${esc(x.player)}: ${x.pts} points</div><div class="pinfo">${esc(x.where)} · ${fmtDate(x.date)}</div></div>
     <button class="btn small primary" data-act="fine-suggest" data-i="${k}" ${readOnly?"disabled":""}>Add ${money(+x.rule.amount)}</button></div>`).join("")}</section>` : ""}
   <h2>Add a fine</h2>
@@ -1176,9 +1178,19 @@ function finesView(){
     ${fineSel.msg ? `<p class="note ${fineSel.msg.startsWith("Pick") ? "warn" : ""}" style="margin:0">${fineSel.msg}</p>` : ""}
     <div class="actions" style="margin:0"><button class="btn primary" data-act="fine-add" ${readOnly?"disabled":""}>Add fine</button></div>
   </section>
+  <h2>Top up the pot</h2>
+  <section class="card stack">
+    <div class="field"><label for="topamt">Amount (£)</label><input type="number" inputmode="decimal" step="0.5" id="topamt" value="${esc(topSel.amount)}" placeholder="e.g. 20"></div>
+    <div><div class="lbl">Paid by</div><div class="rank" style="grid-template-columns:repeat(3,1fr)">
+      <button class="${topSel.who === "__each" ? "on" : ""}" data-topwho="__each" style="grid-column:1 / -1"><span class="rn">Each of us</span><span class="rp">${topSel.amount ? money(+topSel.amount * N) + " in total" : "Everyone pays the amount"}</span></button>
+      ${R.map(p => `<button class="${topSel.who === p.name ? "on" : ""}" data-topwho="${esc(p.name)}"><span class="rn">${esc(p.name)}</span></button>`).join("")}</div></div>
+    <div class="field"><label for="topnote">Note (optional)</label><input type="text" id="topnote" value="${esc(topSel.note)}" placeholder="e.g. Top-up for the skins"></div>
+    ${topSel.msg ? `<p class="note ${topSel.msg.startsWith("Enter") || topSel.msg.startsWith("Pick") ? "warn" : ""}" style="margin:0">${topSel.msg}</p>` : ""}
+    <div class="actions" style="margin:0"><button class="btn primary" data-act="top-add" ${readOnly?"disabled":""}>Add to the pot</button></div>
+  </section>
   <h2>Who's paid in</h2>
-  <section class="card ledger">${byPlayer.sort((a,b) => b.t - a.t).map(x => `<div class="row"><div><div class="pname">${esc(x.n)}</div><div class="pinfo">${x.c} fine${x.c === 1 ? "" : "s"}</div></div><div class="amt num">${money(x.t)}</div></div>`).join("")}</section>
-  <h2>Fines in this pot</h2>
+  <section class="card ledger">${byPlayer.sort((a,b) => b.t - a.t).map(x => `<div class="row"><div><div class="pname">${esc(x.n)}</div><div class="pinfo">${x.c} fine${x.c === 1 ? "" : "s"}${x.u ? ` · ${x.u} top-up${x.u === 1 ? "" : "s"}` : ""}</div></div><div class="amt num">${money(x.t)}</div></div>`).join("")}</section>
+  <h2>In this pot</h2>
   <section class="card ledger">${pot.list.length ? pot.list.map(f => `<div class="row"><div><div class="pname" style="font-size:16px">${esc(f.player)} · ${money(+f.amount || 0)}</div><div class="pinfo">${esc(f.ruleName)}${f.note ? " · " + esc(f.note) : ""} · ${fmtDate(f.date)}</div>
     ${fineConfirm === f.id ? `<div class="actions" style="margin-top:6px"><button class="btn small danger" data-act="fine-del" data-id="${esc(f.id)}">Delete fine</button><button class="btn small" data-act="fine-keep">Keep</button></div>` : ""}</div>
     <button class="btn small" data-act="fine-ask" data-id="${esc(f.id)}" aria-label="Delete this fine" ${readOnly?"disabled":""}>✕</button></div>`).join("") : `<div class="row"><div class="pinfo">No fines yet. Clean golf so far.</div></div>`}</section>
@@ -1496,11 +1508,12 @@ document.addEventListener("click", e => {
   }
   if (ds.year){ go({year: ui.year + (+ds.year)}); return; }
   if (ds.major){ const def = majorDef(ds.major); go(def.kind === "skins" ? {view:"skins", major:"skins", sub: skinsState().saved ? "hole" : "setup"} : {view:"major", major:ds.major}); return; }
-  if (ds.view){ if (ds.view === "fines"){ fineSel = {player:null, rule:null, note:"", msg:""}; fineConfirm = null;
+  if (ds.view){ if (ds.view === "fines"){ fineSel = {player:null, rule:null, note:"", msg:""}; fineConfirm = null; topSel = {who:null, amount:"", note:"", msg:""};
       if (!(docs["config/fines"] || {}).startDate && !readOnly) write("config/fines", {startDate: todayISO(), rules: finesCfg().rules}); }
     go({view:ds.view}); return; }
-  if (ds.fineplayer){ fineSel.player = ds.fineplayer; fineSel.msg = ""; keepNote(); renderMain(); return; }
-  if (ds.finerule){ fineSel.rule = ds.finerule; fineSel.msg = ""; keepNote(); renderMain(); return; }
+  if (ds.topwho){ keepTop(); topSel.who = ds.topwho; topSel.msg = ""; renderMain(); return; }
+  if (ds.fineplayer){ keepTop(); fineSel.player = ds.fineplayer; fineSel.msg = ""; keepNote(); renderMain(); return; }
+  if (ds.finerule){ keepTop(); fineSel.rule = ds.finerule; fineSel.msg = ""; keepNote(); renderMain(); return; }
   if (ds.course){ go({view:"course", courseId:ds.course, back:null}); return; }
   if (ds.round){ const has = getMajor(ui.major).rounds["r"+ds.round]; go({view:"round", round:+ds.round, sub: has ? "hole" : "setup"}); return; }
   if (ds.sub === "summary"){ completeRound(); return; }
@@ -1546,6 +1559,7 @@ function togglePrize(kind, hole, p){
   const patch = kind === "ctp" ? {ctp: {["h"+hole]: next}} : {ld: next};
   write(majorPath(ui.major), {rounds: {["r"+ui.round]: patch}});
 }
+function keepTop(){ const a = $("topamt"), n = $("topnote"); if (a) topSel.amount = a.value; if (n) topSel.note = n.value; }
 function keepNote(){ const n = $("finenote"); if (n) fineSel.note = n.value; }
 function slug(s){ return (String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "course") + "-" + Math.random().toString(36).slice(2, 7); }
 function action(a, t){
@@ -1600,6 +1614,14 @@ function action(a, t){
     if (!fineSel.player || !rule){ fineSel.msg = `Pick ${!fineSel.player ? "who" : "the rule they broke"} first.`; renderMain(); return; }
     addFine(fineSel.player, rule, fineSel.note);
     fineSel = {player:null, rule:null, note:"", msg:`Added ${money(+rule.amount)} for ${esc(rule.name.toLowerCase())}.`}; renderMain(); return; }
+  if (a === "top-add"){ keepTop();
+    const amt = Math.round(parseFloat(topSel.amount) * 100) / 100;
+    if (!(amt > 0)){ topSel.msg = "Enter an amount first."; renderMain(); return; }
+    if (!topSel.who){ topSel.msg = "Pick who's paying."; renderMain(); return; }
+    const who = topSel.who === "__each" ? roster().players.map(p => p.name) : [topSel.who];
+    who.forEach((n,k) => { const id = Date.now().toString(36) + k + Math.random().toString(36).slice(2,5);
+      replace("fines/" + id, {player:n, ruleId:"topup", ruleName:"Top-up", amount:amt, note:topSel.note || "", date:todayISO(), createdAt:Date.now() + k, source:"", kind:"topup"}); });
+    topSel = {who:null, amount:"", note:"", msg:`Added ${money(amt * who.length)} to the pot${who.length > 1 ? ` (${money(amt)} each)` : ""}.`}; renderMain(); return; }
   if (a === "fine-suggest"){ const x = fineSuggestions()[+t.dataset.i]; if (x) addFine(x.player, x.rule, `${x.pts} points, ${x.where}`, x.src, x.date); return; }
   if (a === "fine-del"){ fineConfirm = null; removeDoc("fines/" + t.dataset.id); return; }
   if (a === "rule-add"){ const n = ($("rulename").value || "").trim(), amt = parseFloat($("ruleamt").value);
@@ -1724,7 +1746,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '23';
+const APP_VERSION = '24';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
