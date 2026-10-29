@@ -1,5 +1,5 @@
 // Offline support: the app is cached so it opens on the course with no signal; the network is tried first for updates.
-const CACHE = 'majors-tour-v20';
+const CACHE = 'majors-tour-v21';
 const SHELL = ['./', 'index.html', 'firebase-config.js', 'sync.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
