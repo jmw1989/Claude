@@ -337,12 +337,15 @@ function manualCalc(major, round){
   const mr = round.manual, R = roster().players;
   const stab = byName(mr.stab), win = byName(mr.place), ctp = Array(N).fill(0);
   (mr.ctp || []).forEach(c => byName(c.pts).forEach((v,i) => ctp[i] += v));
-  const ld = byName(mr.ld && mr.ld.pts), snake = Array(N).fill(0);
-  let snakeHolder = mr.snake ? rosterIndex(mr.snake) : -1; if (snakeHolder >= 0) snake[snakeHolder] = -1; else snakeHolder = null;
+  const ld = byName(mr.ld && mr.ld.pts), snake = Array(N).fill(0), bonus = Array(N).fill(0);
+  const snakeHolders = (Array.isArray(mr.snake) ? mr.snake : mr.snake ? [mr.snake] : []).map(rosterIndex).filter(i => i >= 0);
+  snakeHolders.forEach(i => snake[i] = -1);
+  const snakeHolder = snakeHolders.length ? snakeHolders[0] : null;
+  (mr.extras || []).forEach(e => byName(e.pts).forEach((v,i) => bonus[i] += v));
   const order = range(0,N-1).sort((a,b) => stab[b] - stab[a]), tiers = [];
   order.forEach(i => { const last = tiers[tiers.length-1]; if (last && stab[last[0]] === stab[i]) last.push(i); else tiers.push([i]); });
-  const total = win.map((w,i) => w + ctp[i] + ld[i] + snake[i]);
-  return {manual:true, round, course: round.course || {name:"", tees:[], holes:[]}, players: R.map((p,i) => ({holes:[], total:stab[i], thru:H, tee:{name:""}})),
+  const total = win.map((w,i) => w + ctp[i] + ld[i] + snake[i] + bonus[i]);
+  return {manual:true, bonus, snakeHolders, round, course: round.course || {name:"", tees:[], holes:[]}, players: R.map((p,i) => ({holes:[], total:stab[i], thru:H, tee:{name:""}})),
     complete:true, started:true, leaders:tiers[0], tiers, win, ctp, ld, snake, snakeHolder, snakeHole:null, threePutts:Array(N).fill(0),
     snakeOn: !!(major.snake || mr.snake), total, par3s:(mr.ctp || []).map(c => c.hole)};
 }
@@ -386,7 +389,7 @@ function roundCalc(major, rn){
     if (complete && snakeHolder != null) snake[snakeHolder] = -1;
   }
   const total = players.map((p,i) => win[i] + ctp[i] + ld[i] + snake[i]);
-  return {round, course:c, players, complete, leaders, tiers, win, ctp, ld, snake, snakeHolder, snakeHole, threePutts, snakeOn: !!major.snake, total, par3s, started: players.some(p => p.thru > 0)};
+  return {round, course:c, players, complete, leaders, tiers, win, ctp, ld, snake, snakeHolder, snakeHole, threePutts, snakeOn: !!major.snake, bonus: Array(N).fill(0), total, par3s, started: players.some(p => p.thru > 0)};
 }
 /* Stableford places: 5, 3, 1. A tie for first gets 5 each and third gets 2; a tie for second gets 2 each. */
 const PLACE_PTS = {"1,1,1":[5,3,1], "2,1":[5,2], "1,2":[5,2], "3":[5]};
@@ -409,8 +412,8 @@ function prizePts(order){
 function majorCalc(key, year){
   const m = getMajor(key, year); const rounds = [];
   for (let r = 1; r <= m.roundsCount; r++) rounds.push(roundCalc(m, r));
-  const tot = {win:Array(N).fill(0), ctp:Array(N).fill(0), ld:Array(N).fill(0), snake:Array(N).fill(0), total:Array(N).fill(0), stab:Array(N).fill(0), roundWins:Array(N).fill(0)};
-  rounds.forEach(rc => { if (!rc) return; for (let i = 0; i < N; i++){ tot.win[i] += rc.win[i]; tot.ctp[i] += rc.ctp[i]; tot.ld[i] += rc.ld[i]; tot.snake[i] += rc.snake[i]; tot.total[i] += rc.total[i]; tot.stab[i] += rc.players[i].total; if (rc.win[i]) tot.roundWins[i]++; } });
+  const tot = {win:Array(N).fill(0), ctp:Array(N).fill(0), ld:Array(N).fill(0), snake:Array(N).fill(0), bonus:Array(N).fill(0), total:Array(N).fill(0), stab:Array(N).fill(0), roundWins:Array(N).fill(0)};
+  rounds.forEach(rc => { if (!rc) return; for (let i = 0; i < N; i++){ tot.win[i] += rc.win[i]; tot.ctp[i] += rc.ctp[i]; tot.ld[i] += rc.ld[i]; tot.snake[i] += rc.snake[i]; tot.bonus[i] += rc.bonus[i]; tot.total[i] += rc.total[i]; tot.stab[i] += rc.players[i].total; if (rc.win[i]) tot.roundWins[i]++; } });
   const done = rounds.filter(r => r && r.complete).length, started = rounds.filter(r => r && r.started).length;
   return {m, rounds, tot, done, started};
 }
@@ -773,8 +776,8 @@ function majorView(){
   const M = majorCalc(ui.major), R = roster().players;
   const order = range(0,N-1).sort((a,b) => M.tot.total[b] - M.tot.total[a]);
   const table = `<div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${M.m.snake ? "<th>Snake</th>" : ""}<th>Pts</th></tr>
-    ${order.map(i => `<tr><td class="l"><b>${esc(R[i].name)}</b></td><td>${M.tot.stab[i]}</td><td>${pts(M.tot.win[i])}</td><td>${pts(M.tot.ctp[i])}</td><td>${pts(M.tot.ld[i])}</td>${M.m.snake ? `<td>${snakeCell(M.tot.snake[i])}</td>` : ""}<td class="big">${pts(M.tot.total[i])}</td></tr>`).join("")}
+    <tr><th class="l">Player</th><th>Stab.</th><th>Place</th><th>CTP</th><th>LD</th>${M.m.snake ? "<th>Snake</th>" : ""}${M.tot.bonus.some(Boolean) ? "<th>Bonus</th>" : ""}<th>Pts</th></tr>
+    ${order.map(i => `<tr><td class="l"><b>${esc(R[i].name)}</b></td><td>${M.tot.stab[i]}</td><td>${pts(M.tot.win[i])}</td><td>${pts(M.tot.ctp[i])}</td><td>${pts(M.tot.ld[i])}</td>${M.m.snake ? `<td>${snakeCell(M.tot.snake[i])}</td>` : ""}${M.tot.bonus.some(Boolean) ? `<td>${pts(M.tot.bonus[i])}</td>` : ""}<td class="big">${pts(M.tot.total[i])}</td></tr>`).join("")}
   </table></div>`;
   const rounds = range(1, M.m.roundsCount).map(r => {
     const rc = M.rounds[r-1];
@@ -788,12 +791,13 @@ function majorView(){
     return `<button class="rcard" data-round="${r}"><div><div class="rt">${M.m.roundsCount > 1 ? "Round " + r : "The round"}</div><div class="rs">${line}</div></div>${state}</button>`;
   }).join("");
   const d = formFor("major:" + ui.major, () => ({roundsCount:M.m.roundsCount, allowance:M.m.allowance, tieRule:M.m.tieRule, snake: M.m.snake ? "on" : "off"}));
-  const importCard = ui.major === "summer" && ui.year === 2026 && !Object.values(M.m.rounds).some(r => r && r.manual) ? `<section class="card stack" style="margin-top:14px">
-    <div><b>Add your August 2026 results</b><div class="pinfo">Wakefield, Forest Park, Driffield and The KP: stableford, prizes and the snake for all 4 rounds.</div></div>
+  const imp = IMPORTS[ui.major + "/" + ui.year];
+  const importCard = imp && !Object.values(M.m.rounds).some(r => r && r.manual) ? `<section class="card stack" style="margin-top:14px">
+    <div><b>${esc(imp.title)}</b><div class="pinfo">${esc(imp.blurb)}</div></div>
     ${Object.keys(M.m.rounds).length ? `<p class="note warn" style="margin:0">This replaces the ${Object.keys(M.m.rounds).length} round${Object.keys(M.m.rounds).length > 1 ? "s" : ""} already set up here.</p>` : ""}
-    <div class="actions" style="margin:0"><button class="btn primary" data-act="import-summer26" ${readOnly?"disabled":""}>Add the results</button></div></section>` : "";
+    <div class="actions" style="margin:0"><button class="btn primary" data-act="import-results" ${readOnly?"disabled":""}>Add the results</button></div></section>` : "";
   return `${importCard}<h2>Standings</h2>${table}
-  <p class="note">Place = 5, 3 or 1 points for finishing 1st, 2nd or 3rd on stableford in a round. CTP = closest to the pin on the par 3s. LD = longest drive.${M.m.snake ? " Snake = −1 for finishing a round holding the snake." : ""}</p>
+  <p class="note">Place = 5, 3 or 1 points for finishing 1st, 2nd or 3rd on stableford in a round. CTP = closest to the pin on the par 3s. LD = longest drive.${M.m.snake ? " Snake = −1 for finishing a round holding the snake." : ""}${M.tot.bonus.some(Boolean) ? " Bonus = extra points such as Face Ball." : ""}</p>
   <h2>Rounds</h2><div class="rlist">${rounds}</div>
   ${rollView(ui.major)}
   <h2>Format</h2>
@@ -966,13 +970,14 @@ function manualRoundView(ctx){
   <section class="card ledger">${range(0,N-1).sort((a,b) => rc.players[b].total - rc.players[a].total).map(i => `<div class="row"><div class="pname">${pn(i)}</div><div class="amt num">${rc.players[i].total} pts</div></div>`).join("")}</section>
   <h2>Major points</h2>
   <div class="scroll card" style="padding:6px 10px"><table>
-    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}<th>Round</th></tr>
-    ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
+    <tr><th class="l">Player</th><th>Place</th><th>CTP</th><th>LD</th>${rc.snakeOn ? "<th>Snake</th>" : ""}${rc.bonus.some(Boolean) ? "<th>Bonus</th>" : ""}<th>Round</th></tr>
+    ${order.map(i => `<tr><td class="l"><b>${pn(i)}</b></td><td>${pts(rc.win[i])}</td><td>${pts(rc.ctp[i])}</td><td>${pts(rc.ld[i])}</td>${rc.snakeOn ? `<td>${snakeCell(rc.snake[i])}</td>` : ""}${rc.bonus.some(Boolean) ? `<td>${pts(rc.bonus[i])}</td>` : ""}<td class="big">${pts(rc.total[i])}</td></tr>`).join("")}
   </table></div>
   <h2>Prizes</h2>
   <section class="card ledger">${(mr.ctp || []).map(c => hl(`Closest to the pin, hole ${c.hole}`, "", prizeText(c))).join("")}
     ${mr.ld ? hl(`Longest drive, hole ${mr.ld.hole}`, "", prizeText(mr.ld)) : ""}
-    ${rc.snakeOn ? hl(rc.snakeHolder != null ? `Finished with the snake: ${pn(rc.snakeHolder)}` : "The snake", rc.snakeHolder != null ? "−1 pt" : "Nobody", "") : ""}</section>
+    ${(mr.extras || []).map(e => hl(esc(e.name) + (e.note ? ` <span class="pinfo">(${esc(e.note)})</span>` : ""), "", prizeText(e))).join("")}
+    ${rc.snakeOn ? hl(rc.snakeHolders.length ? `Finished with the snake: ${rc.snakeHolders.map(pn).join(" & ")}` : "The snake", rc.snakeHolders.length ? `−1 pt${rc.snakeHolders.length > 1 ? " each" : ""}` : "Nobody", "") : ""}</section>
   ${ctx && ctx.standings && M.roundsCount > 1 ? `<h2>Standings after this round</h2>
   <section class="card ledger">${range(0,N-1).sort((a,b) => ctx.standings.total[b] - ctx.standings.total[a]).map((i,k) => `<div class="row"><div class="pname">${k+1}. ${pn(i)}</div><div class="amt num">${pts(ctx.standings.total[i])}</div></div>`).join("")}</section>` : ""}
   <p class="note">Added from your results sheet, so there's no hole-by-hole scorecard for this round.</p>`;
@@ -989,20 +994,39 @@ const SUMMER_2026 = [
   {date:"2026-08-14", course:"The KP GC", stab:{Brandy:32, Pete:30, Jonty:26}, place:{Brandy:5, Pete:3, Jonty:1},
     ctp:[{hole:3, pts:{Pete:2}}, {hole:6, pts:{Pete:2, Jonty:1}}, {hole:9, pts:{Jonty:2}}, {hole:15, pts:{}}, {hole:17, pts:{}}], ld:{hole:4, pts:{Pete:2, Brandy:1}}, snake:"Pete"}
 ];
-function importSummer2026(){
-  const path = "majors/2026-summer", cur = clone(docs[path] || {});
-  const rounds = {};
-  SUMMER_2026.forEach((r,k) => { rounds["r"+(k+1)] = {date:r.date, courseId:"", course:{name:r.course, tees:[], holes:[]}, ldHole:r.ld.hole,
-    manual:{stab:r.stab, place:r.place, ctp:r.ctp, ld:r.ld, snake:r.snake}}; });
-  replace(path, Object.assign({allowance:95, tieRule:"split"}, cur, {roundsCount:4, snake:true, rounds}));
+const MASTERS_2026 = [
+  {date:"2026-04-08", course:"Elea GC", stab:{Jonty:23, Brandy:23, Pete:20}, place:{Jonty:5, Brandy:5, Pete:2},
+    ctp:[{hole:3, pts:{}}, {hole:7, pts:{}}, {hole:11, pts:{}}, {hole:14, pts:{Jonty:2}}], ld:{hole:9, pts:{Jonty:2}}, snake:["Pete","Brandy"],
+    extras:[{name:"Face Ball", note:"full round", pts:{Brandy:2}}]},
+  {date:"2026-04-10", course:"Secret Valley GC", stab:{Pete:25, Jonty:24, Brandy:23}, place:{Pete:5, Jonty:3, Brandy:1},
+    ctp:[{hole:4, pts:{}}, {hole:6, pts:{Brandy:2}}, {hole:10, pts:{Jonty:2}}, {hole:14, pts:{Jonty:2, Pete:1}}, {hole:16, pts:{}}], ld:{hole:13, pts:{Pete:2, Jonty:1}}, snake:["Brandy"],
+    extras:[{name:"Face Ball", note:"longest", pts:{Pete:1}}]},
+  {date:"2026-04-11", course:"Aphrodite Hills", stab:{Jonty:25, Brandy:24, Pete:17}, place:{Jonty:5, Brandy:3, Pete:1},
+    ctp:[{hole:5, pts:{}}, {hole:7, pts:{Jonty:2, Pete:1}}, {hole:12, pts:{Brandy:2}}, {hole:15, pts:{}}, {hole:17, pts:{}}], ld:{hole:16, pts:{Brandy:2}}, snake:["Brandy"],
+    extras:[{name:"Face Ball", note:"longest", pts:{Jonty:1}}]},
+  {date:"2026-04-13", course:"Minthis GC", stab:{Pete:26, Brandy:25, Jonty:20}, place:{Pete:5, Brandy:3, Jonty:1},
+    ctp:[{hole:2, pts:{Brandy:2}}, {hole:8, pts:{}}, {hole:13, pts:{Pete:2}}, {hole:15, pts:{Brandy:2}}], ld:{hole:10, pts:{}}, snake:["Brandy","Jonty"],
+    extras:[{name:"Face Ball", note:"longest", pts:{Brandy:1}}]}
+];
+// Results sheets that can be added with one tap, by "major/year"
+const IMPORTS = {
+  "summer/2026": {rounds: SUMMER_2026, title: "Add your August 2026 results", blurb: "Wakefield, Forest Park, Driffield and The KP: stableford, prizes and the snake for all 4 rounds."},
+  "masters/2026": {rounds: MASTERS_2026, country: "Cyprus", title: "Add your Cyprus 2026 results", blurb: "Elea, Secret Valley, Aphrodite Hills and Minthis: stableford, prizes, the snake and Face Ball for all 4 rounds."}
+};
+function importResults(key, year){
+  const set = IMPORTS[key + "/" + year]; if (!set) return;
+  const path = `majors/${year}-${key}`, cur = clone(docs[path] || {}), n = set.rounds.length, rounds = {};
+  set.rounds.forEach((r,k) => { rounds["r"+(k+1)] = {date:r.date, courseId:"", course:{name:r.course, country:set.country || "", tees:[], holes:[]}, ldHole:r.ld.hole,
+    manual:{stab:r.stab, place:r.place, ctp:r.ctp, ld:r.ld, snake:r.snake, extras:r.extras || []}}; });
+  replace(path, Object.assign({allowance:95, tieRule:"split"}, cur, {roundsCount:n, snake:true, rounds}));
   // save each round to Past rounds with the standings as they stood after it
-  const M = getMajor("summer", 2026), run = Array(N).fill(0);
-  for (let r = 1; r <= 4; r++){
+  const M = getMajor(key, year), run = Array(N).fill(0);
+  for (let r = 1; r <= n; r++){
     const rc = roundCalc(M, r); rc.total.forEach((v,i) => run[i] += v);
-    replace(`history/2026-summer-r${r}`, {kind:"stable", major:"summer", year:2026, round:r, date:rc.round.date, course:rc.course.name,
+    replace(`history/${year}-${key}-r${r}`, {kind:"stable", major:key, year, round:r, date:rc.round.date, course:rc.course.name,
       title:`${rc.leaders.map(i => roster().players[i].name).join(" & ")} ${rc.leaders.length > 1 ? "tied" : "won"} with ${rc.players[rc.leaders[0]].total} pts`,
-      majorCfg:{allowance:M.allowance, tieRule:M.tieRule, roundsCount:4, snake:true}, roundDoc:clone(rc.round),
-      players:clone(roster().players), standings:{total:run.slice(), done:r, of:4}, savedAt:Date.now() + r});
+      majorCfg:{allowance:M.allowance, tieRule:M.tieRule, roundsCount:n, snake:true}, roundDoc:clone(rc.round),
+      players:clone(roster().players), standings:{total:run.slice(), done:r, of:n}, savedAt:Date.now() + r});
   }
 }
 
@@ -1394,7 +1418,7 @@ function action(a, t){
     const all = clone(honoursDoc()); if (all[ui.major]) delete all[ui.major][t.dataset.y];
     replace("config/honours", all); return;
   }
-  if (a === "import-summer26"){ importSummer2026(); return; }
+  if (a === "import-results"){ importResults(ui.major, ui.year); return; }
   if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule, snake: d.snake === "on"}); return; }
   if (a === "save-round"){
     const d = clone(form.data); if (!d.course) return;
