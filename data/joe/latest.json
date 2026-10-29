@@ -1,70 +1,30 @@
 {
   "source": "JOE",
-  "week": 526,
-  "title": "JOE.ie - The JOE Friday Pub Quiz: week 526",
-  "description": "Welcome to week 526 of the JOE Friday Pub Quiz!",
-  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-526-887100",
-  "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-22T143256-1024x573.webp",
-  "publishedAt": "2026-10-22T15:57:39.000Z",
-  "fetchedAt": "2026-10-23T07:34:36.713Z",
+  "week": 527,
+  "title": "The JOE Friday Pub Quiz: week 527",
+  "description": "Welcome back to another week’s JOE Friday Pub Quiz!",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-527-887846",
+  "image": "https://assets.joe.ie/uploads/2026/10/527.webp",
+  "publishedAt": "2026-10-29T17:00:00.000Z",
+  "fetchedAt": "2026-10-29T20:16:07.855Z",
   "status": "ok",
   "parser": "embed/wpvq",
   "fetchedVia": "jina",
   "questions": [
     {
-      "q": "Which US city's skyline features this giant sphere?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2159867943-1-scaled.jpg",
+      "q": "Which of the following is NOT a primary colour?",
+      "image": "https://assets.joe.ie/uploads/2026/10/1-2.webp",
       "options": [
         {
-          "text": "Las Vegas",
+          "text": "Red",
           "image": null
         },
         {
-          "text": "Los Angeles",
+          "text": "Blue",
           "image": null
         },
         {
-          "text": "Phoenix",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "How many segments make up a Terry's Chocolate Orange?",
-      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_399092140_Editorial_Use_Only-1-scaled.jpeg",
-      "options": [
-        {
-          "text": "18",
-          "image": null
-        },
-        {
-          "text": "20",
-          "image": null
-        },
-        {
-          "text": "16",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "Abdul El-Sayed is running as the Democratic candidate for senator in which US state?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2273878735-1-scaled.jpg",
-      "options": [
-        {
-          "text": "Texas",
-          "image": null
-        },
-        {
-          "text": "California",
-          "image": null
-        },
-        {
-          "text": "Michigan",
+          "text": "White",
           "image": null
         }
       ],
@@ -72,39 +32,39 @@
       "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "On average, what is the most visited tourist attraction in Europe?",
-      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_33341551-1-scaled.jpeg",
+      "q": "What is the largest species of bird in the world?",
+      "image": "https://assets.joe.ie/uploads/2026/10/2-3.webp",
       "options": [
         {
-          "text": "Palace of Versailles, France",
+          "text": "Emu",
           "image": null
         },
         {
-          "text": "St Peter's Basilica, The Vatican City, Rome",
+          "text": "Albatross",
           "image": null
         },
         {
-          "text": "Sagrada Familia, Barcelona",
+          "text": "Ostrich",
           "image": null
         }
       ],
-      "answer": 1,
+      "answer": 2,
       "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "In the Greek alphabet, what does this symbol represent?",
-      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_1678643676-1-scaled.jpeg",
+      "q": "Which vegetable was originally carved into jack-o'-lanterns in Ireland to ward off evil spirits before being replaced by pumpkins in America?",
+      "image": "https://assets.joe.ie/uploads/2026/10/3-2.png",
       "options": [
         {
-          "text": "Sigma",
+          "text": "Turnip",
           "image": null
         },
         {
-          "text": "Epsilon",
+          "text": "Potato",
           "image": null
         },
         {
-          "text": "Delta",
+          "text": "Cabbage",
           "image": null
         }
       ],
@@ -112,59 +72,59 @@
       "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "Which Premier League stadium has the greatest capacity?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-3-Images-45.webp",
+      "q": "Which US rapper played a gig in Dublin's 3Arena this week in aid of Palestine?",
+      "image": "https://assets.joe.ie/uploads/2026/10/4.png",
       "options": [
         {
-          "text": "Tottenham Hotspur Stadium",
+          "text": "Jack Harlow",
           "image": null
         },
         {
-          "text": "Old Trafford, Man United",
+          "text": "Kendrick Lamar",
           "image": null
         },
         {
-          "text": "Hill Dickinson Stadium, Everton",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "What is the only sport that has been played on the surface of the moon?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2269650026-1-scaled.jpg",
-      "options": [
-        {
-          "text": "Baseball",
-          "image": null
-        },
-        {
-          "text": "Hurling",
-          "image": null
-        },
-        {
-          "text": "Golf",
+          "text": "Macklemore",
           "image": null
         }
       ],
       "answer": 2,
-      "category": "ROUND 2: Sport"
+      "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "Which country has won the Women's Rugby World Cup the most times?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-3-Images-44.webp",
+      "q": "In which European city is this landmark located?",
+      "image": "https://assets.joe.ie/uploads/2026/10/5-1.webp",
       "options": [
         {
-          "text": "New Zealand",
+          "text": "Paris",
           "image": null
         },
         {
-          "text": "USA",
+          "text": "Rome",
           "image": null
         },
         {
-          "text": "England",
+          "text": "Madrid",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "On Tuesday night, Arsenal lost to Fleetwood Town in the EFL Cup. What famous English Stadium does the Cod Army's ground share its name with?",
+      "image": "https://assets.joe.ie/uploads/2026/10/6-2.webp",
+      "options": [
+        {
+          "text": "Highbury",
+          "image": null
+        },
+        {
+          "text": "Goodison",
+          "image": null
+        },
+        {
+          "text": "Anfield",
           "image": null
         }
       ],
@@ -172,19 +132,59 @@
       "category": "ROUND 2: Sport"
     },
     {
-      "q": "This Barcelona rising star scored a brilliant goal in his side’s midweek defeat to PSG, but which club legend does he share his first name with?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2292983696-1-scaled.jpg",
+      "q": "Who was the first English player to win the Ballon d'Or?",
+      "image": "https://assets.joe.ie/uploads/2026/10/7-2.webp",
       "options": [
         {
-          "text": "Lionel Messi",
+          "text": "Bobby Charlton",
           "image": null
         },
         {
-          "text": "Andres Iniesta",
+          "text": "Stanley Matthews",
           "image": null
         },
         {
-          "text": "Xavi Hernandez",
+          "text": "Kevin Keegan",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "What is this South African cricketer called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/8-2.webp",
+      "options": [
+        {
+          "text": "Kagiso Rabada",
+          "image": null
+        },
+        {
+          "text": "Temba Bavuma",
+          "image": null
+        },
+        {
+          "text": "Hashim Amla",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which of tennis' Grand Slam tournaments takes place the earliest in the year?",
+      "image": "https://assets.joe.ie/uploads/2026/10/9.jpg",
+      "options": [
+        {
+          "text": "US Open",
+          "image": null
+        },
+        {
+          "text": "French Open",
+          "image": null
+        },
+        {
+          "text": "Australian Open",
           "image": null
         }
       ],
@@ -192,59 +192,39 @@
       "category": "ROUND 2: Sport"
     },
     {
-      "q": "At which Olympic Games did Katie Taylor win a gold medal?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2224728387-scaled.jpg",
+      "q": "Which Spanish city are Troy Parrott's new team, Real Betis, from?",
+      "image": "https://assets.joe.ie/uploads/2026/10/10-1.png",
       "options": [
         {
-          "text": "Beijing 2008",
+          "text": "Madrid",
           "image": null
         },
         {
-          "text": "Rio 2016",
+          "text": "Seville",
           "image": null
         },
         {
-          "text": "London 2012",
+          "text": "Bilbao",
           "image": null
         }
       ],
-      "answer": 2,
+      "answer": 1,
       "category": "ROUND 2: Sport"
     },
     {
-      "q": "Which Coldplay album cover makes use of this iconic French revolution painting?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-463896375-1-scaled.jpg",
+      "q": "Which former Little Mix member's solo track went viral after Kylie Jenner walked to it during the Victoria's Secret Fashion Show?",
+      "image": "https://assets.joe.ie/uploads/2026/10/11-2.png",
       "options": [
         {
-          "text": "Music of the Spheres",
+          "text": "Perrie",
           "image": null
         },
         {
-          "text": "Viva la Vida or Death and All His Friends",
+          "text": "Leigh-Anne",
           "image": null
         },
         {
-          "text": "A Rush of Blood to the Head",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "Who wrote the classic 1952 novel East of Eden, which was recently adapted into a Netflix series?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-21-at-15.46.01.png",
-      "options": [
-        {
-          "text": "Ernest Hemingway",
-          "image": null
-        },
-        {
-          "text": "Tennessee Williams",
-          "image": null
-        },
-        {
-          "text": "John Steinbeck",
+          "text": "JADE",
           "image": null
         }
       ],
@@ -252,19 +232,19 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "Which of these Sam Fender songs has been streamed the most times on Spotify?",
-      "image": "https://assets.joe.ie/uploads/2026/10/GettyImages-2229148687-1-scaled.jpg",
+      "q": "Before Amazon Prime and Disney+ came along, Netflix had a rival best known for its DVD rental service. From the logo below, what was the company called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/12-3.webp",
       "options": [
         {
-          "text": "Spit of You",
+          "text": "FindFilm",
           "image": null
         },
         {
-          "text": "Hypersonic Missiles",
+          "text": "LoveFilm",
           "image": null
         },
         {
-          "text": "People Watching",
+          "text": "BorrowFilm",
           "image": null
         }
       ],
@@ -272,19 +252,19 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "In 2011, US channel MTV launched an American version of cult E4 show Skins. For how long did it air?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-21T162738.138.webp",
+      "q": "Which Irish artist/group currently has the most monthly listeners on Spotify?",
+      "image": "https://assets.joe.ie/uploads/2026/10/13-3.webp",
       "options": [
         {
-          "text": "1 season",
+          "text": "Hozier",
           "image": null
         },
         {
-          "text": "2 seasons",
+          "text": "The Cranberries",
           "image": null
         },
         {
-          "text": "It was axed after the pilot episode",
+          "text": "The Script",
           "image": null
         }
       ],
@@ -292,19 +272,39 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "In The Fresh Prince of Bel-Air, before moving to LA, where was Will Smith's character \"born and raised?\"",
-      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-22-at-12.04.05.png",
+      "q": "What was the first movie that Dwayne Johnson ever appeared in?",
+      "image": "https://assets.joe.ie/uploads/2026/10/14-3.webp",
       "options": [
         {
-          "text": "West Philadelphia",
+          "text": "Race to Witch Mountain",
           "image": null
         },
         {
-          "text": "The Bronx, New York",
+          "text": "Tooth Fairy",
           "image": null
         },
         {
-          "text": "West Chicago",
+          "text": "The Mummy Returns",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Voiced by Paul Bettany in the Iron Man films, what is the name of Tony Stark’s virtual butler, who communicates with him through his helmet?",
+      "image": "https://assets.joe.ie/uploads/2026/10/15-3.webp",
+      "options": [
+        {
+          "text": "J.A.R.V.I.S.",
+          "image": null
+        },
+        {
+          "text": "J.E.E.V.E.S.",
+          "image": null
+        },
+        {
+          "text": "V.I.S.I.O.N.",
           "image": null
         }
       ],
@@ -312,204 +312,184 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "What type of creature is Mr. Tumnus?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-19-at-17.07.29.png",
+      "q": "In this round, we’ll show you two VERY similar flags from different places. Simply identify flags A and B and match each one to the correct place! Below we've presented the flags for Texas and Chile, but which one is the flag for Texas?",
+      "image": "https://assets.joe.ie/uploads/2026/10/16-2.webp",
       "options": [
         {
-          "text": "A Faun",
+          "text": "B",
           "image": null
         },
         {
-          "text": "A Minotaur",
-          "image": null
-        },
-        {
-          "text": "A Centaur",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 4: Narnia"
-    },
-    {
-      "q": "In The Lion, The Witch, and The Wardrobe, what last name do the four siblings, Lucy, Edmund, Susan, and Peter, all share?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Screenshot-2026-10-20-at-13.39.33.webp",
-      "options": [
-        {
-          "text": "Lewis",
-          "image": null
-        },
-        {
-          "text": "Pevensie",
-          "image": null
-        },
-        {
-          "text": "Darling",
+          "text": "A",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 4: Narnia"
+      "category": "ROUND 4: Surprisingly Similar Flags"
     },
     {
-      "q": "For what reason do Lucy, Edmund, Susan, and Peter go to live at the Old Professor’s house in The Lion, the Witch and the Wardrobe?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-20T134502.758.webp",
+      "q": "Below we have the flags for Poland and Indonesia. So, which one is Indonesia?",
+      "image": "https://assets.joe.ie/uploads/2026/10/17-3.webp",
       "options": [
         {
-          "text": "They are evacuated from London during the Second World War",
+          "text": "A",
           "image": null
         },
         {
-          "text": "They are invited to stay while their parents travel abroad",
-          "image": null
-        },
-        {
-          "text": "Their parents send them away to attend a boarding school in the countryside",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 4: Narnia"
-    },
-    {
-      "q": "What sweet treat does the White Witch use to tempt Edmund into betraying his family and Aslan?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-19T172639.145.webp",
-      "options": [
-        {
-          "text": "Sherbet Lemons",
-          "image": null
-        },
-        {
-          "text": "Liquorice Allsorts",
-          "image": null
-        },
-        {
-          "text": "Turkish Delight",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 4: Narnia"
-    },
-    {
-      "q": "Set for release next year, what is Greta Gerwig's upcoming Narnia movie called?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-20T133137.322.webp",
-      "options": [
-        {
-          "text": "Narnia: The Sorcerer's Cousin",
-          "image": null
-        },
-        {
-          "text": "Narnia: The Wizard's Niece",
-          "image": null
-        },
-        {
-          "text": "Narnia: The Magician's Nephew",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 4: Narnia"
-    },
-    {
-      "q": "Which country does this parliament building belong to?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-Full-Bleed-2026-10-22T125702.256.png",
-      "options": [
-        {
-          "text": "The Netherlands",
-          "image": null
-        },
-        {
-          "text": "France",
-          "image": null
-        },
-        {
-          "text": "Germany",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: Global Governments"
-    },
-    {
-      "q": "This building hosts the seat of government for which country?",
-      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_129192732-1-scaled.jpeg",
-      "options": [
-        {
-          "text": "Poland",
-          "image": null
-        },
-        {
-          "text": "Türkiye",
-          "image": null
-        },
-        {
-          "text": "Russia",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: Global Governments"
-    },
-    {
-      "q": "This parliament building belongs to which country?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-22T130635.760.webp",
-      "options": [
-        {
-          "text": "Scotland",
-          "image": null
-        },
-        {
-          "text": "Ireland",
-          "image": null
-        },
-        {
-          "text": "Wales",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 5: Global Governments"
-    },
-    {
-      "q": "This parliament building belongs to which country?",
-      "image": "https://assets.joe.ie/uploads/2026/10/Website-Image-2-Images-2026-10-22T132222.688.webp",
-      "options": [
-        {
-          "text": "Japan",
-          "image": null
-        },
-        {
-          "text": "China",
-          "image": null
-        },
-        {
-          "text": "South Korea",
+          "text": "B",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 5: Global Governments"
+      "category": "ROUND 4: Surprisingly Similar Flags"
     },
     {
-      "q": "This parliament building belongs to which country?",
-      "image": "https://assets.joe.ie/uploads/2026/10/AdobeStock_1998087217-1-scaled.jpeg",
+      "q": "We’re heading across Europe to the Benelux region! Located either above or below the Netherlands, which of these two similar flags belongs to Luxembourg?",
+      "image": "https://assets.joe.ie/uploads/2026/10/18-2.webp",
       "options": [
         {
-          "text": "Serbia",
+          "text": "A",
           "image": null
         },
         {
-          "text": "Hungary",
-          "image": null
-        },
-        {
-          "text": "Czech Republic",
+          "text": "B",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 5: Global Governments"
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "Here we have the flags for Venezuela and Ecuador, so which is the Venezuelan flag?",
+      "image": "https://assets.joe.ie/uploads/2026/10/19-2.webp",
+      "options": [
+        {
+          "text": "B",
+          "image": null
+        },
+        {
+          "text": "A",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "Which of these is the flag for New Zealand?",
+      "image": "https://assets.joe.ie/uploads/2026/10/20-2.webp",
+      "options": [
+        {
+          "text": "A",
+          "image": null
+        },
+        {
+          "text": "B",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/21-3.webp",
+      "options": [
+        {
+          "text": "Shiba Inu",
+          "image": null
+        },
+        {
+          "text": "Chow Chow",
+          "image": null
+        },
+        {
+          "text": "Corgi",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/22-3.webp",
+      "options": [
+        {
+          "text": "Newfoundland",
+          "image": null
+        },
+        {
+          "text": "Schnauzer",
+          "image": null
+        },
+        {
+          "text": "Labradoodle",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/23-3.webp",
+      "options": [
+        {
+          "text": "Shih Tzu",
+          "image": null
+        },
+        {
+          "text": "Pomeranian",
+          "image": null
+        },
+        {
+          "text": "Bichon Frise",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/24-3.webp",
+      "options": [
+        {
+          "text": "Rottweiler",
+          "image": null
+        },
+        {
+          "text": "German Shepard",
+          "image": null
+        },
+        {
+          "text": "Bernese Mountain Dog",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/25-2.webp",
+      "options": [
+        {
+          "text": "Old English Sheepdog",
+          "image": null
+        },
+        {
+          "text": "Saint Bernard",
+          "image": null
+        },
+        {
+          "text": "Bearded Collie",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Dogs"
     }
   ]
 }

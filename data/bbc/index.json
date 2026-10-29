@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-10-26T14:35:52.969Z",
+  "updatedAt": "2026-10-29T20:16:40.228Z",
   "quizzes": [
+    {
+      "id": "cm15jdj7xzj5o",
+      "url": "https://www.bbc.co.uk/news/articles/cm15jdj7xzj5o",
+      "title": "BBC News quiz of the week: What was wrong with the Spotify listing of Dolly Parton's Jolene?",
+      "description": "How much attention did you pay to what happened in the world over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/8cd5/live/f5553330-d3bc-11f1-b441-2b33b063138f.jpg",
+      "publishedAt": "2026-10-29T17:46:50.734Z"
+    },
     {
       "id": "cmx2qpj72znwo",
       "url": "https://www.bbc.co.uk/news/articles/cmx2qpj72znwo",
@@ -170,15 +178,6 @@
       "description": "How much attention did you pay to what happened in the world over the past seven days?",
       "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1cdf/live/106a0a30-6bba-11f1-8e1d-bbbb1017d210.jpg",
       "publishedAt": "2026-06-18T17:24:31.217Z",
-      "hasRiddle": true
-    },
-    {
-      "id": "cwyexxd3378o",
-      "url": "https://www.bbc.co.uk/news/articles/cwyexxd3378o",
-      "title": "BBC News quiz of the week: Which Sesame Street character got in trouble with New Yorkers?",
-      "description": "How much attention did you pay to what happened in the world over the past seven days?",
-      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/2b9b/live/e048efa0-664c-11f1-8e1d-bbbb1017d210.jpg",
-      "publishedAt": "2026-06-11T16:46:56.539Z",
       "hasRiddle": true
     }
   ]

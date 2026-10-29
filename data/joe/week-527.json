@@ -1,0 +1,495 @@
+{
+  "source": "JOE",
+  "week": 527,
+  "title": "The JOE Friday Pub Quiz: week 527",
+  "description": "Welcome back to another week’s JOE Friday Pub Quiz!",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-527-887846",
+  "image": "https://assets.joe.ie/uploads/2026/10/527.webp",
+  "publishedAt": "2026-10-29T17:00:00.000Z",
+  "fetchedAt": "2026-10-29T20:16:07.855Z",
+  "status": "ok",
+  "parser": "embed/wpvq",
+  "fetchedVia": "jina",
+  "questions": [
+    {
+      "q": "Which of the following is NOT a primary colour?",
+      "image": "https://assets.joe.ie/uploads/2026/10/1-2.webp",
+      "options": [
+        {
+          "text": "Red",
+          "image": null
+        },
+        {
+          "text": "Blue",
+          "image": null
+        },
+        {
+          "text": "White",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the largest species of bird in the world?",
+      "image": "https://assets.joe.ie/uploads/2026/10/2-3.webp",
+      "options": [
+        {
+          "text": "Emu",
+          "image": null
+        },
+        {
+          "text": "Albatross",
+          "image": null
+        },
+        {
+          "text": "Ostrich",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Which vegetable was originally carved into jack-o'-lanterns in Ireland to ward off evil spirits before being replaced by pumpkins in America?",
+      "image": "https://assets.joe.ie/uploads/2026/10/3-2.png",
+      "options": [
+        {
+          "text": "Turnip",
+          "image": null
+        },
+        {
+          "text": "Potato",
+          "image": null
+        },
+        {
+          "text": "Cabbage",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Which US rapper played a gig in Dublin's 3Arena this week in aid of Palestine?",
+      "image": "https://assets.joe.ie/uploads/2026/10/4.png",
+      "options": [
+        {
+          "text": "Jack Harlow",
+          "image": null
+        },
+        {
+          "text": "Kendrick Lamar",
+          "image": null
+        },
+        {
+          "text": "Macklemore",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "In which European city is this landmark located?",
+      "image": "https://assets.joe.ie/uploads/2026/10/5-1.webp",
+      "options": [
+        {
+          "text": "Paris",
+          "image": null
+        },
+        {
+          "text": "Rome",
+          "image": null
+        },
+        {
+          "text": "Madrid",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "On Tuesday night, Arsenal lost to Fleetwood Town in the EFL Cup. What famous English Stadium does the Cod Army's ground share its name with?",
+      "image": "https://assets.joe.ie/uploads/2026/10/6-2.webp",
+      "options": [
+        {
+          "text": "Highbury",
+          "image": null
+        },
+        {
+          "text": "Goodison",
+          "image": null
+        },
+        {
+          "text": "Anfield",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Who was the first English player to win the Ballon d'Or?",
+      "image": "https://assets.joe.ie/uploads/2026/10/7-2.webp",
+      "options": [
+        {
+          "text": "Bobby Charlton",
+          "image": null
+        },
+        {
+          "text": "Stanley Matthews",
+          "image": null
+        },
+        {
+          "text": "Kevin Keegan",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "What is this South African cricketer called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/8-2.webp",
+      "options": [
+        {
+          "text": "Kagiso Rabada",
+          "image": null
+        },
+        {
+          "text": "Temba Bavuma",
+          "image": null
+        },
+        {
+          "text": "Hashim Amla",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which of tennis' Grand Slam tournaments takes place the earliest in the year?",
+      "image": "https://assets.joe.ie/uploads/2026/10/9.jpg",
+      "options": [
+        {
+          "text": "US Open",
+          "image": null
+        },
+        {
+          "text": "French Open",
+          "image": null
+        },
+        {
+          "text": "Australian Open",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which Spanish city are Troy Parrott's new team, Real Betis, from?",
+      "image": "https://assets.joe.ie/uploads/2026/10/10-1.png",
+      "options": [
+        {
+          "text": "Madrid",
+          "image": null
+        },
+        {
+          "text": "Seville",
+          "image": null
+        },
+        {
+          "text": "Bilbao",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which former Little Mix member's solo track went viral after Kylie Jenner walked to it during the Victoria's Secret Fashion Show?",
+      "image": "https://assets.joe.ie/uploads/2026/10/11-2.png",
+      "options": [
+        {
+          "text": "Perrie",
+          "image": null
+        },
+        {
+          "text": "Leigh-Anne",
+          "image": null
+        },
+        {
+          "text": "JADE",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Before Amazon Prime and Disney+ came along, Netflix had a rival best known for its DVD rental service. From the logo below, what was the company called?",
+      "image": "https://assets.joe.ie/uploads/2026/10/12-3.webp",
+      "options": [
+        {
+          "text": "FindFilm",
+          "image": null
+        },
+        {
+          "text": "LoveFilm",
+          "image": null
+        },
+        {
+          "text": "BorrowFilm",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which Irish artist/group currently has the most monthly listeners on Spotify?",
+      "image": "https://assets.joe.ie/uploads/2026/10/13-3.webp",
+      "options": [
+        {
+          "text": "Hozier",
+          "image": null
+        },
+        {
+          "text": "The Cranberries",
+          "image": null
+        },
+        {
+          "text": "The Script",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "What was the first movie that Dwayne Johnson ever appeared in?",
+      "image": "https://assets.joe.ie/uploads/2026/10/14-3.webp",
+      "options": [
+        {
+          "text": "Race to Witch Mountain",
+          "image": null
+        },
+        {
+          "text": "Tooth Fairy",
+          "image": null
+        },
+        {
+          "text": "The Mummy Returns",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Voiced by Paul Bettany in the Iron Man films, what is the name of Tony Stark’s virtual butler, who communicates with him through his helmet?",
+      "image": "https://assets.joe.ie/uploads/2026/10/15-3.webp",
+      "options": [
+        {
+          "text": "J.A.R.V.I.S.",
+          "image": null
+        },
+        {
+          "text": "J.E.E.V.E.S.",
+          "image": null
+        },
+        {
+          "text": "V.I.S.I.O.N.",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "In this round, we’ll show you two VERY similar flags from different places. Simply identify flags A and B and match each one to the correct place! Below we've presented the flags for Texas and Chile, but which one is the flag for Texas?",
+      "image": "https://assets.joe.ie/uploads/2026/10/16-2.webp",
+      "options": [
+        {
+          "text": "B",
+          "image": null
+        },
+        {
+          "text": "A",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "Below we have the flags for Poland and Indonesia. So, which one is Indonesia?",
+      "image": "https://assets.joe.ie/uploads/2026/10/17-3.webp",
+      "options": [
+        {
+          "text": "A",
+          "image": null
+        },
+        {
+          "text": "B",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "We’re heading across Europe to the Benelux region! Located either above or below the Netherlands, which of these two similar flags belongs to Luxembourg?",
+      "image": "https://assets.joe.ie/uploads/2026/10/18-2.webp",
+      "options": [
+        {
+          "text": "A",
+          "image": null
+        },
+        {
+          "text": "B",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "Here we have the flags for Venezuela and Ecuador, so which is the Venezuelan flag?",
+      "image": "https://assets.joe.ie/uploads/2026/10/19-2.webp",
+      "options": [
+        {
+          "text": "B",
+          "image": null
+        },
+        {
+          "text": "A",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "Which of these is the flag for New Zealand?",
+      "image": "https://assets.joe.ie/uploads/2026/10/20-2.webp",
+      "options": [
+        {
+          "text": "A",
+          "image": null
+        },
+        {
+          "text": "B",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Surprisingly Similar Flags"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/21-3.webp",
+      "options": [
+        {
+          "text": "Shiba Inu",
+          "image": null
+        },
+        {
+          "text": "Chow Chow",
+          "image": null
+        },
+        {
+          "text": "Corgi",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/22-3.webp",
+      "options": [
+        {
+          "text": "Newfoundland",
+          "image": null
+        },
+        {
+          "text": "Schnauzer",
+          "image": null
+        },
+        {
+          "text": "Labradoodle",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/23-3.webp",
+      "options": [
+        {
+          "text": "Shih Tzu",
+          "image": null
+        },
+        {
+          "text": "Pomeranian",
+          "image": null
+        },
+        {
+          "text": "Bichon Frise",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/24-3.webp",
+      "options": [
+        {
+          "text": "Rottweiler",
+          "image": null
+        },
+        {
+          "text": "German Shepard",
+          "image": null
+        },
+        {
+          "text": "Bernese Mountain Dog",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Dogs"
+    },
+    {
+      "q": "What breed of dog is this?",
+      "image": "https://assets.joe.ie/uploads/2026/10/25-2.webp",
+      "options": [
+        {
+          "text": "Old English Sheepdog",
+          "image": null
+        },
+        {
+          "text": "Saint Bernard",
+          "image": null
+        },
+        {
+          "text": "Bearded Collie",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Dogs"
+    }
+  ]
+}
