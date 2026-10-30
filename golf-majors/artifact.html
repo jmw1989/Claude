@@ -657,6 +657,28 @@ function playersView(){
 }
 
 /* ---------- Courses ---------- */
+/* ---------- Ready-made courses (from published scorecards; check against the card on the day) ---------- */
+function nine(pars, sis){ return pars.map((par,k) => ({par, si: sis[k]})); }
+// Cornelia's Faldo course is three nines: King = A + B, Queen = B + C, Prince = C + A
+const CORN_A = [4,5,3,4,5,3,4,4,4], CORN_B = [4,5,3,4,3,4,5,4,4], CORN_C = [4,4,3,4,5,4,3,5,4];
+const PRESET_COURSES = [
+  {id:"pga-sultan", name:"PGA Sultan (Antalya GC)", country:"Turkey",
+    note:"Stroke indexes are from third-party scorecards and the club's own card may differ, so check them on the day.",
+    tees:[{name:"Black", rating:73.9, slope:142, par:72}, {name:"Yellow", rating:71.4, slope:135, par:72}],
+    holes: nine([4,3,5,4,4,3,5,3,4], [5,17,15,1,7,11,3,13,9]).concat(nine([4,4,5,4,4,4,5,3,4], [16,12,2,10,4,14,6,18,8]))},
+  {id:"cornelia-king", name:"Cornelia Faldo – King", country:"Turkey",
+    tees:[{name:"Black", rating:74.8, slope:147, par:72}, {name:"White", rating:72.0, slope:142, par:72}, {name:"Yellow", rating:69.8, slope:129, par:72}, {name:"Red (ladies)", rating:71.6, slope:131, par:72}],
+    holes: nine(CORN_A, [7,2,12,10,4,17,15,5,13]).concat(nine(CORN_B, [8,1,18,14,16,11,9,6,3]))},
+  {id:"cornelia-queen", name:"Cornelia Faldo – Queen", country:"Turkey",
+    note:"Published stroke indexes for the Queen differ between sources, so check them on the day.",
+    tees:[{name:"Black", rating:74.2, slope:146, par:72}, {name:"White", rating:71.9, slope:138, par:72}, {name:"Yellow", rating:69.8, slope:130, par:72}],
+    holes: nine(CORN_B, [8,1,17,13,15,12,9,6,3]).concat(nine(CORN_C, [16,4,18,11,5,7,14,10,2]))},
+  {id:"cornelia-prince", name:"Cornelia Faldo – Prince", country:"Turkey",
+    note:"Published stroke indexes for the Prince differ between sources, so check them on the day.",
+    tees:[{name:"Black", rating:74.1, slope:146, par:72}, {name:"White", rating:71.1, slope:146, par:72}, {name:"Yellow", rating:69.2, slope:127, par:72}],
+    holes: nine(CORN_C, [15,3,17,11,5,7,13,9,1]).concat(nine(CORN_A, [8,2,12,10,4,18,16,6,14]))}
+];
+function presetsToAdd(){ const have = new Set(courses().map(c => c.id)); return PRESET_COURSES.filter(p => !have.has(p.id)); }
 function coursesView(){
   const cs = courses();
   const list = cs.length ? cs.map(c => {
@@ -665,7 +687,11 @@ function coursesView(){
       <div class="rs">${esc(c.country || "")}${c.country ? " · " : ""}Par ${par} · ${p3} par 3s · ${c.tees.map(t => esc(t.name)).join(", ")}</div></div><span class="go">›</span></button>`;
   }).join("") : `<div class="card empty"><b>No courses yet</b>Add each course once and pick it when you set up a round.</div>`;
   const key = integrations().golfCourseApiKey || "";
+  const presets = presetsToAdd();
   return `<h2>Courses</h2><div class="rlist">${list}</div>
+  ${presets.length ? `<h2>Ready-made courses</h2><div class="rlist">${presets.map(p => `<div class="rcard"><div><div class="rt" style="font-size:18px">${esc(p.name)}</div>
+    <div class="rs">${esc(p.country)} · Par ${sum(p.holes.map(h => h.par))} · ${p.tees.map(t => esc(t.name)).join(", ")}</div>${p.note ? `<div class="rs" style="color:var(--carry)">${esc(p.note)}</div>` : ""}</div>
+    <button class="btn small primary" data-act="add-preset" data-id="${p.id}" ${readOnly?"disabled":""}>Add</button></div>`).join("")}</div>` : ""}
   <div class="actions"><button class="btn primary" data-act="new-course" ${readOnly?"disabled":""}>Add a course</button></div>
   ${canSearch() ? `<h2>Course search</h2>
   <section class="card stack">
@@ -1607,6 +1633,8 @@ function action(a, t){
     if (!n){ $("rulename").focus(); return; } if (!(amt > 0)){ $("ruleamt").focus(); return; }
     write("config/fines", {startDate: finesCfg().startDate || todayISO(), rules: finesCfg().rules.concat({id: slug(n), name: n, amount: amt})}); return; }
   if (a === "rule-del"){ write("config/fines", {startDate: finesCfg().startDate || todayISO(), rules: finesCfg().rules.filter(r => r.id !== t.dataset.id)}); return; }
+  if (a === "add-preset"){ const pc = PRESET_COURSES.find(x => x.id === t.dataset.id); if (!pc) return;
+    replace("courses/" + pc.id, {name:pc.name, country:pc.country, tees:clone(pc.tees), holes:clone(pc.holes), note: pc.note || ""}); return; }
   if (a === "import-results"){ importResults(ui.major, ui.year); return; }
   if (a === "save-major"){ const d = form.data; form.dirty = false; write(majorPath(ui.major), {roundsCount:+d.roundsCount, allowance:+d.allowance, tieRule:d.tieRule, snake: d.snake === "on", faceBall: d.faceBall === "on"}); return; }
   if (a === "save-round"){
