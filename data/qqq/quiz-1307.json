@@ -1,0 +1,88 @@
+{
+  "source": "QuizQuizQuiz",
+  "url": "https://quizquizquiz.com/friday/",
+  "fetchedAt": "2026-10-30T11:31:08.408Z",
+  "fetchedVia": "jina",
+  "title": "The QuizQuizQuiz Friday Quiz, 30th October 2026",
+  "quizId": "1307",
+  "submitUrl": "https://quizquizquiz.com/friday/submit",
+  "hidden": {
+    "quiz_id": "1307",
+    "email": "",
+    "key": "",
+    "time-taken": "0"
+  },
+  "questions": [
+    {
+      "number": 1,
+      "q": "What name was most common for kings of France?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-1-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "q": "In 2026, who succeeded Prue Leith as a judge on 'The Great British Bake Off'?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-2-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "q": "Who completed the 2026 Great North Run in 1 hour 57 minutes and 34 seconds?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-3-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "q": "The name of which beloved cartoon character was apparently inspired by producer Fred Silverman hearing Frank Sinatra's improvised scat singing over the outro of 'Strangers in the Night'?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-4-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "q": "Give the final word of the titles of five of the six Peter Jackson-directed \"Middle Earth\" films.",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-5-0",
+          "label": "Peter Jackson Middle Earth title final word 1"
+        },
+        {
+          "name": "answer-5-1",
+          "label": "Peter Jackson Middle Earth title final word 2"
+        },
+        {
+          "name": "answer-5-2",
+          "label": "Peter Jackson Middle Earth title final word 3"
+        },
+        {
+          "name": "answer-5-3",
+          "label": "Peter Jackson Middle Earth title final word 4"
+        },
+        {
+          "name": "answer-5-4",
+          "label": "Peter Jackson Middle Earth title final word 5"
+        }
+      ]
+    }
+  ]
+}

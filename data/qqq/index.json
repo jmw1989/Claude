@@ -1,6 +1,12 @@
 {
   "quizzes": [
     {
+      "quizId": "1307",
+      "title": "The QuizQuizQuiz Friday Quiz, 30th October 2026",
+      "file": "quiz-1307.json",
+      "count": 5
+    },
+    {
       "quizId": "1305",
       "title": "The QuizQuizQuiz Friday Quiz, 23rd October 2026",
       "file": "quiz-1305.json",
@@ -13,5 +19,5 @@
       "count": 5
     }
   ],
-  "updatedAt": "2026-10-23T07:35:16.924Z"
+  "updatedAt": "2026-10-30T11:31:08.408Z"
 }
