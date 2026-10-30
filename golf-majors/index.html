@@ -687,6 +687,10 @@ const PRESET_COURSES = [
     note:"Stroke indexes are from third-party scorecards and the club's own card may differ, so check them on the day.",
     tees:[{name:"Black", rating:73.9, slope:142, par:72}, {name:"Yellow", rating:71.4, slope:135, par:72}],
     holes: nine([4,3,5,4,4,3,5,3,4], [5,17,15,1,7,11,3,13,9]).concat(nine([4,4,5,4,4,4,5,3,4], [16,12,2,10,4,14,6,18,8]))},
+  {id:"pasha", name:"Pasha (Antalya GC)", country:"Turkey",
+    note:"Published ratings and slopes differ between sources, so check them against the card on the day.",
+    tees:[{name:"White", rating:69.8, slope:130, par:72}, {name:"Gold", rating:67.7, slope:123, par:72}],
+    holes: nine([4,3,4,4,3,5,3,5,4], [7,17,13,9,11,3,15,5,1]).concat(nine([5,4,4,5,4,4,4,3,4], [6,14,16,4,12,2,8,18,10]))},
   {id:"cornelia-king", name:"Cornelia Faldo – King", country:"Turkey",
     tees:[{name:"Black", rating:74.8, slope:147, par:72}, {name:"White", rating:72.0, slope:142, par:72}, {name:"Yellow", rating:69.8, slope:129, par:72}, {name:"Red (ladies)", rating:71.6, slope:131, par:72}],
     holes: nine(CORN_A, [7,2,12,10,4,17,15,5,13]).concat(nine(CORN_B, [8,1,18,14,16,11,9,6,3]))},
@@ -1774,7 +1778,7 @@ try { if (navigator.wakeLock) document.addEventListener("click", () => navigator
   </div>
 </div>
 <script>
-const APP_VERSION = '25';
+const APP_VERSION = '26';
 (function () {
   const club = window.majorsClub;
   if (!club) return;
