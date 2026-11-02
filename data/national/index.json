@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-10-31T10:27:50.640Z",
+  "updatedAt": "2026-11-02T12:52:29.719Z",
   "quizzes": [
+    {
+      "id": "sport-quiz-of-the-week-november-2-2026",
+      "url": "https://www.thenationalnews.com/sport/2026/11/02/sport-quiz-of-the-week-november-2-2026/",
+      "title": "Sport quiz of the week: November 2, 2026",
+      "description": "Test your knowledge of what happened over the past few days in the world of sport",
+      "image": "https://www.thenationalnews.com/resizer/v2/RQPHLI7QINA5PF6V26BTENQ4MU.png?auth=90a5df0c05ed4374d0a302ea90002e3997edc383e09f13887afaa6b820d6a478&smart=true&width=1200&height=630",
+      "publishedAt": "2026-11-02T08:18:28.413Z"
+    },
     {
       "id": "sport-quiz-of-the-week-october-26-2026",
       "url": "https://www.thenationalnews.com/sport/2026/10/26/sport-quiz-of-the-week-october-26-2026/",
