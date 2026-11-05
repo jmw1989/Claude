@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-02T12:52:28.548Z",
+  "updatedAt": "2026-11-05T20:19:50.820Z",
   "quizzes": [
+    {
+      "id": "ckjwe57n45lxo",
+      "url": "https://www.bbc.co.uk/sport/articles/ckjwe57n45lxo",
+      "title": "BBC Sport weekly quiz: Who scored twice for Man Utd against Roma?",
+      "description": "How much attention have you paid to what's happened in the world of sport over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/9b93/live/2d6eac30-d87f-11f1-93e1-3b657b665bcf.png",
+      "publishedAt": "2026-11-05T09:35:34.645Z"
+    },
     {
       "id": "cmrly1jy31p1o",
       "url": "https://www.bbc.co.uk/sport/articles/cmrly1jy31p1o",

@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-02T12:52:28.143Z",
+  "updatedAt": "2026-11-05T20:19:50.694Z",
   "quizzes": [
+    {
+      "id": "cqy0rzz0w9wlo",
+      "url": "https://www.bbc.co.uk/news/articles/cqy0rzz0w9wlo",
+      "title": "BBC News quiz of the week: How did Rice Krispies lose their snap, crackle and pop?",
+      "description": "How much attention did you pay to what happened in the world over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/17d2/live/05939b50-d940-11f1-b441-2b33b063138f.jpg",
+      "publishedAt": "2026-11-05T19:38:58.213Z"
+    },
     {
       "id": "cm15jdj7xzj5o",
       "url": "https://www.bbc.co.uk/news/articles/cm15jdj7xzj5o",
@@ -169,15 +177,6 @@
       "description": "How much attention did you pay to what happened in the world over the past seven days?",
       "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1de2/live/7547ac30-70bc-11f1-8e1d-bbbb1017d210.jpg",
       "publishedAt": "2026-06-25T17:42:35.195Z",
-      "hasRiddle": true
-    },
-    {
-      "id": "c621961qryvo",
-      "url": "https://www.bbc.co.uk/news/articles/c621961qryvo",
-      "title": "BBC News quiz of the week: Where will Prince George be going to school?",
-      "description": "How much attention did you pay to what happened in the world over the past seven days?",
-      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1cdf/live/106a0a30-6bba-11f1-8e1d-bbbb1017d210.jpg",
-      "publishedAt": "2026-06-18T17:24:31.217Z",
       "hasRiddle": true
     }
   ]
