@@ -1,13 +1,13 @@
 {
   "source": "QuizQuizQuiz",
   "url": "https://quizquizquiz.com/friday/",
-  "fetchedAt": "2026-10-30T11:31:08.408Z",
+  "fetchedAt": "2026-11-06T08:03:32.859Z",
   "fetchedVia": "jina",
-  "title": "The QuizQuizQuiz Friday Quiz, 30th October 2026",
-  "quizId": "1307",
+  "title": "The QuizQuizQuiz Friday Quiz, 6th November 2026",
+  "quizId": "1309",
   "submitUrl": "https://quizquizquiz.com/friday/submit",
   "hidden": {
-    "quiz_id": "1307",
+    "quiz_id": "1309",
     "email": "",
     "key": "",
     "time-taken": "0"
@@ -15,7 +15,7 @@
   "questions": [
     {
       "number": 1,
-      "q": "What name was most common for kings of France?",
+      "q": "What name is shared by a smash shot in volleyball and a dog from the 'Tom and Jerry' cartoons?",
       "image": null,
       "fields": [
         {
@@ -26,7 +26,7 @@
     },
     {
       "number": 2,
-      "q": "In 2026, who succeeded Prue Leith as a judge on 'The Great British Bake Off'?",
+      "q": "Which is the only sign of the zodiac that does not represent a living thing (real or mythological)?",
       "image": null,
       "fields": [
         {
@@ -37,7 +37,7 @@
     },
     {
       "number": 3,
-      "q": "Who completed the 2026 Great North Run in 1 hour 57 minutes and 34 seconds?",
+      "q": "Created in 1981, what D is the name for a headband with two springy antennae attached?",
       "image": null,
       "fields": [
         {
@@ -48,7 +48,7 @@
     },
     {
       "number": 4,
-      "q": "The name of which beloved cartoon character was apparently inspired by producer Fred Silverman hearing Frank Sinatra's improvised scat singing over the outro of 'Strangers in the Night'?",
+      "q": "Which 19th century movement's aim was to create artworks using the detail, intense colours and complexity of 15th century Italian art?",
       "image": null,
       "fields": [
         {
@@ -59,28 +59,28 @@
     },
     {
       "number": 5,
-      "q": "Give the final word of the titles of five of the six Peter Jackson-directed \"Middle Earth\" films.",
+      "q": "Name five of the top ten in the New York Times' 2026 list of the 100 Greatest TV Shows of the 21st Century. They are mainly American but the list can include British shows - they have to have started this century, so no e.g The Sopranos, which began in 1999.",
       "image": null,
       "fields": [
         {
           "name": "answer-5-0",
-          "label": "Peter Jackson Middle Earth title final word 1"
+          "label": "NYT Top 10 TV show 1"
         },
         {
           "name": "answer-5-1",
-          "label": "Peter Jackson Middle Earth title final word 2"
+          "label": "NYT Top 10 TV show 2"
         },
         {
           "name": "answer-5-2",
-          "label": "Peter Jackson Middle Earth title final word 3"
+          "label": "NYT Top 10 TV show 3"
         },
         {
           "name": "answer-5-3",
-          "label": "Peter Jackson Middle Earth title final word 4"
+          "label": "NYT Top 10 TV show 4"
         },
         {
           "name": "answer-5-4",
-          "label": "Peter Jackson Middle Earth title final word 5"
+          "label": "NYT Top 10 TV show 5"
         }
       ]
     }

@@ -1,30 +1,110 @@
 {
   "source": "JOE",
-  "week": 527,
-  "title": "The JOE Friday Pub Quiz: week 527",
-  "description": "Welcome back to another week’s JOE Friday Pub Quiz!",
-  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-527-887846",
-  "image": "https://assets.joe.ie/uploads/2026/10/527.webp",
-  "publishedAt": "2026-10-29T17:00:00.000Z",
-  "fetchedAt": "2026-10-29T20:16:07.855Z",
+  "week": 528,
+  "title": "The JOE Friday Pub Quiz: week 528",
+  "description": "It's that time again...",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-528-888617",
+  "image": "https://assets.joe.ie/uploads/2026/11/My-Quiz-FT-1024x512.png",
+  "publishedAt": "2026-11-05T17:13:01.000Z",
+  "fetchedAt": "2026-11-06T08:02:52.333Z",
   "status": "ok",
   "parser": "embed/wpvq",
   "fetchedVia": "jina",
   "questions": [
     {
-      "q": "Which of the following is NOT a primary colour?",
-      "image": "https://assets.joe.ie/uploads/2026/10/1-2.webp",
+      "q": "Garth Brooks has announced a 10 show Irish tour next summer, which city is not included?",
+      "image": "https://assets.joe.ie/uploads/2026/11/1.png",
       "options": [
         {
-          "text": "Red",
+          "text": "Galway",
           "image": null
         },
         {
-          "text": "Blue",
+          "text": "Dublin",
           "image": null
         },
         {
-          "text": "White",
+          "text": "Limerick",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Tallinn is the capital city of which European country?",
+      "image": "https://assets.joe.ie/uploads/2026/11/2.png",
+      "options": [
+        {
+          "text": "Lituania",
+          "image": null
+        },
+        {
+          "text": "Estonia",
+          "image": null
+        },
+        {
+          "text": "Latvia",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "James Talarico was one of the Democratic Party's biggest winners this week, as he was elected as Senator for which state?",
+      "image": "https://assets.joe.ie/uploads/2026/11/3.png",
+      "options": [
+        {
+          "text": "Ohio",
+          "image": null
+        },
+        {
+          "text": "Texas",
+          "image": null
+        },
+        {
+          "text": "Kansas",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is this mathematical formula called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/4.png",
+      "options": [
+        {
+          "text": "Theorem of Calculus",
+          "image": null
+        },
+        {
+          "text": "The Pythagorean Theorem",
+          "image": null
+        },
+        {
+          "text": "The Quadratic Formula",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the largest island in the Mediterranean?",
+      "image": "https://assets.joe.ie/uploads/2026/11/5.png",
+      "options": [
+        {
+          "text": "Corsica",
+          "image": null
+        },
+        {
+          "text": "Cyprus",
+          "image": null
+        },
+        {
+          "text": "Sicily",
           "image": null
         }
       ],
@@ -32,99 +112,19 @@
       "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "What is the largest species of bird in the world?",
-      "image": "https://assets.joe.ie/uploads/2026/10/2-3.webp",
+      "q": "At which Grand Prix race did Kimi Antonelli confirm his World Championship title?",
+      "image": "https://assets.joe.ie/uploads/2026/11/6.png",
       "options": [
         {
-          "text": "Emu",
+          "text": "Mexico Grand Prix",
           "image": null
         },
         {
-          "text": "Albatross",
+          "text": "Monaco Grand Prix",
           "image": null
         },
         {
-          "text": "Ostrich",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "Which vegetable was originally carved into jack-o'-lanterns in Ireland to ward off evil spirits before being replaced by pumpkins in America?",
-      "image": "https://assets.joe.ie/uploads/2026/10/3-2.png",
-      "options": [
-        {
-          "text": "Turnip",
-          "image": null
-        },
-        {
-          "text": "Potato",
-          "image": null
-        },
-        {
-          "text": "Cabbage",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "Which US rapper played a gig in Dublin's 3Arena this week in aid of Palestine?",
-      "image": "https://assets.joe.ie/uploads/2026/10/4.png",
-      "options": [
-        {
-          "text": "Jack Harlow",
-          "image": null
-        },
-        {
-          "text": "Kendrick Lamar",
-          "image": null
-        },
-        {
-          "text": "Macklemore",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "In which European city is this landmark located?",
-      "image": "https://assets.joe.ie/uploads/2026/10/5-1.webp",
-      "options": [
-        {
-          "text": "Paris",
-          "image": null
-        },
-        {
-          "text": "Rome",
-          "image": null
-        },
-        {
-          "text": "Madrid",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "On Tuesday night, Arsenal lost to Fleetwood Town in the EFL Cup. What famous English Stadium does the Cod Army's ground share its name with?",
-      "image": "https://assets.joe.ie/uploads/2026/10/6-2.webp",
-      "options": [
-        {
-          "text": "Highbury",
-          "image": null
-        },
-        {
-          "text": "Goodison",
-          "image": null
-        },
-        {
-          "text": "Anfield",
+          "text": "United States Grand Prix",
           "image": null
         }
       ],
@@ -132,19 +132,39 @@
       "category": "ROUND 2: Sport"
     },
     {
-      "q": "Who was the first English player to win the Ballon d'Or?",
-      "image": "https://assets.joe.ie/uploads/2026/10/7-2.webp",
+      "q": "Which team did Cesc Fabregas' Como beat 9 -1 in the Champions League this week?",
+      "image": "https://assets.joe.ie/uploads/2026/11/7.png",
       "options": [
         {
-          "text": "Bobby Charlton",
+          "text": "RC Lens",
           "image": null
         },
         {
-          "text": "Stanley Matthews",
+          "text": "Sabah FK",
           "image": null
         },
         {
-          "text": "Kevin Keegan",
+          "text": "Club Brugge",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which UK city has been chosen as the start point for next year's Tour de France?",
+      "image": "https://assets.joe.ie/uploads/2026/11/8.png",
+      "options": [
+        {
+          "text": "Cardiff",
+          "image": null
+        },
+        {
+          "text": "Edinburgh",
+          "image": null
+        },
+        {
+          "text": "Liverpool",
           "image": null
         }
       ],
@@ -152,19 +172,39 @@
       "category": "ROUND 2: Sport"
     },
     {
-      "q": "What is this South African cricketer called?",
-      "image": "https://assets.joe.ie/uploads/2026/10/8-2.webp",
+      "q": "After Harry Kane and Alan Shearer, who is the third highest scorer in Premier League history?",
+      "image": "https://assets.joe.ie/uploads/2026/11/9.png",
       "options": [
         {
-          "text": "Kagiso Rabada",
+          "text": "Wayne Rooney",
           "image": null
         },
         {
-          "text": "Temba Bavuma",
+          "text": "Mo Salah",
           "image": null
         },
         {
-          "text": "Hashim Amla",
+          "text": "Andy Cole",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "How long has it been since Novak Djokovic last won a Grand Slam singles title?",
+      "image": "https://assets.joe.ie/uploads/2026/11/10.png",
+      "options": [
+        {
+          "text": "One year",
+          "image": null
+        },
+        {
+          "text": "Three years",
+          "image": null
+        },
+        {
+          "text": "Four Years",
           "image": null
         }
       ],
@@ -172,99 +212,19 @@
       "category": "ROUND 2: Sport"
     },
     {
-      "q": "Which of tennis' Grand Slam tournaments takes place the earliest in the year?",
-      "image": "https://assets.joe.ie/uploads/2026/10/9.jpg",
+      "q": "What was Andrew Scott's character called in Fleabag?",
+      "image": "https://assets.joe.ie/uploads/2026/11/11.png",
       "options": [
         {
-          "text": "US Open",
+          "text": "\"The Priest\"",
           "image": null
         },
         {
-          "text": "French Open",
+          "text": "Adam",
           "image": null
         },
         {
-          "text": "Australian Open",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Which Spanish city are Troy Parrott's new team, Real Betis, from?",
-      "image": "https://assets.joe.ie/uploads/2026/10/10-1.png",
-      "options": [
-        {
-          "text": "Madrid",
-          "image": null
-        },
-        {
-          "text": "Seville",
-          "image": null
-        },
-        {
-          "text": "Bilbao",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Which former Little Mix member's solo track went viral after Kylie Jenner walked to it during the Victoria's Secret Fashion Show?",
-      "image": "https://assets.joe.ie/uploads/2026/10/11-2.png",
-      "options": [
-        {
-          "text": "Perrie",
-          "image": null
-        },
-        {
-          "text": "Leigh-Anne",
-          "image": null
-        },
-        {
-          "text": "JADE",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "Before Amazon Prime and Disney+ came along, Netflix had a rival best known for its DVD rental service. From the logo below, what was the company called?",
-      "image": "https://assets.joe.ie/uploads/2026/10/12-3.webp",
-      "options": [
-        {
-          "text": "FindFilm",
-          "image": null
-        },
-        {
-          "text": "LoveFilm",
-          "image": null
-        },
-        {
-          "text": "BorrowFilm",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "Which Irish artist/group currently has the most monthly listeners on Spotify?",
-      "image": "https://assets.joe.ie/uploads/2026/10/13-3.webp",
-      "options": [
-        {
-          "text": "Hozier",
-          "image": null
-        },
-        {
-          "text": "The Cranberries",
-          "image": null
-        },
-        {
-          "text": "The Script",
+          "text": "Michael",
           "image": null
         }
       ],
@@ -272,19 +232,39 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "What was the first movie that Dwayne Johnson ever appeared in?",
-      "image": "https://assets.joe.ie/uploads/2026/10/14-3.webp",
+      "q": "Which film released since 2020 has grossed the most money at the worldwide box office?",
+      "image": "https://assets.joe.ie/uploads/2026/11/12-7.png",
       "options": [
         {
-          "text": "Race to Witch Mountain",
+          "text": "Spider-Man: Brand New Day",
           "image": null
         },
         {
-          "text": "Tooth Fairy",
+          "text": "Inside Out 2",
           "image": null
         },
         {
-          "text": "The Mummy Returns",
+          "text": "Avatar: The Way of Water",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Ronan Keating made his name as a member of which of these pop groups?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13.png",
+      "options": [
+        {
+          "text": "Take That",
+          "image": null
+        },
+        {
+          "text": "Westlife",
+          "image": null
+        },
+        {
+          "text": "Boyzone",
           "image": null
         }
       ],
@@ -292,19 +272,39 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "Voiced by Paul Bettany in the Iron Man films, what is the name of Tony Stark’s virtual butler, who communicates with him through his helmet?",
-      "image": "https://assets.joe.ie/uploads/2026/10/15-3.webp",
+      "q": "Who wrote the \"Heartstopper\" book series?",
+      "image": "https://assets.joe.ie/uploads/2026/11/14.png",
       "options": [
         {
-          "text": "J.A.R.V.I.S.",
+          "text": "Stephanie Meyer",
           "image": null
         },
         {
-          "text": "J.E.E.V.E.S.",
+          "text": "Alice Oseman",
           "image": null
         },
         {
-          "text": "V.I.S.I.O.N.",
+          "text": "Veronica Roth",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Two Irish bands appeared on Rolling Stone's top 100 rock songs of the 21st century list - who were they?",
+      "image": "https://assets.joe.ie/uploads/2026/11/15.png",
+      "options": [
+        {
+          "text": "Fontaines D.C. and U2",
+          "image": null
+        },
+        {
+          "text": "U2 and Thin Lizzy",
+          "image": null
+        },
+        {
+          "text": "Aslan and The Cranberries",
           "image": null
         }
       ],
@@ -312,184 +312,204 @@
       "category": "ROUND 3: Entertainment"
     },
     {
-      "q": "In this round, we’ll show you two VERY similar flags from different places. Simply identify flags A and B and match each one to the correct place! Below we've presented the flags for Texas and Chile, but which one is the flag for Texas?",
-      "image": "https://assets.joe.ie/uploads/2026/10/16-2.webp",
+      "q": "What is the name of the 2025 comedy musical starring Nick Jonas and Paul Rudd?",
+      "image": "https://assets.joe.ie/uploads/2026/11/16.png",
       "options": [
         {
-          "text": "B",
+          "text": "Power Ballad",
           "image": null
         },
         {
-          "text": "A",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 4: Surprisingly Similar Flags"
-    },
-    {
-      "q": "Below we have the flags for Poland and Indonesia. So, which one is Indonesia?",
-      "image": "https://assets.joe.ie/uploads/2026/10/17-3.webp",
-      "options": [
-        {
-          "text": "A",
+          "text": "Our Song",
           "image": null
         },
         {
-          "text": "B",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 4: Surprisingly Similar Flags"
-    },
-    {
-      "q": "We’re heading across Europe to the Benelux region! Located either above or below the Netherlands, which of these two similar flags belongs to Luxembourg?",
-      "image": "https://assets.joe.ie/uploads/2026/10/18-2.webp",
-      "options": [
-        {
-          "text": "A",
-          "image": null
-        },
-        {
-          "text": "B",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 4: Surprisingly Similar Flags"
-    },
-    {
-      "q": "Here we have the flags for Venezuela and Ecuador, so which is the Venezuelan flag?",
-      "image": "https://assets.joe.ie/uploads/2026/10/19-2.webp",
-      "options": [
-        {
-          "text": "B",
-          "image": null
-        },
-        {
-          "text": "A",
+          "text": "Sing Street",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 4: Surprisingly Similar Flags"
+      "category": "Round 4: Films shot in Ireland"
     },
     {
-      "q": "Which of these is the flag for New Zealand?",
-      "image": "https://assets.joe.ie/uploads/2026/10/20-2.webp",
+      "q": "Which famous Hollywood actress starred in the 2024 rom-com Irish wish?",
+      "image": "https://assets.joe.ie/uploads/2026/11/17.png",
       "options": [
         {
-          "text": "A",
+          "text": "Lindsay Lohan",
           "image": null
         },
         {
-          "text": "B",
+          "text": "Blake Lively",
+          "image": null
+        },
+        {
+          "text": "Cate Blanchett",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 4: Surprisingly Similar Flags"
+      "category": "Round 4: Films shot in Ireland"
     },
     {
-      "q": "What breed of dog is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/21-3.webp",
+      "q": "Who starred in the 1995 film Braveheart, predominantly filmed in Ireland?",
+      "image": "https://assets.joe.ie/uploads/2026/11/Website-Image-_-Full-Bleed-9-1.png",
       "options": [
         {
-          "text": "Shiba Inu",
+          "text": "Mel Gibson",
           "image": null
         },
         {
-          "text": "Chow Chow",
+          "text": "Brendan Gleeson",
           "image": null
         },
         {
-          "text": "Corgi",
+          "text": "Liam Neeson",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 5: Dogs"
+      "category": "Round 4: Films shot in Ireland"
     },
     {
-      "q": "What breed of dog is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/22-3.webp",
+      "q": "This 2023 movie was filmed in Galway, but what is it called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/19.png",
       "options": [
         {
-          "text": "Newfoundland",
+          "text": "We Must Face The Setting Sun",
           "image": null
         },
         {
-          "text": "Schnauzer",
+          "text": "That They May Face The Rising Sun",
           "image": null
         },
         {
-          "text": "Labradoodle",
+          "text": "Sunrises On Their Face",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 5: Dogs"
+      "category": "Round 4: Films shot in Ireland"
     },
     {
-      "q": "What breed of dog is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/23-3.webp",
+      "q": "Which counties was the 2014 film Calvary shot?",
+      "image": "https://assets.joe.ie/uploads/2026/11/20.png",
       "options": [
         {
-          "text": "Shih Tzu",
+          "text": "Donegal and Dublin",
           "image": null
         },
         {
-          "text": "Pomeranian",
+          "text": "Sligo and Dublin",
           "image": null
         },
         {
-          "text": "Bichon Frise",
+          "text": "Cork and Dublin",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 5: Dogs"
+      "category": "Round 4: Films shot in Ireland"
     },
     {
-      "q": "What breed of dog is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/24-3.webp",
+      "q": "Which Northern Irish designer is behind this custom look Harry Styles wore to the 2026 Grammy Awards?",
+      "image": "https://assets.joe.ie/uploads/2026/11/21.png",
       "options": [
         {
-          "text": "Rottweiler",
+          "text": "JW Anderson",
           "image": null
         },
         {
-          "text": "German Shepard",
+          "text": "Colin Burke",
           "image": null
         },
         {
-          "text": "Bernese Mountain Dog",
+          "text": "Paul Costelloe",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 5: Dogs"
+      "category": "Round 5: Irish fashion designers"
     },
     {
-      "q": "What breed of dog is this?",
-      "image": "https://assets.joe.ie/uploads/2026/10/25-2.webp",
+      "q": "Which singing superstar wore a Simone Rocha dress to the 2023 Met Gala?",
+      "image": "https://assets.joe.ie/uploads/2026/11/Website-Image-_-Full-Bleed-10-1.png",
       "options": [
         {
-          "text": "Old English Sheepdog",
+          "text": "Katy Perry",
           "image": null
         },
         {
-          "text": "Saint Bernard",
+          "text": "Billie Eilish",
           "image": null
         },
         {
-          "text": "Bearded Collie",
+          "text": "Olivia Rodrigo",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "What did designer Hope Macaulay go viral for?",
+      "image": "https://assets.joe.ie/uploads/2026/11/23.png",
+      "options": [
+        {
+          "text": "Knitwear",
+          "image": null
+        },
+        {
+          "text": "Leather goods",
+          "image": null
+        },
+        {
+          "text": "Denim",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 5: Dogs"
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "Which Irish designer made Roz Purcell’s wedding dress?",
+      "image": "https://assets.joe.ie/uploads/2026/11/25.png",
+      "options": [
+        {
+          "text": "Sasha Donnellan",
+          "image": null
+        },
+        {
+          "text": "Laura Weber",
+          "image": null
+        },
+        {
+          "text": "JW Anderson",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "Paula Rowan’s accessories have been seen on celebs like Taylor Swift and Cher - but what item does she make?",
+      "image": "https://assets.joe.ie/uploads/2026/11/24.png",
+      "options": [
+        {
+          "text": "Bags",
+          "image": null
+        },
+        {
+          "text": "Hats",
+          "image": null
+        },
+        {
+          "text": "Gloves",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "Round 5: Irish fashion designers"
     }
   ]
 }

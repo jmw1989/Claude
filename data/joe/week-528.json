@@ -1,0 +1,515 @@
+{
+  "source": "JOE",
+  "week": 528,
+  "title": "The JOE Friday Pub Quiz: week 528",
+  "description": "It's that time again...",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-528-888617",
+  "image": "https://assets.joe.ie/uploads/2026/11/My-Quiz-FT-1024x512.png",
+  "publishedAt": "2026-11-05T17:13:01.000Z",
+  "fetchedAt": "2026-11-06T08:02:52.333Z",
+  "status": "ok",
+  "parser": "embed/wpvq",
+  "fetchedVia": "jina",
+  "questions": [
+    {
+      "q": "Garth Brooks has announced a 10 show Irish tour next summer, which city is not included?",
+      "image": "https://assets.joe.ie/uploads/2026/11/1.png",
+      "options": [
+        {
+          "text": "Galway",
+          "image": null
+        },
+        {
+          "text": "Dublin",
+          "image": null
+        },
+        {
+          "text": "Limerick",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Tallinn is the capital city of which European country?",
+      "image": "https://assets.joe.ie/uploads/2026/11/2.png",
+      "options": [
+        {
+          "text": "Lituania",
+          "image": null
+        },
+        {
+          "text": "Estonia",
+          "image": null
+        },
+        {
+          "text": "Latvia",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "James Talarico was one of the Democratic Party's biggest winners this week, as he was elected as Senator for which state?",
+      "image": "https://assets.joe.ie/uploads/2026/11/3.png",
+      "options": [
+        {
+          "text": "Ohio",
+          "image": null
+        },
+        {
+          "text": "Texas",
+          "image": null
+        },
+        {
+          "text": "Kansas",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is this mathematical formula called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/4.png",
+      "options": [
+        {
+          "text": "Theorem of Calculus",
+          "image": null
+        },
+        {
+          "text": "The Pythagorean Theorem",
+          "image": null
+        },
+        {
+          "text": "The Quadratic Formula",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the largest island in the Mediterranean?",
+      "image": "https://assets.joe.ie/uploads/2026/11/5.png",
+      "options": [
+        {
+          "text": "Corsica",
+          "image": null
+        },
+        {
+          "text": "Cyprus",
+          "image": null
+        },
+        {
+          "text": "Sicily",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "At which Grand Prix race did Kimi Antonelli confirm his World Championship title?",
+      "image": "https://assets.joe.ie/uploads/2026/11/6.png",
+      "options": [
+        {
+          "text": "Mexico Grand Prix",
+          "image": null
+        },
+        {
+          "text": "Monaco Grand Prix",
+          "image": null
+        },
+        {
+          "text": "United States Grand Prix",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which team did Cesc Fabregas' Como beat 9 -1 in the Champions League this week?",
+      "image": "https://assets.joe.ie/uploads/2026/11/7.png",
+      "options": [
+        {
+          "text": "RC Lens",
+          "image": null
+        },
+        {
+          "text": "Sabah FK",
+          "image": null
+        },
+        {
+          "text": "Club Brugge",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which UK city has been chosen as the start point for next year's Tour de France?",
+      "image": "https://assets.joe.ie/uploads/2026/11/8.png",
+      "options": [
+        {
+          "text": "Cardiff",
+          "image": null
+        },
+        {
+          "text": "Edinburgh",
+          "image": null
+        },
+        {
+          "text": "Liverpool",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "After Harry Kane and Alan Shearer, who is the third highest scorer in Premier League history?",
+      "image": "https://assets.joe.ie/uploads/2026/11/9.png",
+      "options": [
+        {
+          "text": "Wayne Rooney",
+          "image": null
+        },
+        {
+          "text": "Mo Salah",
+          "image": null
+        },
+        {
+          "text": "Andy Cole",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "How long has it been since Novak Djokovic last won a Grand Slam singles title?",
+      "image": "https://assets.joe.ie/uploads/2026/11/10.png",
+      "options": [
+        {
+          "text": "One year",
+          "image": null
+        },
+        {
+          "text": "Three years",
+          "image": null
+        },
+        {
+          "text": "Four Years",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "What was Andrew Scott's character called in Fleabag?",
+      "image": "https://assets.joe.ie/uploads/2026/11/11.png",
+      "options": [
+        {
+          "text": "\"The Priest\"",
+          "image": null
+        },
+        {
+          "text": "Adam",
+          "image": null
+        },
+        {
+          "text": "Michael",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which film released since 2020 has grossed the most money at the worldwide box office?",
+      "image": "https://assets.joe.ie/uploads/2026/11/12-7.png",
+      "options": [
+        {
+          "text": "Spider-Man: Brand New Day",
+          "image": null
+        },
+        {
+          "text": "Inside Out 2",
+          "image": null
+        },
+        {
+          "text": "Avatar: The Way of Water",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Ronan Keating made his name as a member of which of these pop groups?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13.png",
+      "options": [
+        {
+          "text": "Take That",
+          "image": null
+        },
+        {
+          "text": "Westlife",
+          "image": null
+        },
+        {
+          "text": "Boyzone",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Who wrote the \"Heartstopper\" book series?",
+      "image": "https://assets.joe.ie/uploads/2026/11/14.png",
+      "options": [
+        {
+          "text": "Stephanie Meyer",
+          "image": null
+        },
+        {
+          "text": "Alice Oseman",
+          "image": null
+        },
+        {
+          "text": "Veronica Roth",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Two Irish bands appeared on Rolling Stone's top 100 rock songs of the 21st century list - who were they?",
+      "image": "https://assets.joe.ie/uploads/2026/11/15.png",
+      "options": [
+        {
+          "text": "Fontaines D.C. and U2",
+          "image": null
+        },
+        {
+          "text": "U2 and Thin Lizzy",
+          "image": null
+        },
+        {
+          "text": "Aslan and The Cranberries",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "What is the name of the 2025 comedy musical starring Nick Jonas and Paul Rudd?",
+      "image": "https://assets.joe.ie/uploads/2026/11/16.png",
+      "options": [
+        {
+          "text": "Power Ballad",
+          "image": null
+        },
+        {
+          "text": "Our Song",
+          "image": null
+        },
+        {
+          "text": "Sing Street",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 4: Films shot in Ireland"
+    },
+    {
+      "q": "Which famous Hollywood actress starred in the 2024 rom-com Irish wish?",
+      "image": "https://assets.joe.ie/uploads/2026/11/17.png",
+      "options": [
+        {
+          "text": "Lindsay Lohan",
+          "image": null
+        },
+        {
+          "text": "Blake Lively",
+          "image": null
+        },
+        {
+          "text": "Cate Blanchett",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 4: Films shot in Ireland"
+    },
+    {
+      "q": "Who starred in the 1995 film Braveheart, predominantly filmed in Ireland?",
+      "image": "https://assets.joe.ie/uploads/2026/11/Website-Image-_-Full-Bleed-9-1.png",
+      "options": [
+        {
+          "text": "Mel Gibson",
+          "image": null
+        },
+        {
+          "text": "Brendan Gleeson",
+          "image": null
+        },
+        {
+          "text": "Liam Neeson",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 4: Films shot in Ireland"
+    },
+    {
+      "q": "This 2023 movie was filmed in Galway, but what is it called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/19.png",
+      "options": [
+        {
+          "text": "We Must Face The Setting Sun",
+          "image": null
+        },
+        {
+          "text": "That They May Face The Rising Sun",
+          "image": null
+        },
+        {
+          "text": "Sunrises On Their Face",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "Round 4: Films shot in Ireland"
+    },
+    {
+      "q": "Which counties was the 2014 film Calvary shot?",
+      "image": "https://assets.joe.ie/uploads/2026/11/20.png",
+      "options": [
+        {
+          "text": "Donegal and Dublin",
+          "image": null
+        },
+        {
+          "text": "Sligo and Dublin",
+          "image": null
+        },
+        {
+          "text": "Cork and Dublin",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "Round 4: Films shot in Ireland"
+    },
+    {
+      "q": "Which Northern Irish designer is behind this custom look Harry Styles wore to the 2026 Grammy Awards?",
+      "image": "https://assets.joe.ie/uploads/2026/11/21.png",
+      "options": [
+        {
+          "text": "JW Anderson",
+          "image": null
+        },
+        {
+          "text": "Colin Burke",
+          "image": null
+        },
+        {
+          "text": "Paul Costelloe",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "Which singing superstar wore a Simone Rocha dress to the 2023 Met Gala?",
+      "image": "https://assets.joe.ie/uploads/2026/11/Website-Image-_-Full-Bleed-10-1.png",
+      "options": [
+        {
+          "text": "Katy Perry",
+          "image": null
+        },
+        {
+          "text": "Billie Eilish",
+          "image": null
+        },
+        {
+          "text": "Olivia Rodrigo",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "What did designer Hope Macaulay go viral for?",
+      "image": "https://assets.joe.ie/uploads/2026/11/23.png",
+      "options": [
+        {
+          "text": "Knitwear",
+          "image": null
+        },
+        {
+          "text": "Leather goods",
+          "image": null
+        },
+        {
+          "text": "Denim",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "Which Irish designer made Roz Purcell’s wedding dress?",
+      "image": "https://assets.joe.ie/uploads/2026/11/25.png",
+      "options": [
+        {
+          "text": "Sasha Donnellan",
+          "image": null
+        },
+        {
+          "text": "Laura Weber",
+          "image": null
+        },
+        {
+          "text": "JW Anderson",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "Round 5: Irish fashion designers"
+    },
+    {
+      "q": "Paula Rowan’s accessories have been seen on celebs like Taylor Swift and Cher - but what item does she make?",
+      "image": "https://assets.joe.ie/uploads/2026/11/24.png",
+      "options": [
+        {
+          "text": "Bags",
+          "image": null
+        },
+        {
+          "text": "Hats",
+          "image": null
+        },
+        {
+          "text": "Gloves",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "Round 5: Irish fashion designers"
+    }
+  ]
+}
