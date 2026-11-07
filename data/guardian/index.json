@@ -1,6 +1,106 @@
 {
   "quizzes": [
     {
+      "id": "2026-nov-07",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/nov/07/what-links-leonard-cohen-amelia-earhart-and-graham-nash-the-saturday-quiz",
+      "title": "What links Leonard Cohen, Amelia Earhart and Graham Nash? The Saturday quiz",
+      "description": "From carpals, metacarpals and phalanges to the Valsalva manoeuvre, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/52406d4b3db748ff1d833f75a82963a519997bd4/0_502_2530_2023/master/2530.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=24bbdb690c7b47b0d9f0bb26fd9d584b",
+      "publishedAt": "2026-11-07T07:00:05.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "What is unique about the time in Cape Verde?",
+          "answer": "Only sovereign state to have time at GMT -1.",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "What is typically sold from a Whitby Morrison Mondial Lusso?",
+          "answer": "Ice-cream (leading ice-cream van model).",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "When flying, the Valsalva manoeuvre would be used to do what?",
+          "answer": "Equalise ear pressure.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "Which record producer’s headstone reads “creator of the Manchester sound”?",
+          "answer": "Martin Hannett (d.1991).",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "Which game began in the Green Hill Zone?",
+          "answer": "Sonic the Hedgehog.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "Badr, fought in 624AD, is the only battle mentioned by name in which book?",
+          "answer": "Qur’an.",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "The fake snow in The Wizard of Oz was made from which hazardous material?",
+          "answer": "Asbestos.",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Which teams made up Scottish football’s New Firm?",
+          "answer": "Aberdeen and Dundee United (1980s).",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Leonard Cohen; Amelia Earhart; David Geffen; Graham Nash; Cary Raditz?",
+          "answer": "Inspired songs by Joni Mitchell: Rainy Night House; Amelia; Free Man in Paris; Willy; Carey.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Jamestown colony; British Museum; Irish hospitals until 1987; Millennium Dome?",
+          "answer": "Lottery-funded projects.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Eight carpals; five metacarpals; 14 phalanges?",
+          "answer": "Bones in a hand.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Kim Woodburn and Aggie MacKenzie; Marie Kondo; Sophie Hinchliffe?",
+          "answer": "Cleaning and tidying influencers.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "And Then There Were None; Anne of Green Gables; Lord of the Flies; The Admirable Crichton; The Tempest?",
+          "answer": "Literary works set on islands.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Colin McRae, 1995; Richard Burns, 2001; Elfyn Evans, 2026?",
+          "answer": "British winners of the World Rally Championship.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Blood; Beethoven’s; Man; Protocol; Element; Sense?",
+          "answer": "Film titles with ordinal numbers: First B; B’s 2nd; The Third M; The Fourth P; The Fifth E; The Sixth S.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
       "id": "2026-oct-31",
       "url": "https://www.theguardian.com/lifeandstyle/2026/oct/31/what-links-suzi-quatro-cream-and-blink-182-the-saturday-quiz",
       "title": "What links Suzi Quatro, Cream and Blink-182? The Saturday quiz",
@@ -601,5 +701,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-11-06T16:39:47.286Z"
+  "updatedAt": "2026-11-07T10:33:03.154Z"
 }
