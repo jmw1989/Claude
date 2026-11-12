@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-09T12:56:44.965Z",
+  "updatedAt": "2026-11-12T20:23:29.277Z",
   "quizzes": [
+    {
+      "id": "cme391kq6xgyo",
+      "url": "https://www.bbc.co.uk/sport/articles/cme391kq6xgyo",
+      "title": "BBC Sport weekly quiz: Man Utd's worst start to a season since when?",
+      "description": "How much attention have you paid to what's happened in the world of sport over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/c157/live/9c0ffa70-de0d-11f1-a701-fddedf244c16.png",
+      "publishedAt": "2026-11-12T07:18:00.778Z"
+    },
     {
       "id": "ckjwe57n45lxo",
       "url": "https://www.bbc.co.uk/sport/articles/ckjwe57n45lxo",
