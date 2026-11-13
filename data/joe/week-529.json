@@ -1,0 +1,515 @@
+{
+  "source": "JOE",
+  "week": 529,
+  "title": "The JOE Friday Pub Quiz: week 529",
+  "description": "Welcome back to the JOE Friday Pub Quiz!I bring this week's quiz to you from the utter chaos of another Premier League \"Sackathon.\"",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-529-889400",
+  "image": "https://assets.joe.ie/uploads/2026/11/529-1024x573.webp",
+  "publishedAt": "2026-11-12T17:00:00.000Z",
+  "fetchedAt": "2026-11-13T08:08:07.849Z",
+  "status": "ok",
+  "parser": "embed/wpvq",
+  "fetchedVia": "jina",
+  "questions": [
+    {
+      "q": "How many different colours are recognised as making up a rainbow?",
+      "image": "https://assets.joe.ie/uploads/2026/11/1.webp",
+      "options": [
+        {
+          "text": "Nine",
+          "image": null
+        },
+        {
+          "text": "Seven",
+          "image": null
+        },
+        {
+          "text": "Eight",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the traditional base meat in a classic, authentic Irish stew?",
+      "image": "https://assets.joe.ie/uploads/2026/11/2-1.png",
+      "options": [
+        {
+          "text": "Beef",
+          "image": null
+        },
+        {
+          "text": "Chicken",
+          "image": null
+        },
+        {
+          "text": "Lamb/Mutton",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Which sporting chief did Donald Trump ask to become his press secretary earlier this week?",
+      "image": "https://assets.joe.ie/uploads/2026/11/3.webp",
+      "options": [
+        {
+          "text": "Adam Silver",
+          "image": null
+        },
+        {
+          "text": "Dana White",
+          "image": null
+        },
+        {
+          "text": "Gianni Infantino",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Which country, other than the United States and the Soviet Union, is the only nation to have independently sent a person into space?",
+      "image": "https://assets.joe.ie/uploads/2026/11/4.webp",
+      "options": [
+        {
+          "text": "France",
+          "image": null
+        },
+        {
+          "text": "China",
+          "image": null
+        },
+        {
+          "text": "India",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "This species of bird is the fastest travelling animal on the planet, able to reach speeds over 300km/h. What is it called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/5.webp",
+      "options": [
+        {
+          "text": "Harpy Eagle",
+          "image": null
+        },
+        {
+          "text": "Peregrine Falcon",
+          "image": null
+        },
+        {
+          "text": "Osprey",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "At which Olympic Games did boxer Michael Carruth win Ireland's first-ever Olympic gold medal in boxing?",
+      "image": "https://assets.joe.ie/uploads/2026/11/6-5.jpg",
+      "options": [
+        {
+          "text": "Atlanta 1996",
+          "image": null
+        },
+        {
+          "text": "Barcelona 1992",
+          "image": null
+        },
+        {
+          "text": "Seoul 1988",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which team did Man United sign Michael Carrick from, as a player, in 2006?",
+      "image": "https://assets.joe.ie/uploads/2026/11/7.webp",
+      "options": [
+        {
+          "text": "Newcastle United",
+          "image": null
+        },
+        {
+          "text": "West Ham United",
+          "image": null
+        },
+        {
+          "text": "Tottenham Hotspur",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "How many teams from Canada play in the NBA?",
+      "image": "https://assets.joe.ie/uploads/2026/11/8.webp",
+      "options": [
+        {
+          "text": "One",
+          "image": null
+        },
+        {
+          "text": "Two",
+          "image": null
+        },
+        {
+          "text": "Three",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Which midlands-based English club did Enzo Maresca play for between 1998-2000?",
+      "image": "https://assets.joe.ie/uploads/2026/11/9.webp",
+      "options": [
+        {
+          "text": "West Brom",
+          "image": null
+        },
+        {
+          "text": "Wolverhampton Wanderers",
+          "image": null
+        },
+        {
+          "text": "Aston Villa",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Only one WSL club has ever lifted the UEFA Women’s Champions League trophy. Can you name them?",
+      "image": "https://assets.joe.ie/uploads/2026/11/10.webp",
+      "options": [
+        {
+          "text": "Arsenal",
+          "image": null
+        },
+        {
+          "text": "Chelsea",
+          "image": null
+        },
+        {
+          "text": "Man City",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "In which town is The Office (US) set?",
+      "image": "https://assets.joe.ie/uploads/2026/11/11.webp",
+      "options": [
+        {
+          "text": "Stamford, Connecticut",
+          "image": null
+        },
+        {
+          "text": "Albany, New York",
+          "image": null
+        },
+        {
+          "text": "Scranton, Pennsylvania",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Starring main character and gentleman thief Assane Diop, what is this Netflix series called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/12.webp",
+      "options": [
+        {
+          "text": "Lupin",
+          "image": null
+        },
+        {
+          "text": "The Night Agent",
+          "image": null
+        },
+        {
+          "text": "Shadow Force",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which legendary English musician did Olivia Rodrigo surprise Glastonbury crowds by bringing on stage during her 2025 headline set?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13.webp",
+      "options": [
+        {
+          "text": "Damon Albarn, Blur",
+          "image": null
+        },
+        {
+          "text": "Robert Smith, The Cure",
+          "image": null
+        },
+        {
+          "text": "Paul McCartney",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "What is the name of the fictional pub where the characters regularly meet in the sitcom How I Met Your Mother?",
+      "image": "https://assets.joe.ie/uploads/2026/11/14.webp",
+      "options": [
+        {
+          "text": "O'Murphy's Pub",
+          "image": null
+        },
+        {
+          "text": "Paddy's Pub",
+          "image": null
+        },
+        {
+          "text": "MacLaren's Pub",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Dame Judi Dench won an Oscar for her portrayal of Queen Elizabeth I in the 1998 film Shakespeare in Love. But how little screen time did she have in the film?",
+      "image": "https://assets.joe.ie/uploads/2026/11/15.webp",
+      "options": [
+        {
+          "text": "Just twelve minutes",
+          "image": null
+        },
+        {
+          "text": "Just nineteen minutes",
+          "image": null
+        },
+        {
+          "text": "Just eight minutes",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Located between China and Russia, what country is this?",
+      "image": "https://assets.joe.ie/uploads/2026/11/16.webp",
+      "options": [
+        {
+          "text": "Kyrgyzstan",
+          "image": null
+        },
+        {
+          "text": "Mongolia",
+          "image": null
+        },
+        {
+          "text": "Kazakhstan",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Landlocked Countries"
+    },
+    {
+      "q": "Positioned between Kenya and South Sudan, what country is this?",
+      "image": "https://assets.joe.ie/uploads/2026/11/17.webp",
+      "options": [
+        {
+          "text": "Tanzania",
+          "image": null
+        },
+        {
+          "text": "Uganda",
+          "image": null
+        },
+        {
+          "text": "Rwanda",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Landlocked Countries"
+    },
+    {
+      "q": "Which European country is this?",
+      "image": "https://assets.joe.ie/uploads/2026/11/18.webp",
+      "options": [
+        {
+          "text": "Austria",
+          "image": null
+        },
+        {
+          "text": "Czechia/Czech Republic",
+          "image": null
+        },
+        {
+          "text": "Switzerland",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Landlocked Countries"
+    },
+    {
+      "q": "Between Paraguay, Peru, and Brazil, what country is this?",
+      "image": "https://assets.joe.ie/uploads/2026/11/19.webp",
+      "options": [
+        {
+          "text": "Bolivia",
+          "image": null
+        },
+        {
+          "text": "Ecuador",
+          "image": null
+        },
+        {
+          "text": "Venezuela",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Landlocked Countries"
+    },
+    {
+      "q": "What country is this?",
+      "image": "https://assets.joe.ie/uploads/2026/11/20.webp",
+      "options": [
+        {
+          "text": "Nepal",
+          "image": null
+        },
+        {
+          "text": "Bhutan",
+          "image": null
+        },
+        {
+          "text": "Myanmar",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Landlocked Countries"
+    },
+    {
+      "q": "In what year did \"Can't Get You Out of My Head\" by Kylie Minogue first make it to number one in the Irish charts?",
+      "image": "https://assets.joe.ie/uploads/2026/11/21.webp",
+      "options": [
+        {
+          "text": "1998",
+          "image": null
+        },
+        {
+          "text": "2003",
+          "image": null
+        },
+        {
+          "text": "2001",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Number Ones"
+    },
+    {
+      "q": "In what year did \"God's Plan\" by Drake first make it to number one in the Irish charts?",
+      "image": "https://assets.joe.ie/uploads/2026/11/22.webp",
+      "options": [
+        {
+          "text": "2014",
+          "image": null
+        },
+        {
+          "text": "2016",
+          "image": null
+        },
+        {
+          "text": "2018",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Number Ones"
+    },
+    {
+      "q": "In what year did \"As It Was\" by Harry Styles first make it to number one in the Irish charts?",
+      "image": "https://assets.joe.ie/uploads/2026/11/23.webp",
+      "options": [
+        {
+          "text": "2019",
+          "image": null
+        },
+        {
+          "text": "2020",
+          "image": null
+        },
+        {
+          "text": "2022",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Number Ones"
+    },
+    {
+      "q": "In what year did \"A Hard Day's Night\" by The Beatles reach number one on the Irish Singles Chart?",
+      "image": "https://assets.joe.ie/uploads/2026/11/24.jpeg",
+      "options": [
+        {
+          "text": "1969",
+          "image": null
+        },
+        {
+          "text": "1959",
+          "image": null
+        },
+        {
+          "text": "1964",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Number Ones"
+    },
+    {
+      "q": "In what year did \"Nothing's Gonna Stop Us Now\" by Starship first reach number one on the Irish Singles Chart?",
+      "image": "https://assets.joe.ie/uploads/2026/11/25.webp",
+      "options": [
+        {
+          "text": "1989",
+          "image": null
+        },
+        {
+          "text": "1987",
+          "image": null
+        },
+        {
+          "text": "1985",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Number Ones"
+    }
+  ]
+}

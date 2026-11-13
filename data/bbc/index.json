@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-12T20:23:28.844Z",
+  "updatedAt": "2026-11-13T08:08:47.311Z",
   "quizzes": [
+    {
+      "id": "cmkgk0w34lkpo",
+      "url": "https://www.bbc.co.uk/news/articles/cmkgk0w34lkpo",
+      "title": "BBC News quiz of the week: Who's joining Wayne Rooney in the I'm A Celebrity jungle?",
+      "description": "How much attention did you pay to what happened in the world over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/f57f/live/3c227540-dec9-11f1-b441-2b33b063138f.jpg",
+      "publishedAt": "2026-11-12T20:22:21.356Z"
+    },
     {
       "id": "cqy0rzz0w9wlo",
       "url": "https://www.bbc.co.uk/news/articles/cqy0rzz0w9wlo",
@@ -168,15 +176,6 @@
       "description": "How much attention did you pay to what happened in the world over the past seven days?",
       "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ad0a/live/1ea3c210-76b6-11f1-b976-0b9c15b0ccfc.jpg",
       "publishedAt": "2026-07-02T17:02:29.617Z",
-      "hasRiddle": true
-    },
-    {
-      "id": "c1lyqd6e7ypo",
-      "url": "https://www.bbc.co.uk/news/articles/c1lyqd6e7ypo",
-      "title": "BBC News quiz of the week: Who did Donald Trump anger after saying they begged for a photo with him?",
-      "description": "How much attention did you pay to what happened in the world over the past seven days?",
-      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1de2/live/7547ac30-70bc-11f1-8e1d-bbbb1017d210.jpg",
-      "publishedAt": "2026-06-25T17:42:35.195Z",
       "hasRiddle": true
     }
   ]

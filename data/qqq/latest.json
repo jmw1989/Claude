@@ -1,13 +1,13 @@
 {
   "source": "QuizQuizQuiz",
   "url": "https://quizquizquiz.com/friday/",
-  "fetchedAt": "2026-11-06T08:03:32.859Z",
+  "fetchedAt": "2026-11-13T08:08:46.195Z",
   "fetchedVia": "jina",
-  "title": "The QuizQuizQuiz Friday Quiz, 6th November 2026",
-  "quizId": "1309",
+  "title": "The QuizQuizQuiz Friday Quiz, 13th November 2026",
+  "quizId": "1311",
   "submitUrl": "https://quizquizquiz.com/friday/submit",
   "hidden": {
-    "quiz_id": "1309",
+    "quiz_id": "1311",
     "email": "",
     "key": "",
     "time-taken": "0"
@@ -15,7 +15,7 @@
   "questions": [
     {
       "number": 1,
-      "q": "What name is shared by a smash shot in volleyball and a dog from the 'Tom and Jerry' cartoons?",
+      "q": "What was the family name of King Henry VII of England and his successors?",
       "image": null,
       "fields": [
         {
@@ -26,7 +26,7 @@
     },
     {
       "number": 2,
-      "q": "Which is the only sign of the zodiac that does not represent a living thing (real or mythological)?",
+      "q": "In 1824, William Hillary, a philanthropist on the Isle of Man, founded which long-running service, which is now a charity based in Poole, Dorset?",
       "image": null,
       "fields": [
         {
@@ -37,7 +37,7 @@
     },
     {
       "number": 3,
-      "q": "Created in 1981, what D is the name for a headband with two springy antennae attached?",
+      "q": "Which footballer scored their first senior goal for Leyton Orient against Sheffield Wednesday on 22nd January 2011?",
       "image": null,
       "fields": [
         {
@@ -48,7 +48,7 @@
     },
     {
       "number": 4,
-      "q": "Which 19th century movement's aim was to create artworks using the detail, intense colours and complexity of 15th century Italian art?",
+      "q": "A euphemistic phrase once used by barbers in Britain when offering condoms to customers, what title links songs by both the Super Furry Animals and the Divine Comedy which were Top 20 hits in the summer of 1996?",
       "image": null,
       "fields": [
         {
@@ -59,28 +59,28 @@
     },
     {
       "number": 5,
-      "q": "Name five of the top ten in the New York Times' 2026 list of the 100 Greatest TV Shows of the 21st Century. They are mainly American but the list can include British shows - they have to have started this century, so no e.g The Sopranos, which began in 1999.",
+      "q": "There are five winners of the Best Picture Oscar with titles ending with the letter A. There are a couple of recent ones and a couple of classics (and one in between). Can you name them?",
       "image": null,
       "fields": [
         {
           "name": "answer-5-0",
-          "label": "NYT Top 10 TV show 1"
+          "label": "Osca winna 1"
         },
         {
           "name": "answer-5-1",
-          "label": "NYT Top 10 TV show 2"
+          "label": "Osca winna 2"
         },
         {
           "name": "answer-5-2",
-          "label": "NYT Top 10 TV show 3"
+          "label": "Osca winna 3"
         },
         {
           "name": "answer-5-3",
-          "label": "NYT Top 10 TV show 4"
+          "label": "Osca winna 4"
         },
         {
           "name": "answer-5-4",
-          "label": "NYT Top 10 TV show 5"
+          "label": "Osca winna 5"
         }
       ]
     }
