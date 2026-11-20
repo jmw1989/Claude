@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-16T21:40:14.282Z",
+  "updatedAt": "2026-11-20T01:27:40.183Z",
   "quizzes": [
+    {
+      "id": "cmvg2edq12nno",
+      "url": "https://www.bbc.co.uk/news/articles/cmvg2edq12nno",
+      "title": "BBC News quiz: Which star played cricket with Catherine in India?",
+      "description": "How much attention did you pay to what happened in the world over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/fae6/live/95169960-e432-11f1-99a1-253766e7ad8b.jpg",
+      "publishedAt": "2026-11-19T18:43:15.987Z"
+    },
     {
       "id": "cmkgk0w34lkpo",
       "url": "https://www.bbc.co.uk/news/articles/cmkgk0w34lkpo",
@@ -167,15 +175,6 @@
       "description": "How much attention did you pay to what happened in the world over the past seven days?",
       "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/b18b/live/b3a9e600-7bb1-11f1-bee8-53ce494e1abc.jpg",
       "publishedAt": "2026-07-09T16:45:50.252Z",
-      "hasRiddle": true
-    },
-    {
-      "id": "c70ydx22q25o",
-      "url": "https://www.bbc.co.uk/news/articles/c70ydx22q25o",
-      "title": "BBC News quiz of the week: Why did Catherine, Princess of Wales climb the UK's three highest peaks?",
-      "description": "How much attention did you pay to what happened in the world over the past seven days?",
-      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ad0a/live/1ea3c210-76b6-11f1-b976-0b9c15b0ccfc.jpg",
-      "publishedAt": "2026-07-02T17:02:29.617Z",
       "hasRiddle": true
     }
   ]

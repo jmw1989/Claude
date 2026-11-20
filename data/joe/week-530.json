@@ -1,0 +1,515 @@
+{
+  "source": "JOE",
+  "week": 530,
+  "title": "The JOE Friday Pub Quiz: week 530",
+  "description": "Welcome back to another week of the JOE Friday Pub Quiz: Quiz Theft Auto!",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-530-889920",
+  "image": "https://assets.joe.ie/uploads/2026/11/530-1024x573.webp",
+  "publishedAt": "2026-11-19T17:00:00.000Z",
+  "fetchedAt": "2026-11-20T01:26:58.334Z",
+  "status": "ok",
+  "parser": "embed/wpvq",
+  "fetchedVia": "jina",
+  "questions": [
+    {
+      "q": "What is Ireland's most common surname?",
+      "image": "https://assets.joe.ie/uploads/2026/11/1-1.png",
+      "options": [
+        {
+          "text": "Byrne",
+          "image": null
+        },
+        {
+          "text": "Kelly",
+          "image": null
+        },
+        {
+          "text": "Murphy",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "According to the saying, to which European city do all roads lead?",
+      "image": "https://assets.joe.ie/uploads/2026/11/2.webp",
+      "options": [
+        {
+          "text": "Paris",
+          "image": null
+        },
+        {
+          "text": "Athens",
+          "image": null
+        },
+        {
+          "text": "Rome",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "In which European capital would you find The Little Mermaid statue?",
+      "image": "https://assets.joe.ie/uploads/2026/11/3-1.png",
+      "options": [
+        {
+          "text": "Lisbon",
+          "image": null
+        },
+        {
+          "text": "Copenhagen",
+          "image": null
+        },
+        {
+          "text": "Brussels",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "After Russia and Turkey, what is the European country with the highest population?",
+      "image": "https://assets.joe.ie/uploads/2026/11/4-1.webp",
+      "options": [
+        {
+          "text": "Germany",
+          "image": null
+        },
+        {
+          "text": "The UK",
+          "image": null
+        },
+        {
+          "text": "France",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "The ancient passage tomb of Newgrange, which is older than the Egyptian pyramids, is located in which Irish county?",
+      "image": "https://assets.joe.ie/uploads/2026/11/5-1.png",
+      "options": [
+        {
+          "text": "Kilkenny",
+          "image": null
+        },
+        {
+          "text": "Laois",
+          "image": null
+        },
+        {
+          "text": "Meath",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Since its release in 2013, how many copies of Grand Theft Auto V have been sold?",
+      "image": "https://assets.joe.ie/uploads/2026/11/6.webp",
+      "options": [
+        {
+          "text": "337 million copies",
+          "image": null
+        },
+        {
+          "text": "424 million copies",
+          "image": null
+        },
+        {
+          "text": "235 million copies",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "The latest Grand Theft Auto game, GTA VI, is set in Leonida, which is based on which real American state?",
+      "image": "https://assets.joe.ie/uploads/2026/11/7-1.webp",
+      "options": [
+        {
+          "text": "Flordia",
+          "image": null
+        },
+        {
+          "text": "Georgia",
+          "image": null
+        },
+        {
+          "text": "California",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "What is this GTA V character called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/8-1.webp",
+      "options": [
+        {
+          "text": "Steve",
+          "image": null
+        },
+        {
+          "text": "Michael",
+          "image": null
+        },
+        {
+          "text": "Carl",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "How many years ago was the very first Grand Theft Auto game released?",
+      "image": "https://assets.joe.ie/uploads/2026/11/9-1.webp",
+      "options": [
+        {
+          "text": "26 years ago",
+          "image": null
+        },
+        {
+          "text": "29 years ago",
+          "image": null
+        },
+        {
+          "text": "25 years ago",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "Which video game company produces the Grand Theft Auto series?",
+      "image": "https://assets.joe.ie/uploads/2026/11/10-1.webp",
+      "options": [
+        {
+          "text": "Bethesda Softworks",
+          "image": null
+        },
+        {
+          "text": "Rockstar Games",
+          "image": null
+        },
+        {
+          "text": "Ubisoft",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "Ronaldinho made a shock return to pro football last weekend, playing a third-tier game for a team in which country?",
+      "image": "https://assets.joe.ie/uploads/2026/11/11-1.webp",
+      "options": [
+        {
+          "text": "Spain",
+          "image": null
+        },
+        {
+          "text": "Brazil",
+          "image": null
+        },
+        {
+          "text": "Italy",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "Which club currently sit at the top of the men's UEFA Champions League table?",
+      "image": "https://assets.joe.ie/uploads/2026/11/12-1.webp",
+      "options": [
+        {
+          "text": "Arsenal",
+          "image": null
+        },
+        {
+          "text": "PSG",
+          "image": null
+        },
+        {
+          "text": "Bayern Munich",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "What was the final score of the Republic of Ireland’s UEFA Nations League match against Kosovo at the Aviva Stadium earlier this week?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13-1.png",
+      "options": [
+        {
+          "text": "3-0 to Ireland",
+          "image": null
+        },
+        {
+          "text": "2-1 to Kosovo",
+          "image": null
+        },
+        {
+          "text": "0-0 draw",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "For which sports competiton would a team win this trophy?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13-1.webp",
+      "options": [
+        {
+          "text": "National Basketball Association (NBA)",
+          "image": null
+        },
+        {
+          "text": "National Hockey League (NHL)",
+          "image": null
+        },
+        {
+          "text": "The Ryder Cup",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "During a 2018 tour of which country were Australian cricketers caught using sandpaper to tamper with the ball?",
+      "image": "https://assets.joe.ie/uploads/2026/11/15-1.webp",
+      "options": [
+        {
+          "text": "England",
+          "image": null
+        },
+        {
+          "text": "South Africa",
+          "image": null
+        },
+        {
+          "text": "India",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "Which song claimed the Irish Christmas Number One spot in 2025?",
+      "image": "https://assets.joe.ie/uploads/2026/11/16-1.webp",
+      "options": [
+        {
+          "text": "'Killeagh', Kingfishr",
+          "image": null
+        },
+        {
+          "text": "'Last Christmas', Wham!",
+          "image": null
+        },
+        {
+          "text": "'XMAS', Kylie Minogue",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Entertainment"
+    },
+    {
+      "q": "Which Shakespeare play has had the most successful film adaptation at the worldwide box office?",
+      "image": "https://assets.joe.ie/uploads/2026/11/17-1.webp",
+      "options": [
+        {
+          "text": "Hamnet",
+          "image": null
+        },
+        {
+          "text": "MacBeth",
+          "image": null
+        },
+        {
+          "text": "Romeo and Juliet",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Entertainment"
+    },
+    {
+      "q": "How many 'Hunger Games' books has Suzanne Collins written?",
+      "image": "https://assets.joe.ie/uploads/2026/11/18-1.webp",
+      "options": [
+        {
+          "text": "Three",
+          "image": null
+        },
+        {
+          "text": "Four",
+          "image": null
+        },
+        {
+          "text": "Five",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Entertainment"
+    },
+    {
+      "q": "What was Robert Pattinson's Twilight character called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/19-1.webp",
+      "options": [
+        {
+          "text": "Cedric",
+          "image": null
+        },
+        {
+          "text": "Edward",
+          "image": null
+        },
+        {
+          "text": "Jacob",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Entertainment"
+    },
+    {
+      "q": "Which of these actors played James Bond in just one official 007 film?",
+      "image": "https://assets.joe.ie/uploads/2026/11/20.jpeg",
+      "options": [
+        {
+          "text": "Barry Nelson",
+          "image": null
+        },
+        {
+          "text": "Timothy Dalton",
+          "image": null
+        },
+        {
+          "text": "George Lazenby",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Entertainment"
+    },
+    {
+      "q": "What is this New York skyscraper called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/21-1.webp",
+      "options": [
+        {
+          "text": "Empire State Building",
+          "image": null
+        },
+        {
+          "text": "Rockefeller Building",
+          "image": null
+        },
+        {
+          "text": "Chrysler Building",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 5: Skyscrapers"
+    },
+    {
+      "q": "In what country would you find this building?",
+      "image": "https://assets.joe.ie/uploads/2026/11/22-1.webp",
+      "options": [
+        {
+          "text": "South Korea",
+          "image": null
+        },
+        {
+          "text": "Taiwan",
+          "image": null
+        },
+        {
+          "text": "China",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Skyscrapers"
+    },
+    {
+      "q": "In which city is the Burj Khalifa located?",
+      "image": "https://assets.joe.ie/uploads/2026/11/23-1.webp",
+      "options": [
+        {
+          "text": "Dubai",
+          "image": null
+        },
+        {
+          "text": "Abu Dhabi",
+          "image": null
+        },
+        {
+          "text": "Riyadh",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 5: Skyscrapers"
+    },
+    {
+      "q": "This is the tallest building in the UK outside London, but which city is it in?",
+      "image": "https://assets.joe.ie/uploads/2026/11/24.webp",
+      "options": [
+        {
+          "text": "Glasgow",
+          "image": null
+        },
+        {
+          "text": "Manchester",
+          "image": null
+        },
+        {
+          "text": "Birmingham",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Skyscrapers"
+    },
+    {
+      "q": "Pictured here, where are the Petronas Towers located?",
+      "image": "https://assets.joe.ie/uploads/2026/11/25-1.webp",
+      "options": [
+        {
+          "text": "Jakarta, Indonesia",
+          "image": null
+        },
+        {
+          "text": "Kuala Lumpur, Malaysia",
+          "image": null
+        },
+        {
+          "text": "Singapore",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 5: Skyscrapers"
+    }
+  ]
+}

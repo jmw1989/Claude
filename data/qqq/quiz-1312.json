@@ -1,0 +1,88 @@
+{
+  "source": "QuizQuizQuiz",
+  "url": "https://quizquizquiz.com/friday/",
+  "fetchedAt": "2026-11-20T01:27:39.034Z",
+  "fetchedVia": "jina",
+  "title": "The QuizQuizQuiz Friday Quiz, 20th November 2026",
+  "quizId": "1312",
+  "submitUrl": "https://quizquizquiz.com/friday/submit",
+  "hidden": {
+    "quiz_id": "1312",
+    "email": "",
+    "key": "",
+    "time-taken": "0"
+  },
+  "questions": [
+    {
+      "number": 1,
+      "q": "In the children's song, when there were ten in the bed, what did the little one say?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-1-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "q": "What was the first name of the wife of Rainier III, Prince of Monaco?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-2-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "q": "Commonly seen on aeroplanes, what item of furnishing takes its name from a type of hair oil used by men in the early 19th century?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-3-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "q": "In the first series of which British TV show was a warehouse worker played by Neil Fitzmaurice hired in the first episode and made redundant in the last episode?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-4-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "q": "Name five of the ten all-time best selling albums in the UK, according to the Official Charts Company. This can include Greatest Hits. There are ten different artists - we do want the album name, not just the artist.",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-5-0",
+          "label": "Best selling album 1"
+        },
+        {
+          "name": "answer-5-1",
+          "label": "Best selling album 2"
+        },
+        {
+          "name": "answer-5-2",
+          "label": "Best selling album 3"
+        },
+        {
+          "name": "answer-5-3",
+          "label": "Best selling album 4"
+        },
+        {
+          "name": "answer-5-4",
+          "label": "Best selling album 5"
+        }
+      ]
+    }
+  ]
+}

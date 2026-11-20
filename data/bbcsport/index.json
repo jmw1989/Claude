@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-16T21:40:14.422Z",
+  "updatedAt": "2026-11-20T01:27:40.561Z",
   "quizzes": [
+    {
+      "id": "c6pw4xnjrzydo",
+      "url": "https://www.bbc.co.uk/sport/articles/c6pw4xnjrzydo",
+      "title": "BBC Sport weekly quiz: When did England last beat the world champions?",
+      "description": "How much attention have you paid to what's happened in the world of sport over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/a1dc/live/5bdf8f60-e376-11f1-a094-5fdc692f3e33.png",
+      "publishedAt": "2026-11-19T07:54:27.024Z"
+    },
     {
       "id": "cme391kq6xgyo",
       "url": "https://www.bbc.co.uk/sport/articles/cme391kq6xgyo",

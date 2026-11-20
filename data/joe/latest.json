@@ -1,50 +1,30 @@
 {
   "source": "JOE",
-  "week": 529,
-  "title": "The JOE Friday Pub Quiz: week 529",
-  "description": "Welcome back to the JOE Friday Pub Quiz!I bring this week's quiz to you from the utter chaos of another Premier League \"Sackathon.\"",
-  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-529-889400",
-  "image": "https://assets.joe.ie/uploads/2026/11/529-1024x573.webp",
-  "publishedAt": "2026-11-12T17:00:00.000Z",
-  "fetchedAt": "2026-11-13T08:08:07.849Z",
+  "week": 530,
+  "title": "The JOE Friday Pub Quiz: week 530",
+  "description": "Welcome back to another week of the JOE Friday Pub Quiz: Quiz Theft Auto!",
+  "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-530-889920",
+  "image": "https://assets.joe.ie/uploads/2026/11/530-1024x573.webp",
+  "publishedAt": "2026-11-19T17:00:00.000Z",
+  "fetchedAt": "2026-11-20T01:26:58.334Z",
   "status": "ok",
   "parser": "embed/wpvq",
   "fetchedVia": "jina",
   "questions": [
     {
-      "q": "How many different colours are recognised as making up a rainbow?",
-      "image": "https://assets.joe.ie/uploads/2026/11/1.webp",
+      "q": "What is Ireland's most common surname?",
+      "image": "https://assets.joe.ie/uploads/2026/11/1-1.png",
       "options": [
         {
-          "text": "Nine",
+          "text": "Byrne",
           "image": null
         },
         {
-          "text": "Seven",
+          "text": "Kelly",
           "image": null
         },
         {
-          "text": "Eight",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 1: General Knowledge"
-    },
-    {
-      "q": "What is the traditional base meat in a classic, authentic Irish stew?",
-      "image": "https://assets.joe.ie/uploads/2026/11/2-1.png",
-      "options": [
-        {
-          "text": "Beef",
-          "image": null
-        },
-        {
-          "text": "Chicken",
-          "image": null
-        },
-        {
-          "text": "Lamb/Mutton",
+          "text": "Murphy",
           "image": null
         }
       ],
@@ -52,19 +32,39 @@
       "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "Which sporting chief did Donald Trump ask to become his press secretary earlier this week?",
-      "image": "https://assets.joe.ie/uploads/2026/11/3.webp",
+      "q": "According to the saying, to which European city do all roads lead?",
+      "image": "https://assets.joe.ie/uploads/2026/11/2.webp",
       "options": [
         {
-          "text": "Adam Silver",
+          "text": "Paris",
           "image": null
         },
         {
-          "text": "Dana White",
+          "text": "Athens",
           "image": null
         },
         {
-          "text": "Gianni Infantino",
+          "text": "Rome",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "In which European capital would you find The Little Mermaid statue?",
+      "image": "https://assets.joe.ie/uploads/2026/11/3-1.png",
+      "options": [
+        {
+          "text": "Lisbon",
+          "image": null
+        },
+        {
+          "text": "Copenhagen",
+          "image": null
+        },
+        {
+          "text": "Brussels",
           "image": null
         }
       ],
@@ -72,15 +72,235 @@
       "category": "ROUND 1: General Knowledge"
     },
     {
-      "q": "Which country, other than the United States and the Soviet Union, is the only nation to have independently sent a person into space?",
-      "image": "https://assets.joe.ie/uploads/2026/11/4.webp",
+      "q": "After Russia and Turkey, what is the European country with the highest population?",
+      "image": "https://assets.joe.ie/uploads/2026/11/4-1.webp",
       "options": [
         {
-          "text": "France",
+          "text": "Germany",
           "image": null
         },
         {
-          "text": "China",
+          "text": "The UK",
+          "image": null
+        },
+        {
+          "text": "France",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "The ancient passage tomb of Newgrange, which is older than the Egyptian pyramids, is located in which Irish county?",
+      "image": "https://assets.joe.ie/uploads/2026/11/5-1.png",
+      "options": [
+        {
+          "text": "Kilkenny",
+          "image": null
+        },
+        {
+          "text": "Laois",
+          "image": null
+        },
+        {
+          "text": "Meath",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Since its release in 2013, how many copies of Grand Theft Auto V have been sold?",
+      "image": "https://assets.joe.ie/uploads/2026/11/6.webp",
+      "options": [
+        {
+          "text": "337 million copies",
+          "image": null
+        },
+        {
+          "text": "424 million copies",
+          "image": null
+        },
+        {
+          "text": "235 million copies",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "The latest Grand Theft Auto game, GTA VI, is set in Leonida, which is based on which real American state?",
+      "image": "https://assets.joe.ie/uploads/2026/11/7-1.webp",
+      "options": [
+        {
+          "text": "Flordia",
+          "image": null
+        },
+        {
+          "text": "Georgia",
+          "image": null
+        },
+        {
+          "text": "California",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "What is this GTA V character called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/8-1.webp",
+      "options": [
+        {
+          "text": "Steve",
+          "image": null
+        },
+        {
+          "text": "Michael",
+          "image": null
+        },
+        {
+          "text": "Carl",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "How many years ago was the very first Grand Theft Auto game released?",
+      "image": "https://assets.joe.ie/uploads/2026/11/9-1.webp",
+      "options": [
+        {
+          "text": "26 years ago",
+          "image": null
+        },
+        {
+          "text": "29 years ago",
+          "image": null
+        },
+        {
+          "text": "25 years ago",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "Which video game company produces the Grand Theft Auto series?",
+      "image": "https://assets.joe.ie/uploads/2026/11/10-1.webp",
+      "options": [
+        {
+          "text": "Bethesda Softworks",
+          "image": null
+        },
+        {
+          "text": "Rockstar Games",
+          "image": null
+        },
+        {
+          "text": "Ubisoft",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Grand Theft Auto"
+    },
+    {
+      "q": "Ronaldinho made a shock return to pro football last weekend, playing a third-tier game for a team in which country?",
+      "image": "https://assets.joe.ie/uploads/2026/11/11-1.webp",
+      "options": [
+        {
+          "text": "Spain",
+          "image": null
+        },
+        {
+          "text": "Brazil",
+          "image": null
+        },
+        {
+          "text": "Italy",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "Which club currently sit at the top of the men's UEFA Champions League table?",
+      "image": "https://assets.joe.ie/uploads/2026/11/12-1.webp",
+      "options": [
+        {
+          "text": "Arsenal",
+          "image": null
+        },
+        {
+          "text": "PSG",
+          "image": null
+        },
+        {
+          "text": "Bayern Munich",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "What was the final score of the Republic of Ireland’s UEFA Nations League match against Kosovo at the Aviva Stadium earlier this week?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13-1.png",
+      "options": [
+        {
+          "text": "3-0 to Ireland",
+          "image": null
+        },
+        {
+          "text": "2-1 to Kosovo",
+          "image": null
+        },
+        {
+          "text": "0-0 draw",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "For which sports competiton would a team win this trophy?",
+      "image": "https://assets.joe.ie/uploads/2026/11/13-1.webp",
+      "options": [
+        {
+          "text": "National Basketball Association (NBA)",
+          "image": null
+        },
+        {
+          "text": "National Hockey League (NHL)",
+          "image": null
+        },
+        {
+          "text": "The Ryder Cup",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 3: Sport"
+    },
+    {
+      "q": "During a 2018 tour of which country were Australian cricketers caught using sandpaper to tamper with the ball?",
+      "image": "https://assets.joe.ie/uploads/2026/11/15-1.webp",
+      "options": [
+        {
+          "text": "England",
+          "image": null
+        },
+        {
+          "text": "South Africa",
           "image": null
         },
         {
@@ -89,427 +309,207 @@
         }
       ],
       "answer": 1,
-      "category": "ROUND 1: General Knowledge"
+      "category": "ROUND 3: Sport"
     },
     {
-      "q": "This species of bird is the fastest travelling animal on the planet, able to reach speeds over 300km/h. What is it called?",
-      "image": "https://assets.joe.ie/uploads/2026/11/5.webp",
+      "q": "Which song claimed the Irish Christmas Number One spot in 2025?",
+      "image": "https://assets.joe.ie/uploads/2026/11/16-1.webp",
       "options": [
         {
-          "text": "Harpy Eagle",
+          "text": "'Killeagh', Kingfishr",
           "image": null
         },
         {
-          "text": "Peregrine Falcon",
+          "text": "'Last Christmas', Wham!",
           "image": null
         },
         {
-          "text": "Osprey",
+          "text": "'XMAS', Kylie Minogue",
           "image": null
         }
       ],
-      "answer": 1,
-      "category": "ROUND 1: General Knowledge"
+      "answer": 0,
+      "category": "ROUND 4: Entertainment"
     },
     {
-      "q": "At which Olympic Games did boxer Michael Carruth win Ireland's first-ever Olympic gold medal in boxing?",
-      "image": "https://assets.joe.ie/uploads/2026/11/6-5.jpg",
+      "q": "Which Shakespeare play has had the most successful film adaptation at the worldwide box office?",
+      "image": "https://assets.joe.ie/uploads/2026/11/17-1.webp",
       "options": [
         {
-          "text": "Atlanta 1996",
+          "text": "Hamnet",
           "image": null
         },
         {
-          "text": "Barcelona 1992",
+          "text": "MacBeth",
           "image": null
         },
         {
-          "text": "Seoul 1988",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Which team did Man United sign Michael Carrick from, as a player, in 2006?",
-      "image": "https://assets.joe.ie/uploads/2026/11/7.webp",
-      "options": [
-        {
-          "text": "Newcastle United",
-          "image": null
-        },
-        {
-          "text": "West Ham United",
-          "image": null
-        },
-        {
-          "text": "Tottenham Hotspur",
+          "text": "Romeo and Juliet",
           "image": null
         }
       ],
       "answer": 2,
-      "category": "ROUND 2: Sport"
+      "category": "ROUND 4: Entertainment"
     },
     {
-      "q": "How many teams from Canada play in the NBA?",
-      "image": "https://assets.joe.ie/uploads/2026/11/8.webp",
+      "q": "How many 'Hunger Games' books has Suzanne Collins written?",
+      "image": "https://assets.joe.ie/uploads/2026/11/18-1.webp",
       "options": [
-        {
-          "text": "One",
-          "image": null
-        },
-        {
-          "text": "Two",
-          "image": null
-        },
         {
           "text": "Three",
           "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Which midlands-based English club did Enzo Maresca play for between 1998-2000?",
-      "image": "https://assets.joe.ie/uploads/2026/11/9.webp",
-      "options": [
+        },
         {
-          "text": "West Brom",
+          "text": "Four",
           "image": null
         },
         {
-          "text": "Wolverhampton Wanderers",
-          "image": null
-        },
-        {
-          "text": "Aston Villa",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "Only one WSL club has ever lifted the UEFA Women’s Champions League trophy. Can you name them?",
-      "image": "https://assets.joe.ie/uploads/2026/11/10.webp",
-      "options": [
-        {
-          "text": "Arsenal",
-          "image": null
-        },
-        {
-          "text": "Chelsea",
-          "image": null
-        },
-        {
-          "text": "Man City",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 2: Sport"
-    },
-    {
-      "q": "In which town is The Office (US) set?",
-      "image": "https://assets.joe.ie/uploads/2026/11/11.webp",
-      "options": [
-        {
-          "text": "Stamford, Connecticut",
-          "image": null
-        },
-        {
-          "text": "Albany, New York",
-          "image": null
-        },
-        {
-          "text": "Scranton, Pennsylvania",
+          "text": "Five",
           "image": null
         }
       ],
       "answer": 2,
-      "category": "ROUND 3: Entertainment"
+      "category": "ROUND 4: Entertainment"
     },
     {
-      "q": "Starring main character and gentleman thief Assane Diop, what is this Netflix series called?",
-      "image": "https://assets.joe.ie/uploads/2026/11/12.webp",
+      "q": "What was Robert Pattinson's Twilight character called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/19-1.webp",
       "options": [
         {
-          "text": "Lupin",
+          "text": "Cedric",
           "image": null
         },
         {
-          "text": "The Night Agent",
+          "text": "Edward",
           "image": null
         },
         {
-          "text": "Shadow Force",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 3: Entertainment"
-    },
-    {
-      "q": "Which legendary English musician did Olivia Rodrigo surprise Glastonbury crowds by bringing on stage during her 2025 headline set?",
-      "image": "https://assets.joe.ie/uploads/2026/11/13.webp",
-      "options": [
-        {
-          "text": "Damon Albarn, Blur",
-          "image": null
-        },
-        {
-          "text": "Robert Smith, The Cure",
-          "image": null
-        },
-        {
-          "text": "Paul McCartney",
+          "text": "Jacob",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 3: Entertainment"
+      "category": "ROUND 4: Entertainment"
     },
     {
-      "q": "What is the name of the fictional pub where the characters regularly meet in the sitcom How I Met Your Mother?",
-      "image": "https://assets.joe.ie/uploads/2026/11/14.webp",
+      "q": "Which of these actors played James Bond in just one official 007 film?",
+      "image": "https://assets.joe.ie/uploads/2026/11/20.jpeg",
       "options": [
         {
-          "text": "O'Murphy's Pub",
+          "text": "Barry Nelson",
           "image": null
         },
         {
-          "text": "Paddy's Pub",
+          "text": "Timothy Dalton",
           "image": null
         },
         {
-          "text": "MacLaren's Pub",
+          "text": "George Lazenby",
           "image": null
         }
       ],
       "answer": 2,
-      "category": "ROUND 3: Entertainment"
+      "category": "ROUND 4: Entertainment"
     },
     {
-      "q": "Dame Judi Dench won an Oscar for her portrayal of Queen Elizabeth I in the 1998 film Shakespeare in Love. But how little screen time did she have in the film?",
-      "image": "https://assets.joe.ie/uploads/2026/11/15.webp",
+      "q": "What is this New York skyscraper called?",
+      "image": "https://assets.joe.ie/uploads/2026/11/21-1.webp",
       "options": [
         {
-          "text": "Just twelve minutes",
+          "text": "Empire State Building",
           "image": null
         },
         {
-          "text": "Just nineteen minutes",
+          "text": "Rockefeller Building",
           "image": null
         },
         {
-          "text": "Just eight minutes",
+          "text": "Chrysler Building",
           "image": null
         }
       ],
       "answer": 2,
-      "category": "ROUND 3: Entertainment"
+      "category": "ROUND 5: Skyscrapers"
     },
     {
-      "q": "Located between China and Russia, what country is this?",
-      "image": "https://assets.joe.ie/uploads/2026/11/16.webp",
+      "q": "In what country would you find this building?",
+      "image": "https://assets.joe.ie/uploads/2026/11/22-1.webp",
       "options": [
         {
-          "text": "Kyrgyzstan",
+          "text": "South Korea",
           "image": null
         },
         {
-          "text": "Mongolia",
+          "text": "Taiwan",
           "image": null
         },
         {
-          "text": "Kazakhstan",
+          "text": "China",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 4: Landlocked Countries"
+      "category": "ROUND 5: Skyscrapers"
     },
     {
-      "q": "Positioned between Kenya and South Sudan, what country is this?",
-      "image": "https://assets.joe.ie/uploads/2026/11/17.webp",
+      "q": "In which city is the Burj Khalifa located?",
+      "image": "https://assets.joe.ie/uploads/2026/11/23-1.webp",
       "options": [
         {
-          "text": "Tanzania",
+          "text": "Dubai",
           "image": null
         },
         {
-          "text": "Uganda",
+          "text": "Abu Dhabi",
           "image": null
         },
         {
-          "text": "Rwanda",
-          "image": null
-        }
-      ],
-      "answer": 1,
-      "category": "ROUND 4: Landlocked Countries"
-    },
-    {
-      "q": "Which European country is this?",
-      "image": "https://assets.joe.ie/uploads/2026/11/18.webp",
-      "options": [
-        {
-          "text": "Austria",
-          "image": null
-        },
-        {
-          "text": "Czechia/Czech Republic",
-          "image": null
-        },
-        {
-          "text": "Switzerland",
+          "text": "Riyadh",
           "image": null
         }
       ],
       "answer": 0,
-      "category": "ROUND 4: Landlocked Countries"
+      "category": "ROUND 5: Skyscrapers"
     },
     {
-      "q": "Between Paraguay, Peru, and Brazil, what country is this?",
-      "image": "https://assets.joe.ie/uploads/2026/11/19.webp",
+      "q": "This is the tallest building in the UK outside London, but which city is it in?",
+      "image": "https://assets.joe.ie/uploads/2026/11/24.webp",
       "options": [
         {
-          "text": "Bolivia",
+          "text": "Glasgow",
           "image": null
         },
         {
-          "text": "Ecuador",
+          "text": "Manchester",
           "image": null
         },
         {
-          "text": "Venezuela",
-          "image": null
-        }
-      ],
-      "answer": 0,
-      "category": "ROUND 4: Landlocked Countries"
-    },
-    {
-      "q": "What country is this?",
-      "image": "https://assets.joe.ie/uploads/2026/11/20.webp",
-      "options": [
-        {
-          "text": "Nepal",
-          "image": null
-        },
-        {
-          "text": "Bhutan",
-          "image": null
-        },
-        {
-          "text": "Myanmar",
+          "text": "Birmingham",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 4: Landlocked Countries"
+      "category": "ROUND 5: Skyscrapers"
     },
     {
-      "q": "In what year did \"Can't Get You Out of My Head\" by Kylie Minogue first make it to number one in the Irish charts?",
-      "image": "https://assets.joe.ie/uploads/2026/11/21.webp",
+      "q": "Pictured here, where are the Petronas Towers located?",
+      "image": "https://assets.joe.ie/uploads/2026/11/25-1.webp",
       "options": [
         {
-          "text": "1998",
+          "text": "Jakarta, Indonesia",
           "image": null
         },
         {
-          "text": "2003",
+          "text": "Kuala Lumpur, Malaysia",
           "image": null
         },
         {
-          "text": "2001",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: Number Ones"
-    },
-    {
-      "q": "In what year did \"God's Plan\" by Drake first make it to number one in the Irish charts?",
-      "image": "https://assets.joe.ie/uploads/2026/11/22.webp",
-      "options": [
-        {
-          "text": "2014",
-          "image": null
-        },
-        {
-          "text": "2016",
-          "image": null
-        },
-        {
-          "text": "2018",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: Number Ones"
-    },
-    {
-      "q": "In what year did \"As It Was\" by Harry Styles first make it to number one in the Irish charts?",
-      "image": "https://assets.joe.ie/uploads/2026/11/23.webp",
-      "options": [
-        {
-          "text": "2019",
-          "image": null
-        },
-        {
-          "text": "2020",
-          "image": null
-        },
-        {
-          "text": "2022",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: Number Ones"
-    },
-    {
-      "q": "In what year did \"A Hard Day's Night\" by The Beatles reach number one on the Irish Singles Chart?",
-      "image": "https://assets.joe.ie/uploads/2026/11/24.jpeg",
-      "options": [
-        {
-          "text": "1969",
-          "image": null
-        },
-        {
-          "text": "1959",
-          "image": null
-        },
-        {
-          "text": "1964",
-          "image": null
-        }
-      ],
-      "answer": 2,
-      "category": "ROUND 5: Number Ones"
-    },
-    {
-      "q": "In what year did \"Nothing's Gonna Stop Us Now\" by Starship first reach number one on the Irish Singles Chart?",
-      "image": "https://assets.joe.ie/uploads/2026/11/25.webp",
-      "options": [
-        {
-          "text": "1989",
-          "image": null
-        },
-        {
-          "text": "1987",
-          "image": null
-        },
-        {
-          "text": "1985",
+          "text": "Singapore",
           "image": null
         }
       ],
       "answer": 1,
-      "category": "ROUND 5: Number Ones"
+      "category": "ROUND 5: Skyscrapers"
     }
   ]
 }

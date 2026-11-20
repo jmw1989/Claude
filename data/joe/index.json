@@ -1,6 +1,15 @@
 {
   "quizzes": [
     {
+      "week": 530,
+      "title": "The JOE Friday Pub Quiz: week 530",
+      "file": "week-530.json",
+      "status": "ok",
+      "count": 25,
+      "publishedAt": "2026-11-19T17:00:00.000Z",
+      "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-530-889920"
+    },
+    {
       "week": 529,
       "title": "The JOE Friday Pub Quiz: week 529",
       "file": "week-529.json",
@@ -46,5 +55,5 @@
       "url": "https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-525-886057"
     }
   ],
-  "updatedAt": "2026-11-13T08:08:07.849Z"
+  "updatedAt": "2026-11-20T01:26:58.334Z"
 }
