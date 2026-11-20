@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-20T01:27:40.848Z",
+  "updatedAt": "2026-11-20T15:51:09.196Z",
   "quizzes": [
+    {
+      "id": "quiz-of-the-week-14-20-november",
+      "url": "https://theweek.com/puzzles/quiz-of-the-week-14-20-november",
+      "title": "Quiz of The Week: 14 - 20 November",
+      "description": "Have you been paying attention to The Week’s news?",
+      "image": "https://cdn.mos.cms.futurecdn.net/86bDC4DBYsEpXFj4Q9HpEf-2000-80.jpg",
+      "publishedAt": "2026-11-20T11:56:47Z"
+    },
     {
       "id": "quiz-of-the-week-7-13-november",
       "url": "https://theweek.com/puzzles/quiz-of-the-week-7-13-november",
