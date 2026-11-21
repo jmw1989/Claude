@@ -206,6 +206,7 @@ async function loadJoe() {
   state.joe.latest = latest ? await loadJoeWeek(latest) : null;
   renderJoeCard();
   if (current === 'joe') renderJoe();
+  return state.joe.latest;
 }
 
 async function loadJoeWeek(entry) {
@@ -284,7 +285,150 @@ function renderJoe() {
         })
         .join('')
     : '<li class="empty">Past quizzes will build up here each week.</li>';
+  renderRefetch();
 }
+
+// ---------- Fetch the JOE quiz again ----------
+// The quiz is imported by a GitHub Actions workflow (.github/workflows/joe-quiz.yml).
+// This button starts that workflow through GitHub's API, using a token the user
+// pastes in once. The token is kept only in this browser's storage.
+const GH = { owner: 'jmw1989', repo: 'Claude', workflow: 'joe-quiz.yml' };
+const GH_API = `https://api.github.com/repos/${GH.owner}/${GH.repo}`;
+const GH_ACTIONS_PAGE = `https://github.com/${GH.owner}/${GH.repo}/actions/workflows/${GH.workflow}`;
+const refetch = { busy: false, status: '', setup: false };
+
+function isUkJoe(quiz) {
+  try {
+    return /(^|\.)joe\.co\.uk$/i.test(new URL(quiz.url).hostname);
+  } catch {
+    return false;
+  }
+}
+
+function renderRefetch() {
+  const el = $('#joe-refetch');
+  const latest = state.joe.latest;
+  const ok = latest && latest.status === 'ok' && latest.questions?.length && isUkJoe(latest);
+  const token = store.get('ghToken', '');
+  const intro = ok
+    ? "Quiz not up to date? Check JOE for a newer one."
+    : "This week's UK quiz hasn't come through yet. Try fetching it again.";
+  el.innerHTML = `
+    <h2>Fetch again</h2>
+    <p class="hint">${intro}</p>
+    ${
+      refetch.setup && !token
+        ? `<form class="refetch-setup" id="refetch-setup">
+            <p class="hint">One-time setup: the button needs a GitHub token so it can start the fetch for you.
+              <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create a fine-grained token ↗</a>
+              with access to only the <b>${GH.owner}/${GH.repo}</b> repository and <b>Actions: Read and write</b> permission, then paste it here.
+              It is stored only on this device.</p>
+            <input type="password" id="gh-token" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+            <div class="row">
+              <button type="button" class="secondary-btn" id="refetch-cancel">Cancel</button>
+              <button type="submit" class="secondary-btn refetch-go">Save and fetch</button>
+            </div>
+          </form>`
+        : `<button class="secondary-btn full refetch-go" id="refetch-btn" ${refetch.busy ? 'disabled' : ''}>${refetch.busy ? 'Fetching…' : '🔄 Fetch the quiz again'}</button>`
+    }
+    ${refetch.status ? `<p class="refetch-status" role="status">${escapeHtml(refetch.status)}</p>` : ''}
+    <p class="hint refetch-links">
+      <a href="${GH_ACTIONS_PAGE}" target="_blank" rel="noopener">Or run it on GitHub ↗</a>
+      ${token && !refetch.busy ? ' · <button class="link-btn" id="refetch-forget">Forget token</button>' : ''}
+    </p>`;
+}
+
+function setRefetchStatus(msg) {
+  refetch.status = msg;
+  if (current === 'joe') renderRefetch();
+}
+
+async function gh(path, token, options = {}) {
+  const res = await fetch(`${GH_API}${path}`, {
+    ...options,
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', ...options.headers },
+  });
+  if (res.status === 401) {
+    store.set('ghToken', '');
+    throw new Error('GitHub rejected the token (it may have expired). Tap the button to enter a new one.');
+  }
+  if (res.status === 403 || res.status === 404) {
+    throw new Error(`The token can't run the fetch. Check it has access to ${GH.owner}/${GH.repo} with "Actions: Read and write" permission.`);
+  }
+  if (!res.ok) throw new Error(`GitHub returned an error (${res.status}).`);
+  return res.status === 204 ? null : res.json();
+}
+
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function runRefetch() {
+  const token = store.get('ghToken', '');
+  if (!token) {
+    refetch.setup = true;
+    renderRefetch();
+    $('#gh-token')?.focus();
+    return;
+  }
+  const before = state.joe.latest;
+  refetch.busy = true;
+  setRefetchStatus('Starting the fetch on GitHub…');
+  try {
+    const { default_branch: ref } = await gh('', token);
+    const startedAt = Date.now() - 60000; // allow for clock differences
+    await gh(`/actions/workflows/${GH.workflow}/dispatches`, token, { method: 'POST', body: JSON.stringify({ ref }) });
+    setRefetchStatus('Fetching the quiz from JOE. This usually takes a minute or two…');
+
+    // Wait for the workflow run to finish (up to about 8 minutes).
+    let run = null;
+    for (let i = 0; i < 48; i++) {
+      await wait(10000);
+      const { workflow_runs: runs = [] } = await gh(`/actions/workflows/${GH.workflow}/runs?event=workflow_dispatch&per_page=5`, token);
+      run = runs.find((r) => Date.parse(r.created_at) >= startedAt) || run;
+      if (run?.status === 'completed') break;
+    }
+    if (!run || run.status !== 'completed') throw new Error('The fetch is taking longer than usual. Check back in a few minutes.');
+
+    // The saved quiz takes a little while to reach the website after the run commits it.
+    setRefetchStatus('Fetch finished. Loading the quiz…');
+    let latest = null;
+    for (let i = 0; i < 8; i++) {
+      latest = await loadJoe();
+      const changed = latest && (latest.week !== before?.week || latest.url !== before?.url || latest.status !== before?.status);
+      if (changed) break;
+      await wait(15000);
+    }
+    const ok = latest && latest.status === 'ok' && latest.questions?.length && isUkJoe(latest);
+    if (ok) setRefetchStatus(`Got it: week ${latest.week}, ${latest.questions.length} questions.`);
+    else if (run.conclusion !== 'success') setRefetchStatus("The fetch ran into a problem. JOE may be blocking it right now. Try again later, or play it on JOE.");
+    else setRefetchStatus("Couldn't find a newer UK quiz on JOE yet. It usually comes out on Thursday afternoon or evening. Try again later.");
+  } catch (err) {
+    setRefetchStatus(err.message || "Couldn't reach GitHub. Check your connection and try again.");
+  } finally {
+    refetch.busy = false;
+    if (current === 'joe') renderRefetch();
+  }
+}
+
+$('#joe-refetch').addEventListener('click', (e) => {
+  if (e.target.closest('#refetch-btn')) runRefetch();
+  else if (e.target.closest('#refetch-cancel')) {
+    refetch.setup = false;
+    renderRefetch();
+  } else if (e.target.closest('#refetch-forget')) {
+    store.set('ghToken', '');
+    refetch.status = 'Token removed from this device.';
+    renderRefetch();
+  }
+});
+
+$('#joe-refetch').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const token = $('#gh-token').value.trim();
+  if (!token) return;
+  store.set('ghToken', token);
+  refetch.setup = false;
+  runRefetch();
+});
 
 $('#screen-joe').addEventListener('click', async (e) => {
   const btn = e.target.closest('[data-play-week]');

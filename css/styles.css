@@ -155,6 +155,18 @@ main { max-width: 640px; margin: 0 auto; padding: 16px; }
 .joe-hero .primary-btn { background: var(--joe-ink); color: var(--joe); margin-top: 16px; }
 .joe-hero .secondary-btn { background: transparent; color: #fff; border-color: rgb(255 255 255 / 30%); }
 .joe-img { width: calc(100% + 36px); margin: -18px -18px 14px; max-height: 200px; object-fit: cover; display: block; }
+.joe-refetch { margin-top: 16px; }
+.joe-refetch h2 { margin-top: 0; }
+.joe-refetch #refetch-btn { margin-top: 4px; }
+.joe-refetch a { color: var(--accent); }
+.joe-refetch .refetch-go:disabled { opacity: 0.6; }
+.refetch-setup input {
+  width: 100%; padding: 12px; font: inherit; font-size: 16px; color: var(--text);
+  background: var(--bg); border: 2px solid var(--border); border-radius: 10px;
+}
+.refetch-setup input:focus { outline: none; border-color: var(--accent); }
+.refetch-status { margin: 12px 0 0; font-weight: 600; }
+.refetch-links { margin: 12px 0 0; }
 .joe-list { list-style: none; padding: 0; margin: 0; }
 .joe-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; margin-bottom: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
 .joe-list li span { display: flex; flex-direction: column; }
