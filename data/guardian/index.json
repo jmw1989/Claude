@@ -1,6 +1,106 @@
 {
   "quizzes": [
     {
+      "id": "2026-nov-21",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/nov/21/what-links-diana-moran-and-fenway-parks-left-field-wall-the-saturday-quiz",
+      "title": "What links Diana Moran and Fenway Park’s left-field wall? The Saturday quiz",
+      "description": "From Battle Creek, Michigan, to the ‘land of a million elephants’, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/236176a9519bf05d683704cc5a5d135d51981ce3/370_0_2501_2000/master/2501.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=fa5b8690909208f7057d02fe00ef7851",
+      "publishedAt": "2026-11-21T07:00:51.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "What prompted more than 20,000 readers of the Strand magazine to cancel their subscriptions?",
+          "answer": "Apparent death of Sherlock Holmes (1893 story).",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "Battle Creek, Michigan, is known as the home of what type of food?",
+          "answer": "Breakfast cereal (Kellogg’s home).",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "Which Belgian masterpiece is said to be the most stolen artwork of all time?",
+          "answer": "Ghent Altarpiece by Hubert and Jan van Eyck.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "Which agreement was, legend has it, made by the Ankerwycke Yew?",
+          "answer": "Magna Carta.",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "After a windfall in 1961, who vowed to “spend, spend, spend”?",
+          "answer": "Viv Nicholson (pools winner).",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "What word describes metals that can be drawn into wire?",
+          "answer": "Ductile.",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "Which radical militant group took their name from a Bob Dylan lyric?",
+          "answer": "Weathermen/Weather Underground (from Subterranean Homesick Blues).",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Now home to fewer than a thousand, which country was nicknamed “land of a million elephants”?",
+          "answer": "Laos.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Cuauhtémoc Blanco; Kakha Kaladze; Romário; George Weah?",
+          "answer": "Footballers who went into politics: governor of Morelos, Mexico; mayor of Tbilisi, Georgia; senator for Rio de Janeiro, Brazil; president of Liberia.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Makes a liquid flow; openings in the skin; short wait; clawed animal’s feet?",
+          "answer": "Homophones: pours; pores; pause; paws.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Enid Frick; Maggie Prescott; Miranda Priestly; Wilhelmina Slater?",
+          "answer": "TV and film magazine editors: Sex and the City; Funny Face; The Devil Wears Prada; Ugly Betty.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Knettishall Heath Country Park, Suffolk and Holme-next-the-Sea, Norfolk?",
+          "answer": "Peddars Way national trail.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Absinthe; Fenway Park’s left-field wall; jealousy; Diana Moran?",
+          "answer": "Green bynames: g fairy; g monster; g-eyed monster; g goddess fitness instructor.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Cylinder; cordless; handheld; robot; upright?",
+          "answer": "Vacuum cleaners.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "In a Circle; The Twelve; The Scattered?",
+          "answer": "Etymologies of the names of Greek island groups: Cyclades; Dodecanese; Sporades.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
       "id": "2026-nov-14",
       "url": "https://www.theguardian.com/lifeandstyle/2026/nov/14/saturday-quiz-day-of-the-jackal-1979-sun-headline",
       "title": "What links The Day of the Jackal film with a 1979 headline in the Sun? The Saturday quiz",
@@ -801,5 +901,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-11-20T22:29:05.000Z"
+  "updatedAt": "2026-11-21T17:07:21.858Z"
 }
