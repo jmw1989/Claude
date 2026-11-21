@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { findWeeklyQuizLinks, parseQuizPage, weekFromUrl } from '../joe-parser.mjs';
+import { findWeeklyQuizLinks, isUkQuizUrl, parseQuizPage, weekFromUrl } from '../joe-parser.mjs';
 
 const page = (body, head = '') =>
   `<!doctype html><html><head><title>The JOE Friday Pub Quiz: week 525</title>
@@ -157,4 +157,11 @@ test('reads JOE WP Viral Quiz embeds, including rounds and the answer key', () =
   assert.equal(q3.category, 'ROUND 2: Sport');
   assert.equal(q3.q, 'When Liverpool signed Andy Carroll in 2011, how much did he cost?');
   assert.equal(q3.options[q3.answer].text, '£20 million');
+});
+
+test('isUkQuizUrl tells the UK site from the Irish one', () => {
+  assert.equal(isUkQuizUrl('https://www.joe.co.uk/quiz/the-joe-friday-pub-quiz-week-530-551000'), true);
+  assert.equal(isUkQuizUrl('https://joe.co.uk/quiz/x'), true);
+  assert.equal(isUkQuizUrl('https://www.joe.ie/quiz/the-joe-friday-pub-quiz-week-530-889920'), false);
+  assert.equal(isUkQuizUrl('not a url'), false);
 });

@@ -2,22 +2,21 @@
 // ../data/joe so the app can play it. Run by .github/workflows/joe-quiz.yml.
 //
 // Usage: node fetch-joe-quiz.mjs [--url <quiz page url>] [--force]
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describePage } from './describe-page.mjs';
 import { ROUTES, fetchText, get, readJson } from './fetch-page.mjs';
-import { findQuizEmbeds, findWeeklyQuizLinks, parseQuizPage, weekFromUrl } from './joe-parser.mjs';
+import { findQuizEmbeds, findWeeklyQuizLinks, isUkQuizUrl, parseQuizPage, weekFromUrl } from './joe-parser.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(HERE, '..', 'data', 'joe');
 const DEBUG_DIR = join(HERE, 'debug');
 
+// Only the UK site (joe.co.uk) is used: joe.ie runs a different, Irish version of the quiz.
 const LISTING_PAGES = [
   'https://www.joe.co.uk/quiz',
-  'https://www.joe.ie/quiz',
   'https://www.joe.co.uk/',
-  'https://www.joe.ie/',
 ];
 
 // Search engines, used to discover the newest quiz link when JOE's own pages can't be read.
@@ -37,7 +36,8 @@ function parseArgs(argv) {
 
 async function findLatest() {
   let best = null;
-  const consider = (links, from) => {
+  const consider = (allLinks, from) => {
+    const links = allLinks.filter((link) => isUkQuizUrl(link.url));
     console.log(`${from}: found ${links.length} weekly quiz link(s)${links[0] ? `, newest week ${links[0].week}` : ''}`);
     if (links[0] && (!best || links[0].week > best.week)) best = links[0];
   };
@@ -82,8 +82,10 @@ async function main() {
   const target = args.url ? { url: args.url, week: weekFromUrl(args.url) } : await findLatest();
   const indexPath = join(DATA_DIR, 'index.json');
   const index = await readJson(indexPath, { quizzes: [] });
+  if (!isUkQuizUrl(target.url)) console.warn(`::warning::${target.url} is not on joe.co.uk, so it may be the Irish version of the quiz.`);
   const existing = index.quizzes.find((q) => q.week === target.week);
-  if (existing && existing.status === 'ok' && !args.force) {
+  // A week saved from joe.ie is fetched again so the UK version replaces it.
+  if (existing && existing.status === 'ok' && isUkQuizUrl(existing.url) && !args.force) {
     console.log(`Week ${target.week} is already saved (${existing.count} questions). Nothing to do.`);
     return;
   }
@@ -143,8 +145,17 @@ async function main() {
   await writeFile(join(DATA_DIR, file), JSON.stringify(quiz, null, 2) + '\n');
   await writeFile(join(DATA_DIR, 'latest.json'), JSON.stringify(quiz, null, 2) + '\n');
 
+  // Once a UK quiz is saved, drop the Irish (joe.ie) quizzes saved before the switch to joe.co.uk.
+  const replaceIrish = ok && isUkQuizUrl(quiz.url);
+  const keep = (q) => q.week !== week && (!replaceIrish || isUkQuizUrl(q.url));
+  if (replaceIrish) {
+    for (const old of index.quizzes.filter((q) => !keep(q) && q.week !== week && q.file)) {
+      await rm(join(DATA_DIR, old.file), { force: true });
+      console.log(`Removed week ${old.week}, saved from the Irish site (${old.url}).`);
+    }
+  }
   const entry = { week, title: quiz.title, file, status: quiz.status, count: quiz.questions.length, publishedAt: quiz.publishedAt, url: quiz.url };
-  index.quizzes = [entry, ...index.quizzes.filter((q) => q.week !== week)].sort((a, b) => b.week - a.week);
+  index.quizzes = [entry, ...index.quizzes.filter(keep)].sort((a, b) => b.week - a.week);
   index.updatedAt = quiz.fetchedAt;
   await writeFile(indexPath, JSON.stringify(index, null, 2) + '\n');
 }

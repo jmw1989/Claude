@@ -434,6 +434,15 @@ export function findWeeklyQuizLinks(html, baseUrl) {
   return [...byWeek.entries()].sort((a, b) => b[0] - a[0]).map(([week, url]) => ({ week, url }));
 }
 
+// True for quiz pages on the UK site (joe.co.uk), as opposed to the Irish one (joe.ie).
+export function isUkQuizUrl(url) {
+  try {
+    return /(^|\.)joe\.co\.uk$/i.test(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}
+
 export function weekFromUrl(url) {
   const m = /pub-quiz-week-(\d+)/i.exec(url || '');
   return m ? Number(m[1]) : null;
