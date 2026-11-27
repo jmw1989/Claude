@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-23T23:27:32.469Z",
+  "updatedAt": "2026-11-27T02:25:04.082Z",
   "quizzes": [
+    {
+      "id": "c6m2lv9yy72yo",
+      "url": "https://www.bbc.co.uk/news/articles/c6m2lv9yy72yo",
+      "title": "BBC News weekly quiz: Which music icon’s house did Miley Cyrus get married at?",
+      "description": "How much attention did you pay to what happened in the world over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1207/live/cfb55ca0-e9c3-11f1-a094-5fdc692f3e33.jpg",
+      "publishedAt": "2026-11-26T18:31:07.094Z"
+    },
     {
       "id": "cmvg2edq12nno",
       "url": "https://www.bbc.co.uk/news/articles/cmvg2edq12nno",
@@ -166,15 +174,6 @@
       "description": "How much attention did you pay to what happened in the world over the past seven days?",
       "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/e4aa/live/5cadeae0-8129-11f1-bee8-53ce494e1abc.jpg",
       "publishedAt": "2026-07-16T16:26:27.817Z",
-      "hasRiddle": true
-    },
-    {
-      "id": "cx2wzdznqgpo",
-      "url": "https://www.bbc.co.uk/news/articles/cx2wzdznqgpo",
-      "title": "BBC News quiz of the week: Why did Australia's prime minister apologise to Kylie Minogue?",
-      "description": "How much attention did you pay to what happened in the world over the past seven days?",
-      "image": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/b18b/live/b3a9e600-7bb1-11f1-bee8-53ce494e1abc.jpg",
-      "publishedAt": "2026-07-09T16:45:50.252Z",
       "hasRiddle": true
     }
   ]

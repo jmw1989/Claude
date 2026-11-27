@@ -1,13 +1,13 @@
 {
   "source": "QuizQuizQuiz",
   "url": "https://quizquizquiz.com/friday/",
-  "fetchedAt": "2026-11-20T01:27:39.034Z",
-  "fetchedVia": "jina",
-  "title": "The QuizQuizQuiz Friday Quiz, 20th November 2026",
-  "quizId": "1312",
+  "fetchedAt": "2026-11-27T02:23:49.273Z",
+  "fetchedVia": "wayback",
+  "title": "The QuizQuizQuiz Friday Quiz, 8th August 2025",
+  "quizId": "1178",
   "submitUrl": "https://quizquizquiz.com/friday/submit",
   "hidden": {
-    "quiz_id": "1312",
+    "quiz_id": "1178",
     "email": "",
     "key": "",
     "time-taken": "0"
@@ -15,7 +15,7 @@
   "questions": [
     {
       "number": 1,
-      "q": "In the children's song, when there were ten in the bed, what did the little one say?",
+      "q": "In 1787, Fletcher Christian became the master's mate of which ship?",
       "image": null,
       "fields": [
         {
@@ -26,7 +26,7 @@
     },
     {
       "number": 2,
-      "q": "What was the first name of the wife of Rainier III, Prince of Monaco?",
+      "q": "According to Edwin Starr, what is war good for?",
       "image": null,
       "fields": [
         {
@@ -37,7 +37,7 @@
     },
     {
       "number": 3,
-      "q": "Commonly seen on aeroplanes, what item of furnishing takes its name from a type of hair oil used by men in the early 19th century?",
+      "q": "In 2010, Philips first revealed which brand name, which has now become a generic term for a popular type of convection oven?",
       "image": null,
       "fields": [
         {
@@ -48,7 +48,7 @@
     },
     {
       "number": 4,
-      "q": "In the first series of which British TV show was a warehouse worker played by Neil Fitzmaurice hired in the first episode and made redundant in the last episode?",
+      "q": "Which budget store was sold to the US investment firm Gordon Brothers in June 2025 for the nominal fee of £1?",
       "image": null,
       "fields": [
         {
@@ -59,28 +59,28 @@
     },
     {
       "number": 5,
-      "q": "Name five of the ten all-time best selling albums in the UK, according to the Official Charts Company. This can include Greatest Hits. There are ten different artists - we do want the album name, not just the artist.",
+      "q": "Name the five chemical elements with chemical symbols made up entirely of vowels with no consonants. We need the names of the elements, you can't just name vowels. [Y not counted as a vowel]",
       "image": null,
       "fields": [
         {
           "name": "answer-5-0",
-          "label": "Best selling album 1"
+          "label": "Vowel elements 1"
         },
         {
           "name": "answer-5-1",
-          "label": "Best selling album 2"
+          "label": "Vowel elements 2"
         },
         {
           "name": "answer-5-2",
-          "label": "Best selling album 3"
+          "label": "Vowel elements 3"
         },
         {
           "name": "answer-5-3",
-          "label": "Best selling album 4"
+          "label": "Vowel elements 4"
         },
         {
           "name": "answer-5-4",
-          "label": "Best selling album 5"
+          "label": "Vowel elements 5"
         }
       ]
     }

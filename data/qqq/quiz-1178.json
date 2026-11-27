@@ -1,0 +1,88 @@
+{
+  "source": "QuizQuizQuiz",
+  "url": "https://quizquizquiz.com/friday/",
+  "fetchedAt": "2026-11-27T02:23:49.273Z",
+  "fetchedVia": "wayback",
+  "title": "The QuizQuizQuiz Friday Quiz, 8th August 2025",
+  "quizId": "1178",
+  "submitUrl": "https://quizquizquiz.com/friday/submit",
+  "hidden": {
+    "quiz_id": "1178",
+    "email": "",
+    "key": "",
+    "time-taken": "0"
+  },
+  "questions": [
+    {
+      "number": 1,
+      "q": "In 1787, Fletcher Christian became the master's mate of which ship?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-1-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "q": "According to Edwin Starr, what is war good for?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-2-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "q": "In 2010, Philips first revealed which brand name, which has now become a generic term for a popular type of convection oven?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-3-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "q": "Which budget store was sold to the US investment firm Gordon Brothers in June 2025 for the nominal fee of £1?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-4-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "q": "Name the five chemical elements with chemical symbols made up entirely of vowels with no consonants. We need the names of the elements, you can't just name vowels. [Y not counted as a vowel]",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-5-0",
+          "label": "Vowel elements 1"
+        },
+        {
+          "name": "answer-5-1",
+          "label": "Vowel elements 2"
+        },
+        {
+          "name": "answer-5-2",
+          "label": "Vowel elements 3"
+        },
+        {
+          "name": "answer-5-3",
+          "label": "Vowel elements 4"
+        },
+        {
+          "name": "answer-5-4",
+          "label": "Vowel elements 5"
+        }
+      ]
+    }
+  ]
+}

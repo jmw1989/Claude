@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-11-23T23:27:33.691Z",
+  "updatedAt": "2026-11-27T02:25:04.452Z",
   "quizzes": [
+    {
+      "id": "cm5y1g91xq3po",
+      "url": "https://www.bbc.co.uk/sport/articles/cm5y1g91xq3po",
+      "title": "BBC Sport weekly quiz: What year will the UK host the Women's World Cup?",
+      "description": "How much attention have you paid to what's happened in the world of sport over the past seven days?",
+      "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/f5a8/live/4c6ac610-e8fa-11f1-a094-5fdc692f3e33.png",
+      "publishedAt": "2026-11-26T08:02:45.177Z"
+    },
     {
       "id": "c6pw4xnjrzydo",
       "url": "https://www.bbc.co.uk/sport/articles/c6pw4xnjrzydo",
