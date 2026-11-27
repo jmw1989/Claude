@@ -1,0 +1,88 @@
+{
+  "source": "QuizQuizQuiz",
+  "url": "https://quizquizquiz.com/friday/",
+  "fetchedAt": "2026-11-27T16:26:46.304Z",
+  "fetchedVia": "jina",
+  "title": "The QuizQuizQuiz Friday Quiz, 27th November 2026",
+  "quizId": "1314",
+  "submitUrl": "https://quizquizquiz.com/friday/submit",
+  "hidden": {
+    "quiz_id": "1314",
+    "email": "",
+    "key": "",
+    "time-taken": "0"
+  },
+  "questions": [
+    {
+      "number": 1,
+      "q": "On the human hand, which finger is between the middle finger and the thumb?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-1-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "q": "\"Just one more thing\" was the catchphrase of which TV detective played by Peter Falk?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-2-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "q": "A 2025 best-selling book is 'Careless People: A Story of Where I Used to Work' by Sarah Wynn-Williams. Where did she used to work?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-3-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "q": "Which poet's last words, in November 1953, are often reported to have been \"I’ve had eighteen straight whiskies, I think that’s the record\"?",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-4-0",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "q": "Name five counties of either the Republic of Ireland or Northern Ireland which have a double-letter in their English name (as in, two of the same letter next to each other).",
+      "image": null,
+      "fields": [
+        {
+          "name": "answer-5-0",
+          "label": "Irish county with double letter 1"
+        },
+        {
+          "name": "answer-5-1",
+          "label": "Irish county with double letter 2"
+        },
+        {
+          "name": "answer-5-2",
+          "label": "Irish county with double letter 3"
+        },
+        {
+          "name": "answer-5-3",
+          "label": "Irish county with double letter 4"
+        },
+        {
+          "name": "answer-5-4",
+          "label": "Irish county with double letter 5"
+        }
+      ]
+    }
+  ]
+}

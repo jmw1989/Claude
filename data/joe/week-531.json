@@ -1,0 +1,515 @@
+{
+  "source": "JOE",
+  "week": 531,
+  "title": "The JOE Friday Pub Quiz: week 531",
+  "description": "Welcome to week 531 of the JOE Friday Pub Quiz!",
+  "url": "https://www.joe.co.uk/quiz/the-joe-friday-pub-quiz-week-531-556743",
+  "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-2-Images-2026-11-26T142709.098-1024x573.png",
+  "publishedAt": "2026-11-26T17:00:00.000Z",
+  "fetchedAt": "2026-11-27T16:25:43.299Z",
+  "status": "ok",
+  "parser": "embed/wpvq",
+  "fetchedVia": "jina",
+  "questions": [
+    {
+      "q": "The UK's largest cathedral is located in which city?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/AdobeStock_235031055.jpeg",
+      "options": [
+        {
+          "text": "Durham",
+          "image": null
+        },
+        {
+          "text": "Lincoln",
+          "image": null
+        },
+        {
+          "text": "Liverpool",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "What is the distance between the edge and the centre of a circle called?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-Full-Bleed-2026-11-25T165204.188.png",
+      "options": [
+        {
+          "text": "Radius",
+          "image": null
+        },
+        {
+          "text": "Diameter",
+          "image": null
+        },
+        {
+          "text": "Circumference",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Influencer Max Balegde found himself in hot water this week, after posting a video of himself singing a viral meme song outside 10 Downing Street. Which of these food items featured in the lyrics?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Screenshot-2026-11-25-at-16.29.03.png",
+      "options": [
+        {
+          "text": "Chicken Wings",
+          "image": null
+        },
+        {
+          "text": "Chicken Tenders",
+          "image": null
+        },
+        {
+          "text": "Chicken Nuggets",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Which country is this?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/2-Images-Split-Horizontal-2026-11-25T164157.666.png",
+      "options": [
+        {
+          "text": "Paraguay",
+          "image": null
+        },
+        {
+          "text": "Ecuador",
+          "image": null
+        },
+        {
+          "text": "Uruguay",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "According to an iconic 2007 advert, how are Shreddies cereal \"supposedly\" made?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/AdobeStock_808743258_Editorial_Use_Only.jpeg",
+      "options": [
+        {
+          "text": "By grannies knitting",
+          "image": null
+        },
+        {
+          "text": "By basket weavers",
+          "image": null
+        },
+        {
+          "text": "By a team of wool spinners",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 1: General Knowledge"
+    },
+    {
+      "q": "Only once in history have England, Wales, Northern Ireland, and Scotland all qualified for the same World Cup. When?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/2250186867.jpg",
+      "options": [
+        {
+          "text": "1958",
+          "image": null
+        },
+        {
+          "text": "1966",
+          "image": null
+        },
+        {
+          "text": "1998",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Who are the most successful club in the UK's ice hockey league history, having won ten domestic league titles?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/AdobeStock_1441800981_Editorial_Use_Only.jpeg",
+      "options": [
+        {
+          "text": "Manchester Storm",
+          "image": null
+        },
+        {
+          "text": "Sheffield Steelers",
+          "image": null
+        },
+        {
+          "text": "Belfast Giants",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Who is Man United's all-time top scorer in the Premier League?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/168612184-1.jpg",
+      "options": [
+        {
+          "text": "Eric Cantona",
+          "image": null
+        },
+        {
+          "text": "Wayne Rooney",
+          "image": null
+        },
+        {
+          "text": "Bruno Fernandes",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "From which club did Newcastle United sign Alexander Isak in 2022?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-35.png",
+      "options": [
+        {
+          "text": "Real Sociedad",
+          "image": null
+        },
+        {
+          "text": "AIK Stockholm",
+          "image": null
+        },
+        {
+          "text": "Borussia Dortmund",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Who did Carlos Alcaraz defeat in the final of last week’s ATP Finals, to win the title for the first time in his career?",
+      "image": "https://assets.joe.co.uk/uploads/2026/09/GettyImages-2293857849.jpg",
+      "options": [
+        {
+          "text": "Ben Shelton",
+          "image": null
+        },
+        {
+          "text": "Alexander Zverev",
+          "image": null
+        },
+        {
+          "text": "Jannik Sinner",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 2: Sport"
+    },
+    {
+      "q": "Who has just been named the new host of Top Gear?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-36.png",
+      "options": [
+        {
+          "text": "Joe Marler",
+          "image": null
+        },
+        {
+          "text": "Jimmy Carr",
+          "image": null
+        },
+        {
+          "text": "Gordon Ramsay",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Once Upon A Time In Hollywood spinoff \"The Further Mis-Adventures of Cliff Booth\" hits cinemas this month. Who directed it?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-37-1.png",
+      "options": [
+        {
+          "text": "Quentin Tarantino",
+          "image": null
+        },
+        {
+          "text": "Sean Baker",
+          "image": null
+        },
+        {
+          "text": "David Fincher",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Who was the first of these three artists to secure a UK Number 1 single?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-3-Images-3.png",
+      "options": [
+        {
+          "text": "Jessie J",
+          "image": null
+        },
+        {
+          "text": "Justin Bieber",
+          "image": null
+        },
+        {
+          "text": "Bruno Mars",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which of these three was NOT a coach on season 1 of reality show The Voice UK?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-38-1.png",
+      "options": [
+        {
+          "text": "Cheryl",
+          "image": null
+        },
+        {
+          "text": "Sir Tom Jones",
+          "image": null
+        },
+        {
+          "text": "Danny O'Donoghue",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "How many years before the events of 'The Lord of the Rings' is Prime Video’s 'The Rings of Power' set?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Screenshot-2026-11-26-at-12.59.55.png",
+      "options": [
+        {
+          "text": "Around 200 years",
+          "image": null
+        },
+        {
+          "text": "Just 70 years",
+          "image": null
+        },
+        {
+          "text": "Around 5,000 years",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 3: Entertainment"
+    },
+    {
+      "q": "Which country uses the below currency, under the code: CHF?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-39-1.png",
+      "options": [
+        {
+          "text": "Belgium",
+          "image": null
+        },
+        {
+          "text": "China",
+          "image": null
+        },
+        {
+          "text": "Switzerland",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Currencies"
+    },
+    {
+      "q": "This is the symbol for the Lira. Which country uses it?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-41.png",
+      "options": [
+        {
+          "text": "Egypt",
+          "image": null
+        },
+        {
+          "text": "Türkiye",
+          "image": null
+        },
+        {
+          "text": "Georgia",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Currencies"
+    },
+    {
+      "q": "Which country uses this currency?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-42.png",
+      "options": [
+        {
+          "text": "India",
+          "image": null
+        },
+        {
+          "text": "Philippines",
+          "image": null
+        },
+        {
+          "text": "Russia",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Currencies"
+    },
+    {
+      "q": "Which of these countries uses the Euro as its currency?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-43.png",
+      "options": [
+        {
+          "text": "Italy",
+          "image": null
+        },
+        {
+          "text": "Romania",
+          "image": null
+        },
+        {
+          "text": "Czechia",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Currencies"
+    },
+    {
+      "q": "What currency is this?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-44-1.png",
+      "options": [
+        {
+          "text": "South Korean Won",
+          "image": null
+        },
+        {
+          "text": "Chinese Yuan",
+          "image": null
+        },
+        {
+          "text": "UAE Dirham",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Currencies"
+    },
+    {
+      "q": "Which artist won the 2026 Mercury Prize?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-31-1.png",
+      "options": [
+        {
+          "text": "Sam Fender",
+          "image": null
+        },
+        {
+          "text": "RAYE",
+          "image": null
+        },
+        {
+          "text": "Olivia Dean",
+          "image": null
+        }
+      ],
+      "answer": 1,
+      "category": "ROUND 4: Award Winners"
+    },
+    {
+      "q": "Which of these authors was awarded the Booker Prize for 2026?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/AdobeStock_1776434210_Editorial_Use_Only.jpeg",
+      "options": [
+        {
+          "text": "M. John Harrison, for The End of Everything",
+          "image": null
+        },
+        {
+          "text": "Rebecca Yarros, for Onyx Storm",
+          "image": null
+        },
+        {
+          "text": "Lucy Steeds, for The Artist",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Award Winners"
+    },
+    {
+      "q": "Back in 1995, former Doctor Who actor, Peter Capaldi won an Oscar. What category was it for?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-Full-Bleed-2026-11-25T161307.446.png",
+      "options": [
+        {
+          "text": "Best Original Screenplay",
+          "image": null
+        },
+        {
+          "text": "Best Supporting Actor",
+          "image": null
+        },
+        {
+          "text": "Best Live Action Short Film",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Award Winners"
+    },
+    {
+      "q": "Who is the only musician to have ever been awarded a Nobel Prize?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/AdobeStock_2177647681_Editorial_Use_Only.jpeg",
+      "options": [
+        {
+          "text": "Bob Dylan",
+          "image": null
+        },
+        {
+          "text": "John Lennon",
+          "image": null
+        },
+        {
+          "text": "Leonard Cohen",
+          "image": null
+        }
+      ],
+      "answer": 0,
+      "category": "ROUND 4: Award Winners"
+    },
+    {
+      "q": "Last year Nnena Kalu won the Turner Prize for artwork. Which UK city is she from?",
+      "image": "https://assets.joe.co.uk/uploads/2026/11/Website-Image-_-Full-Bleed-32.png",
+      "options": [
+        {
+          "text": "Bradford",
+          "image": null
+        },
+        {
+          "text": "Bristol",
+          "image": null
+        },
+        {
+          "text": "Glasgow",
+          "image": null
+        }
+      ],
+      "answer": 2,
+      "category": "ROUND 4: Award Winners"
+    }
+  ]
+}
