@@ -1,6 +1,106 @@
 {
   "quizzes": [
     {
+      "id": "2026-nov-28",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/nov/28/troops-returning-from-which-war-helped-introduce-cigarettes-to-britain-the-saturday-quiz",
+      "title": "Troops returning from which war helped introduce cigarettes to Britain? The Saturday quiz",
+      "description": "From Denny’s sausages and Anne Lynch’s tea to Dr Flora Murray and Charles Rennie Mackintosh, test your knowledge with the Saturday quiz",
+      "image": "https://i.guim.co.uk/img/media/a26b9570042048889738ce10428a0451edc20674/581_0_7217_5773/master/7217.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=a8f616333d6d28447806e5ed1f3cb4c3",
+      "publishedAt": "2026-11-28T07:00:33.000Z",
+      "questions": [
+        {
+          "number": 1,
+          "q": "Which South American country added an “e” to its name in 1978?",
+          "answer": "Suriname.",
+          "category": null
+        },
+        {
+          "number": 2,
+          "q": "Which Tyne and Wear Metro station has signs in Latin?",
+          "answer": "Wallsend (end of Hadrian’s Wall).",
+          "category": null
+        },
+        {
+          "number": 3,
+          "q": "Troops returning from which war helped introduce cigarettes to Britain?",
+          "answer": "Crimean war.",
+          "category": null
+        },
+        {
+          "number": 4,
+          "q": "On an electronic device, what is measured in nits?",
+          "answer": "Screen brightness/luminance.",
+          "category": null
+        },
+        {
+          "number": 5,
+          "q": "Which motor sport tradition was accidentally begun in 1966 by driver Jo Siffert?",
+          "answer": "Spraying champagne on the podium.",
+          "category": null
+        },
+        {
+          "number": 6,
+          "q": "Who was the ancient Mesopotamian goddess of war and love?",
+          "answer": "Ishtar (Inanna).",
+          "category": null
+        },
+        {
+          "number": 7,
+          "q": "Which neologism is derived from “alpha male of the group”?",
+          "answer": "Mogging/mog (Collins Dictionary word of the year 2026).",
+          "category": null
+        },
+        {
+          "number": 8,
+          "q": "Whose only Oscar was an Academy Juvenile award in 1940?",
+          "answer": "Judy Garland.",
+          "category": null
+        },
+        {
+          "number": 9,
+          "q": "Jamestown settler; Star-Spangled Banner composer; Tadcaster brewer; Labour party leader?",
+          "answer": "Various John Smiths.",
+          "category": "What links"
+        },
+        {
+          "number": 10,
+          "q": "Third Monday in January; third Monday in February; second Monday in October?",
+          "answer": "US federal holidays named after people: Martin Luther King Jr; Washington’s Birthday (Presidents’ Day); Columbus Day.",
+          "category": "What links"
+        },
+        {
+          "number": 11,
+          "q": "Dr Flora Murray; Sir Walter Scott; Lord Ilay; Charles Rennie Mackintosh?",
+          "answer": "Appear on £100 Scottish banknotes.",
+          "category": "What links"
+        },
+        {
+          "number": 12,
+          "q": "Barcelona Pavilion; New National Gallery, Berlin; Seagram Building, NY; Villa Tugendhat, Brno?",
+          "answer": "Buildings designed by Ludwig Mies van der Rohe.",
+          "category": "What links"
+        },
+        {
+          "number": 13,
+          "q": "Anne Lynch’s tea; Cantrell & Cochrane’s ginger ale; Denny’s sausages; Epps’s cocoa; Plumtree’s potted meat?",
+          "answer": "Food and drink brands mentioned in James Joyce’s Ulysses.",
+          "category": "What links"
+        },
+        {
+          "number": 14,
+          "q": "Creative Assembly; Frontier Developments; Rare; Rockstar North?",
+          "answer": "Major UK video game developers.",
+          "category": "What links"
+        },
+        {
+          "number": 15,
+          "q": "Archduke Charles of Austria; Eric XIV of Sweden; François, Duke of Anjou?",
+          "answer": "Overseas suitors of Queen Elizabeth I.",
+          "category": "What links"
+        }
+      ]
+    },
+    {
       "id": "2026-nov-21",
       "url": "https://www.theguardian.com/lifeandstyle/2026/nov/21/what-links-diana-moran-and-fenway-parks-left-field-wall-the-saturday-quiz",
       "title": "What links Diana Moran and Fenway Park’s left-field wall? The Saturday quiz",
@@ -1301,5 +1401,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-11-27T23:51:00.777Z"
+  "updatedAt": "2026-11-28T17:58:52.651Z"
 }
